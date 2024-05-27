@@ -3,9 +3,9 @@ package pieces;
 import java.util.Objects;
 
 public class Piece {
-    enum Color {WHITE, BLACK}
+    public enum Color {WHITE, BLACK}
 
-    enum Type {PAWN, KNIGHT, ROOK, BISHOP, QUEEN, KING, NO_PIECE}
+    public enum Type {PAWN, KNIGHT, ROOK, BISHOP, QUEEN, KING, NO_PIECE}
 
     private Color color;
     private final Type type;
