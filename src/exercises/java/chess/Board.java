@@ -19,18 +19,23 @@ public class Board {
     }
 
     public void initialize() {
-        addPiecesToTheBoard();
         this.piecesWhite = getPiecesWhite();
         this.piecesBlack = getPiecesBlack();
+
+        addPiecesOfRank(new ArrayList<>(), Piece.Color.WHITE);
+        addPiecesPawnOfRank(new ArrayList<>(), Piece.Color.WHITE);
+        addPiecesBlank();
+        addPiecesPawnOfRank(new ArrayList<>(), Piece.Color.BLACK);
+        addPiecesOfRank(new ArrayList<>(), Piece.Color.BLACK);
     }
 
-    public void addPiecesToTheBoard(){
-        addPiecesOfRank(new ArrayList<>(), Piece.Color.BLACK);
-        addPiecesPawnOfRank(new ArrayList<>(), Piece.Color.BLACK);
-        addPiecesBlank();
-        addPiecesPawnOfRank(new ArrayList<>(), Piece.Color.WHITE);
-        addPiecesOfRank(new ArrayList<>(), Piece.Color.WHITE);
-    }
+//    public void addPiecesToTheBoard(){
+//        addPiecesOfRank(new ArrayList<>(), Piece.Color.WHITE);
+//        addPiecesPawnOfRank(new ArrayList<>(), Piece.Color.WHITE);
+//        addPiecesBlank();
+//        addPiecesPawnOfRank(new ArrayList<>(), Piece.Color.BLACK);
+//        addPiecesOfRank(new ArrayList<>(), Piece.Color.BLACK);
+//    }
 
     public void addPiecesBlank() {
         for (int x = 0; x < 4; x++) {
@@ -107,5 +112,22 @@ public class Board {
 
     int getPiecesBlack(){
         return piecesBlack;
+    }
+
+    char getPiece(char files, int rank){
+        int num = 0;
+        switch (files) {
+            case 'a' -> num = 0;
+            case 'b' -> num = 1;
+            case 'c' -> num = 2;
+            case 'd' -> num = 3;
+            case 'e' -> num = 4;
+            case 'f' -> num = 5;
+            case 'g' -> num = 6;
+            case 'h' -> num = 7;
+        }
+        ArrayList<Piece> boardRank = ranks.get(rank-1);
+        System.out.println(boardRank.get(num).getRepresentation());
+        return boardRank.get(num).getRepresentation();
     }
 }
