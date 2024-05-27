@@ -23,11 +23,15 @@ public class Board {
         this.piecesWhite = getPiecesWhite();
         this.piecesBlack = getPiecesBlack();
     }
+
     public void addPiecesToTheBoard(){
-        addPieces(Piece.Color.BLACK);
+        addPiecesOfRank(new ArrayList<>(), Piece.Color.BLACK);
+        addPiecesPawnOfRank(new ArrayList<>(), Piece.Color.BLACK);
         addPiecesBlank();
-        addPieces(Piece.Color.WHITE);
+        addPiecesPawnOfRank(new ArrayList<>(), Piece.Color.WHITE);
+        addPiecesOfRank(new ArrayList<>(), Piece.Color.WHITE);
     }
+
     public void addPiecesBlank() {
         for (int x = 0; x < 4; x++) {
             Piece blank = Piece.noPiece();
@@ -38,100 +42,48 @@ public class Board {
         }
     }
 
-    public void addPieces(Piece.Color color){
-        if (color == Piece.Color.BLACK){
-            ranks.add(addPiecesOfRank(new ArrayList<>(), color));
-            addPiecesOfRank(pieces, color);
-            ArrayList<Piece> rankOthers = ranks.get(index);
-            for (Piece pieces: rankOthers) {
-                piecesOnTheBoard.append(pieces.getRepresentation());
-                if (Objects.equals(color, Piece.Color.WHITE)){
-                    piecesWhite++;
-                } else {
-                    piecesBlack++;
-                }
+    void addPiecesOnTheBoard(ArrayList<Piece> rank, Piece.Color color){
+        for (Piece pieces: rank) {
+            piecesOnTheBoard.append(pieces.getRepresentation());
+            if (Objects.equals(color, Piece.Color.WHITE)){
+                piecesWhite++;
+            } else {
+                piecesBlack++;
             }
-            piecesOnTheBoard.append(StringUtil.NEWLINE);
-            index++;
-
-            ranks.add(addPiecesPawnOfRank(new ArrayList<>(), color));
-            addPiecesOfRank(pieces, color);
-            ArrayList<Piece> rankPawns = ranks.get(index);
-            for (Piece pieces: rankPawns) {
-                piecesOnTheBoard.append(pieces.getRepresentation());
-                if (Objects.equals(color, Piece.Color.WHITE)){
-                    piecesWhite++;
-                } else {
-                    piecesBlack++;
-                }
-            }
-            piecesOnTheBoard.append(StringUtil.NEWLINE);
-            index++;
-        } else {
-            ranks.add(addPiecesPawnOfRank(new ArrayList<>(), color));
-            addPiecesOfRank(pieces, color);
-            ArrayList<Piece> rankPawns = ranks.get(index);
-            for (Piece pieces: rankPawns) {
-                piecesOnTheBoard.append(pieces.getRepresentation());
-                if (Objects.equals(color, Piece.Color.WHITE)){
-                    piecesWhite++;
-                } else {
-                    piecesBlack++;
-                }
-            }
-            piecesOnTheBoard.append(StringUtil.NEWLINE);
-            index++;
-
-            ranks.add(addPiecesOfRank(new ArrayList<>(), color));
-            addPiecesOfRank(pieces, color);
-            ArrayList<Piece> rankOthers = ranks.get(index);
-            for (Piece pieces: rankOthers) {
-                piecesOnTheBoard.append(pieces.getRepresentation());
-                if (Objects.equals(color, Piece.Color.WHITE)){
-                    piecesWhite++;
-                } else {
-                    piecesBlack++;
-                }
-            }
-            piecesOnTheBoard.append(StringUtil.NEWLINE);
-            index++;
         }
+        piecesOnTheBoard.append(StringUtil.NEWLINE);
+        index++;
     }
 
-    private ArrayList<Piece> addPiecesOfRank(ArrayList<Piece> aux, Piece.Color color) {
-        if(Objects.equals(color, Piece.Color.WHITE)){
-            aux.add(Piece.createWhitePiece(Piece.Type.ROOK));
-            aux.add(Piece.createWhitePiece(Piece.Type.KNIGHT));
-            aux.add(Piece.createWhitePiece(Piece.Type.BISHOP));
-            aux.add(Piece.createWhitePiece(Piece.Type.QUEEN));
-            aux.add(Piece.createWhitePiece(Piece.Type.KING));
-            aux.add(Piece.createWhitePiece(Piece.Type.BISHOP));
-            aux.add(Piece.createWhitePiece(Piece.Type.KNIGHT));
-            aux.add(Piece.createWhitePiece(Piece.Type.ROOK));
-        } else {
-            aux.add(Piece.createBlackPiece(Piece.Type.ROOK));
-            aux.add(Piece.createBlackPiece(Piece.Type.KNIGHT));
-            aux.add(Piece.createBlackPiece(Piece.Type.BISHOP));
-            aux.add(Piece.createBlackPiece(Piece.Type.QUEEN));
-            aux.add(Piece.createBlackPiece(Piece.Type.KING));
-            aux.add(Piece.createBlackPiece(Piece.Type.BISHOP));
-            aux.add(Piece.createBlackPiece(Piece.Type.KNIGHT));
-            aux.add(Piece.createBlackPiece(Piece.Type.ROOK));
+    private void addPiecesOfRank(ArrayList<Piece> aux, Piece.Color color) {
+        Piece.Type[] types = {Piece.Type.ROOK, Piece.Type.KNIGHT, Piece.Type.BISHOP, Piece.Type.QUEEN, Piece.Type.KING, Piece.Type.BISHOP, Piece.Type.KNIGHT, Piece.Type.ROOK};
+        for (Piece.Type type : types) {
+            if (Objects.equals(color, Piece.Color.WHITE)) {
+                aux.add(Piece.createWhitePiece(type));
+                pieces.add(Piece.createWhitePiece(type));
+            } else if (Objects.equals(color, Piece.Color.BLACK)) {
+                aux.add(Piece.createBlackPiece(type));
+                pieces.add(Piece.createBlackPiece(type));
+            }
         }
-        return aux;
+        ranks.add(aux);
+        addPiecesOnTheBoard(ranks.get(index), color);
     }
 
-    private ArrayList<Piece> addPiecesPawnOfRank(ArrayList<Piece> aux, Piece.Color color) {
+    private void addPiecesPawnOfRank(ArrayList<Piece> aux, Piece.Color color) {
         if(Objects.equals(color, Piece.Color.WHITE)){
             for (int z = 0; z < 8; z++) {
                 aux.add(Piece.createWhitePiece(Piece.Type.PAWN));
+                pieces.add(Piece.createWhitePiece(Piece.Type.PAWN));
             }
         } else {
             for (int z = 0; z < 8; z++) {
                 aux.add(Piece.createBlackPiece(Piece.Type.PAWN));
+                pieces.add(Piece.createBlackPiece(Piece.Type.PAWN));
             }
         }
-        return aux;
+        ranks.add(aux);
+        addPiecesOnTheBoard(ranks.get(index), color);
     }
     public String print(){
         return piecesOnTheBoard.toString();
