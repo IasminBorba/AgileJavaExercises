@@ -14,6 +14,9 @@ public class Board {
     public static final StringBuilder piecesOnTheBoard = new StringBuilder();
     public int index = 0;
 
+    float strengthWhite = 0;
+    float strengthBlack = 0;
+
     public void initialize() {
         this.piecesWhite = getPiecesWhite();
         this.piecesBlack = getPiecesBlack();
@@ -60,6 +63,7 @@ public class Board {
         pieces.add(piece);
 
         alterPrint(piece, num, rank);
+        evoluationPieces(piece);
     }
 
     public void alterPrint(Piece piece, int files, int rank){
@@ -112,6 +116,67 @@ public class Board {
         ranks.add(aux);
         addPiecesOnTheBoard(ranks.get(index), color);
     }
+    void evoluationPieces(Piece piece){
+        switch (piece.getType()) {
+            case Piece.Type.QUEEN -> {
+                if (piece.isWhite()){
+                    strengthWhite += 9;
+                } else {
+                    strengthBlack += 9;
+                }
+            }
+            case Piece.Type.ROOK -> {
+                if (piece.isWhite()){
+                    strengthWhite += 5;
+                } else {
+                    strengthBlack += 5;
+                }
+            }
+            case BISHOP -> {
+                if (piece.isWhite()){
+                    strengthWhite += 3;
+                } else {
+                    strengthBlack += 3;
+                }
+            }
+            case KNIGHT -> {
+                if (piece.isWhite()){
+                    strengthWhite += 2.5F;
+                } else {
+                    strengthBlack += 2.5F;
+                }
+            }
+//            case PAWN -> {
+//                calculationPawnPoints();
+//            }
+        }
+    }
+
+//    void calculationPawnPoints() {
+//        ArrayList<int> whitePawnsPositions = new ArrayList<int>();
+//        ArrayList<int> blackPawnsPositions = new ArrayList<int>();
+//
+//        for (int rank = 0; rank < ranks.size(); rank++) {
+//            ArrayList<Piece> boardRank = ranks.get(rank);
+//            for (int file = 0; file < boardRank.size(); file++) {
+//                Piece piece = boardRank.get(file);
+//                if (piece.getType() == Piece.Type.PAWN) {
+//                    if (piece.isWhite()) {
+//                        whitePawnsPositions.add(file);
+//                    } else {
+//                        blackPawnsPositions.add(file);
+//                    }
+//                }
+//            }
+//        }
+//    }
+
+    float getEvoluationBlackPieces(){
+        return strengthBlack;
+    }
+    float getEvoluationWhitePieces(){
+        return strengthWhite;
+    }
 
     public String print(){
         return piecesOnTheBoard.toString();
@@ -150,7 +215,6 @@ public class Board {
             case 'h' -> num = 7;
         }
         ArrayList<Piece> boardRank = ranks.get(rank-1);
-//        System.out.println(boardRank.get(num).getRepresentation());
         return boardRank.get(num).getRepresentation();
     }
 }
