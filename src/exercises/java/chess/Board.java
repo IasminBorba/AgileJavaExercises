@@ -119,9 +119,6 @@ public class Board {
                     strengthBlack += 2.5F;
                 }
             }
-//            case PAWN -> {
-//                calculationPawnPoints();
-//            }
         }
     }
 
@@ -132,24 +129,51 @@ public class Board {
         for (int rank = 0; rank < 8; rank++) {
             ArrayList<Piece> boardRank = ranks.get(rank);
             for (int file = 0; file < boardRank.size(); file++) {
-//                System.out.println(boardRank.get(file).getRepresentation());
-
                 Piece piece = boardRank.get(file);
                 if (piece.getType() == Piece.Type.PAWN) {
                     if (piece.isWhite()) {
-                        whitePawnsPositions.add(piece.getRepresentation());
                         whitePawnsPositions.add(file);
                     } else {
-                        blackPawnsPositions.add(piece.getRepresentation());
                         blackPawnsPositions.add(file);
                     }
                 }
             }
         }
-        // em whitePawnsPositions eu tenho a fileira em que tem uma peça pawn branca
-        System.out.println(whitePawnsPositions);
-        // em blackPawnsPositions eu tenho a fileira em que tem uma peça pawn preta
-        System.out.println(blackPawnsPositions);
+
+        int duplicateWhite = 0;
+        for (int i = 0; i < whitePawnsPositions.size(); i++){
+            for (int j = i+1; j < whitePawnsPositions.size(); j++) {
+                if (whitePawnsPositions.get(i) == whitePawnsPositions.get(j)){
+                    duplicateWhite++;
+                }
+            }
+        }
+        if (duplicateWhite != 0){
+            strengthWhite += (duplicateWhite*0.5F) + 0.5F;
+            for (int x = duplicateWhite+1; x < whitePawnsPositions.size(); x++){
+                strengthWhite += 1;
+            }
+        } else {
+            strengthWhite += whitePawnsPositions.size();
+        }
+
+        int duplicateBlack = 0;
+        for (int i = 0; i < blackPawnsPositions.size(); i++){
+            for (int j = i+1; j < blackPawnsPositions.size(); j++) {
+                if (blackPawnsPositions.get(i) == blackPawnsPositions.get(j)){
+                    duplicateBlack++;
+                }
+            }
+        }
+
+        if (duplicateBlack != 0){
+            strengthBlack += (duplicateBlack*0.5F) + 0.5F;
+            for (int x = duplicateBlack+1; x < blackPawnsPositions.size(); x++){
+                strengthBlack += 1;
+            }
+        } else {
+            strengthBlack += blackPawnsPositions.size();
+        }
     }
 
     public void alterPrint(Piece piece, int files, int rank){
@@ -176,6 +200,7 @@ public class Board {
         return strengthBlack;
     }
     float getEvoluationWhitePieces(){
+        calculationPawnPoints();
         return strengthWhite;
     }
 
@@ -224,7 +249,7 @@ public class Board {
         return num;
     }
 
-    public String printRanks(){
+    public void printRanks(){
         StringBuilder stringRanks = new StringBuilder();
         
         for (int x = 0; x < 8; x++){
@@ -234,6 +259,7 @@ public class Board {
             }
             stringRanks.append("\n");
         }
-        return stringRanks.toString();
+
+        System.out.println(stringRanks);
     }
 }

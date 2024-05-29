@@ -123,8 +123,8 @@ public class BoardTest extends  TestCase{
 
         board.addPiece(Piece.createWhitePiece(Piece.Type.KING), 'f', 1);
 
-        assertEquals(16.5, board.getEvoluationWhitePieces(), 0.001);
-        assertEquals(17, board.getEvoluationBlackPieces(), 0.001);
+        assertEquals(19.5, board.getEvoluationWhitePieces(), 0.001);
+        assertEquals(20, board.getEvoluationBlackPieces(), 0.001);
 
         String blankRank = StringUtil.appendNewLine("........");
         assertEquals(
@@ -138,11 +138,7 @@ public class BoardTest extends  TestCase{
                         StringUtil.appendNewLine("....rk.." ),
                         board.print()
         );
-        System.out.println(board.printRanks());
-        board.calculationPawnPoints();
-
-//        assertEquals(19.5, board.getEvoluationWhitePieces(), 0.001);
-//        assertEquals(20, board.getEvoluationBlackPieces(), 0.001);
+        board.printRanks();
     }
 
 }
