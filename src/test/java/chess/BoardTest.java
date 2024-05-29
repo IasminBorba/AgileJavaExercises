@@ -123,6 +123,8 @@ public class BoardTest extends  TestCase{
 
         board.addPiece(Piece.createWhitePiece(Piece.Type.KING), 'f', 1);
 
+        board.calculationPawnPoints();
+
         assertEquals(19.5, board.getEvoluationWhitePieces(), 0.001);
         assertEquals(20, board.getEvoluationBlackPieces(), 0.001);
 
@@ -139,6 +141,10 @@ public class BoardTest extends  TestCase{
                         board.print()
         );
         board.printRanks();
+
+        board.strengthBlack = 0;
+        board.strengthWhite = 0;
+        board.calculateFinal();
     }
 
 }

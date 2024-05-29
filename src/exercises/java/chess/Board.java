@@ -4,6 +4,7 @@ import pieces.Piece;
 import util.StringUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class Board {
@@ -11,9 +12,10 @@ public class Board {
     int piecesBlack;
     private final ArrayList<Piece> pieces = new ArrayList<>();
     private final ArrayList<ArrayList<Piece>> ranks = new ArrayList<>();
+//    public HashMap<int, int> pawnsWhiteInColumns = new HashMap<int, int>();
+//    public HashMap<int, int> pawnsBlackInColumns = new HashMap<int, int>();
     public static final StringBuilder piecesOnTheBoard = new StringBuilder();
     public int index = 0;
-
     float strengthWhite = 0;
     float strengthBlack = 0;
 
@@ -34,7 +36,7 @@ public class Board {
 
     private void addPiecesBlank(int rank) {
         Piece blank = Piece.noPiece();
-        for (int x = 0; x < rank; x++){
+        for (int x = 0; x < rank; x++) {
             ArrayList<Piece> aux = new ArrayList<>();
             for (int z = 0; z < 8; z++) {
                 aux.add(blank);
@@ -62,7 +64,7 @@ public class Board {
     }
 
     private void addPiecesPawnOfRank(ArrayList<Piece> aux, Piece.Color color) {
-        if(Objects.equals(color, Piece.Color.WHITE)){
+        if (Objects.equals(color, Piece.Color.WHITE)) {
             for (int z = 0; z < 8; z++) {
                 aux.add(Piece.createWhitePiece(Piece.Type.PAWN));
                 pieces.add(Piece.createWhitePiece(Piece.Type.PAWN));
@@ -77,7 +79,7 @@ public class Board {
         addPiecesOnTheBoard(ranks.get(index), color);
     }
 
-    public void addPiece(Piece piece, char files, int rank){
+    public void addPiece(Piece piece, char files, int rank) {
         int file = transformPosition(files);
         int aux = rank - 1;
         ArrayList<Piece> boardRank = ranks.get(aux);
@@ -86,6 +88,7 @@ public class Board {
         pieces.add(piece);
 
         alterPrint(piece, file, rank);
+//        teste(piece, files, rank);
         evoluationPieces(piece);
     }
 
@@ -200,7 +203,6 @@ public class Board {
         return strengthBlack;
     }
     float getEvoluationWhitePieces(){
-        calculationPawnPoints();
         return strengthWhite;
     }
 
@@ -251,7 +253,7 @@ public class Board {
 
     public void printRanks(){
         StringBuilder stringRanks = new StringBuilder();
-        
+
         for (int x = 0; x < 8; x++){
             ArrayList<Piece> list = ranks.get(x);
             for (Piece piece: list){
@@ -262,4 +264,81 @@ public class Board {
 
         System.out.println(stringRanks);
     }
+
+    void calculateFinal() {
+        for (int rank = 0; rank < 8; rank++) {
+            ArrayList<Piece> boardRank = ranks.get(rank);
+            for (int file = 0; file < boardRank.size(); file++) {
+                Piece piece = boardRank.get(file);
+                switch (piece.getType()) {
+                    case QUEEN -> {
+                        if (piece.isWhite()) {
+                            strengthWhite += Piece.Type.QUEEN.strengthPiece;
+                        } else {
+                            strengthBlack += Piece.Type.QUEEN.strengthPiece;
+                        }
+                    }
+                    case ROOK -> {
+                        if (piece.isWhite()) {
+                            strengthWhite += Piece.Type.ROOK.strengthPiece;
+                        } else {
+                            strengthBlack += Piece.Type.ROOK.strengthPiece;
+                        }
+                    }
+                    case BISHOP -> {
+                        if (piece.isWhite()) {
+                            strengthWhite += Piece.Type.BISHOP.strengthPiece;
+                        } else {
+                            strengthBlack += Piece.Type.BISHOP.strengthPiece;
+                        }
+                    }
+                    case KNIGHT -> {
+                        if (piece.isWhite()) {
+                            strengthWhite += Piece.Type.KNIGHT.strengthPiece;
+                        } else {
+                            strengthBlack += Piece.Type.KNIGHT.strengthPiece;
+                        }
+                    }
+//                    case PAWN -> {
+//                        if (piece.isWhite()) {
+//                            whitePawnsPositions.add(file);
+//                        } else {
+//                            blackPawnsPositions.add(file);
+//                        }
+//                    }
+                }
+            }
+
+        }
+        System.out.println(strengthWhite);
+        System.out.println(strengthBlack);
+    }
+
+//    void testeCalculatePawn(Piece pieceTo, int indexFile) {
+//        if (pieceTo.getType() == Piece.Type.PAWN) {
+//            for (int rank = 0; rank < 8; rank++) {
+//                ArrayList<Piece> boardRank = ranks.get(rank);
+//                Piece piece = boardRank.get(indexFile);
+//                if (piece.getRepresentation() == pieceTo.getRepresentation()) {
+//                    if (piece != pieceTo) {
+//                        if (pieceTo.isWhite()) {
+//                            pawnsWhiteInColumns.put(indexFile, rank);
+//                            strengthWhite += 0.5F;
+//                        } else {
+//                            strengthBlack += 0.5F;
+//                        }
+//                    } else {
+//                        if (pieceTo.isWhite()) {
+//                            pawnsWhiteInColumns.put(indexFile, rank);
+//                            strengthWhite += 1;
+//                        } else {
+//                            pawnsBlackInColumns.put(indexFile, rank);
+//                            strengthBlack += 1;
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
 }
+
