@@ -23,18 +23,19 @@ public class Board {
 
         addPiecesOfRank(new ArrayList<>(), Piece.Color.WHITE);
         addPiecesPawnOfRank(new ArrayList<>(), Piece.Color.WHITE);
-        addPiecesBlank(new ArrayList<>(), 4);
+        addPiecesBlank(4);
         addPiecesPawnOfRank(new ArrayList<>(), Piece.Color.BLACK);
         addPiecesOfRank(new ArrayList<>(), Piece.Color.BLACK);
     }
 
     public void createBoard() {
-        addPiecesBlank(new ArrayList<>(), 8);
+        addPiecesBlank(8);
     }
 
-    private void addPiecesBlank(ArrayList<Piece> aux, int rank) {
+    private void addPiecesBlank(int rank) {
         Piece blank = Piece.noPiece();
         for (int x = 0; x < rank; x++){
+            ArrayList<Piece> aux = new ArrayList<>();
             for (int z = 0; z < 8; z++) {
                 aux.add(blank);
                 piecesOnTheBoard.append(blank.getRepresentation());
@@ -43,47 +44,6 @@ public class Board {
             index++;
             ranks.add(aux);
         }
-    }
-
-    public void addPiece(Piece piece, char files, int rank){
-        int num = 0;
-        switch (files) {
-            case 'a' -> num = 0;
-            case 'b' -> num = 1;
-            case 'c' -> num = 2;
-            case 'd' -> num = 3;
-            case 'e' -> num = 4;
-            case 'f' -> num = 5;
-            case 'g' -> num = 6;
-            case 'h' -> num = 7;
-        }
-
-        ArrayList<Piece> boardRank = ranks.get(rank-1);
-        boardRank.set(num, piece);
-        pieces.add(piece);
-
-        alterPrint(piece, num, rank);
-        evoluationPieces(piece);
-    }
-
-    public void alterPrint(Piece piece, int files, int rank){
-        int lines = 8-rank;
-        int positionPiece = (lines*8) + files + lines;
-
-        piecesOnTheBoard.setCharAt(positionPiece, piece.getRepresentation());
-    }
-
-    void addPiecesOnTheBoard(ArrayList<Piece> rank, Piece.Color color){
-        for (Piece pieces: rank) {
-            piecesOnTheBoard.append(pieces.getRepresentation());
-            if (Objects.equals(color, Piece.Color.WHITE)){
-                piecesWhite++;
-            } else {
-                piecesBlack++;
-            }
-        }
-        piecesOnTheBoard.append(StringUtil.NEWLINE);
-        index++;
     }
 
     private void addPiecesOfRank(ArrayList<Piece> aux, Piece.Color color) {
@@ -116,6 +76,19 @@ public class Board {
         ranks.add(aux);
         addPiecesOnTheBoard(ranks.get(index), color);
     }
+
+    public void addPiece(Piece piece, char files, int rank){
+        int file = transformPosition(files);
+        int aux = rank - 1;
+        ArrayList<Piece> boardRank = ranks.get(aux);
+        boardRank.set(file, piece);
+
+        pieces.add(piece);
+
+        alterPrint(piece, file, rank);
+        evoluationPieces(piece);
+    }
+
     void evoluationPieces(Piece piece){
         switch (piece.getType()) {
             case Piece.Type.QUEEN -> {
@@ -152,24 +125,52 @@ public class Board {
         }
     }
 
-//    void calculationPawnPoints() {
-//        ArrayList<int> whitePawnsPositions = new ArrayList<int>();
-//        ArrayList<int> blackPawnsPositions = new ArrayList<int>();
-//
-//        for (int rank = 0; rank < ranks.size(); rank++) {
-//            ArrayList<Piece> boardRank = ranks.get(rank);
-//            for (int file = 0; file < boardRank.size(); file++) {
-//                Piece piece = boardRank.get(file);
-//                if (piece.getType() == Piece.Type.PAWN) {
-//                    if (piece.isWhite()) {
-//                        whitePawnsPositions.add(file);
-//                    } else {
-//                        blackPawnsPositions.add(file);
-//                    }
-//                }
-//            }
-//        }
-//    }
+    void calculationPawnPoints() {
+        var whitePawnsPositions = new ArrayList<>();
+        var blackPawnsPositions = new ArrayList<>();
+
+        for (int rank = 0; rank < 8; rank++) {
+            ArrayList<Piece> boardRank = ranks.get(rank);
+            for (int file = 0; file < boardRank.size(); file++) {
+//                System.out.println(boardRank.get(file).getRepresentation());
+
+                Piece piece = boardRank.get(file);
+                if (piece.getType() == Piece.Type.PAWN) {
+                    if (piece.isWhite()) {
+                        whitePawnsPositions.add(piece.getRepresentation());
+                        whitePawnsPositions.add(file);
+                    } else {
+                        blackPawnsPositions.add(piece.getRepresentation());
+                        blackPawnsPositions.add(file);
+                    }
+                }
+            }
+        }
+        // em whitePawnsPositions eu tenho a fileira em que tem uma peça pawn branca
+        System.out.println(whitePawnsPositions);
+        // em blackPawnsPositions eu tenho a fileira em que tem uma peça pawn preta
+        System.out.println(blackPawnsPositions);
+    }
+
+    public void alterPrint(Piece piece, int files, int rank){
+        int lines = 8-rank;
+        int positionPiece = (lines*8) + files + lines;
+
+        piecesOnTheBoard.setCharAt(positionPiece, piece.getRepresentation());
+    }
+
+    void addPiecesOnTheBoard(ArrayList<Piece> rank, Piece.Color color){
+        for (Piece pieces: rank) {
+            piecesOnTheBoard.append(pieces.getRepresentation());
+            if (Objects.equals(color, Piece.Color.WHITE)){
+                piecesWhite++;
+            } else {
+                piecesBlack++;
+            }
+        }
+        piecesOnTheBoard.append(StringUtil.NEWLINE);
+        index++;
+    }
 
     float getEvoluationBlackPieces(){
         return strengthBlack;
@@ -190,7 +191,7 @@ public class Board {
         ArrayList<Piece> boardRank = ranks.get(rank - 1);
         StringBuilder rankPiece = new StringBuilder();
         for (Piece piece : boardRank) {
-            rankPiece.append(piece != null ? piece.getRepresentation() : ".");
+            rankPiece.append(piece.getRepresentation());
         }
         return rankPiece.toString();
     }
@@ -203,8 +204,14 @@ public class Board {
     }
 
     char getPiece(char files, int rank){
+        int file = transformPosition(files);
+        ArrayList<Piece> boardRank = ranks.get(rank-1);
+        return boardRank.get(file).getRepresentation();
+    }
+
+    int transformPosition(char file){
         int num = 0;
-        switch (files) {
+        switch (file) {
             case 'a' -> num = 0;
             case 'b' -> num = 1;
             case 'c' -> num = 2;
@@ -214,7 +221,19 @@ public class Board {
             case 'g' -> num = 6;
             case 'h' -> num = 7;
         }
-        ArrayList<Piece> boardRank = ranks.get(rank-1);
-        return boardRank.get(num).getRepresentation();
+        return num;
+    }
+
+    public String printRanks(){
+        StringBuilder stringRanks = new StringBuilder();
+        
+        for (int x = 0; x < 8; x++){
+            ArrayList<Piece> list = ranks.get(x);
+            for (Piece piece: list){
+                stringRanks.append(piece.getRepresentation());
+            }
+            stringRanks.append("\n");
+        }
+        return stringRanks.toString();
     }
 }

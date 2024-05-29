@@ -6,11 +6,8 @@ import junit.framework.TestCase;
 public class BoardTest extends  TestCase{
     public Board board;
 
-
-    public void setUp() {
-        board = new Board();
-    }
     public void testCreate(){
+        board = new Board();
         board.initialize();
         assertEquals(32, board.pieceCount());
         assertEquals(16, board.getPiecesWhite());
@@ -23,7 +20,7 @@ public class BoardTest extends  TestCase{
         assertEquals("PPPPPPPP", secondRank);
 
         String emptyRank = board.getRank(4);
-        assertEquals("", emptyRank);
+        assertEquals("........", emptyRank);
 
         String seventhRank = board.getRank(2);
         assertEquals("pppppppp", seventhRank);
@@ -113,12 +110,12 @@ public class BoardTest extends  TestCase{
         board.addPiece(Piece.createBlackPiece(Piece.Type.PAWN), 'c', 7);
         board.addPiece(Piece.createBlackPiece(Piece.Type.PAWN), 'a', 7);
 
-        board.addPiece(Piece.createBlackPiece(Piece.Type.PAWN), 'a', 6);
+        board.addPiece(Piece.createBlackPiece(Piece.Type.PAWN), 'b', 6);
 
         board.addPiece(Piece.createWhitePiece(Piece.Type.QUEEN), 'g', 4);
         board.addPiece(Piece.createWhitePiece(Piece.Type.KNIGHT), 'f', 4);
 
-        board.addPiece(Piece.createWhitePiece(Piece.Type.PAWN), 'H', 3);
+        board.addPiece(Piece.createWhitePiece(Piece.Type.PAWN), 'h', 3);
         board.addPiece(Piece.createWhitePiece(Piece.Type.PAWN), 'f', 3);
 
         board.addPiece(Piece.createWhitePiece(Piece.Type.PAWN), 'g', 2);
@@ -128,6 +125,21 @@ public class BoardTest extends  TestCase{
 
         assertEquals(16.5, board.getEvoluationWhitePieces(), 0.001);
         assertEquals(17, board.getEvoluationBlackPieces(), 0.001);
+
+        String blankRank = StringUtil.appendNewLine("........");
+        assertEquals(
+                        StringUtil.appendNewLine(".KR....." )+
+                        StringUtil.appendNewLine("P.PB...." )+
+                        StringUtil.appendNewLine(".P..Q..." )+
+                        blankRank +
+                        StringUtil.appendNewLine(".....nq." ) +
+                        StringUtil.appendNewLine(".....p.p" ) +
+                        StringUtil.appendNewLine(".....pp." ) +
+                        StringUtil.appendNewLine("....rk.." ),
+                        board.print()
+        );
+        System.out.println(board.printRanks());
+        board.calculationPawnPoints();
 
 //        assertEquals(19.5, board.getEvoluationWhitePieces(), 0.001);
 //        assertEquals(20, board.getEvoluationBlackPieces(), 0.001);
