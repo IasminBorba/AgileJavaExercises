@@ -4,16 +4,7 @@ import java.util.Objects;
 
 public class Piece {
     public enum Color {WHITE, BLACK}
-
-    public enum Type {
-        PAWN(1), KNIGHT(2.5F), ROOK(5), BISHOP(3), QUEEN(9), KING(0), NO_PIECE(0);
-
-    public final float strengthPiece;
-        Type(float strength){
-            strengthPiece = strength;
-        }
-    }
-
+    public enum Type {PAWN, KNIGHT, ROOK, BISHOP, QUEEN, KING, NO_PIECE}
     private Color color;
     private final Type type;
     private final char representation;
@@ -105,5 +96,8 @@ public class Piece {
 
     public char getRepresentation() {
         return representation;
+    }
+    public float getStrength(Piece piece) {
+        return piece.strength;
     }
 }

@@ -5,9 +5,11 @@ import junit.framework.TestCase;
 
 public class BoardTest extends  TestCase{
     public Board board;
+    public void setUp() {
+        board = new Board();
+    }
 
     public void testCreate(){
-        board = new Board();
         board.initialize();
         assertEquals(32, board.pieceCount());
         assertEquals(16, board.getPiecesWhite());
@@ -37,17 +39,16 @@ public class BoardTest extends  TestCase{
 
         String blankRank = StringUtil.appendNewLine("........");
         assertEquals(
-        StringUtil.appendNewLine("rnbqkbnr") +
-                StringUtil.appendNewLine("pppppppp") +
-                blankRank + blankRank + blankRank + blankRank +
-                StringUtil.appendNewLine("PPPPPPPP") +
-                StringUtil.appendNewLine("RNBQKBNR"),
+                StringUtil.appendNewLine("RNBQKBNR") +
+                        StringUtil.appendNewLine("PPPPPPPP") +
+                        blankRank + blankRank + blankRank + blankRank +
+                        StringUtil.appendNewLine("pppppppp") +
+                        StringUtil.appendNewLine("rnbqkbnr"),
                 board.print()
         );
     }
 
     public void testCreateBoard(){
-        board = new Board();
         board.createBoard();
 
         assertEquals(0, board.pieceCount());
@@ -85,24 +86,25 @@ public class BoardTest extends  TestCase{
                 board.print()
         );
     }
-    public void testEvaluationFunction(){
+
+    public void testCalculateStrength() {
         board = new Board();
         board.createBoard();
 
         Piece blackQueen = Piece.createBlackPiece(Piece.Type.QUEEN);
         board.addPiece(blackQueen, 'e', 6);
-        assertEquals(0.0, board.getEvoluationWhitePieces(), 0.001);
-        assertEquals(9.0, board.getEvoluationBlackPieces(), 0.001);
+        assertEquals(0.0, board.getStrengthWhitePiece(), 0.001);
+        assertEquals(9.0, board.getStrengthBlackPiece(), 0.001);
 
         Piece whiteRook = Piece.createWhitePiece(Piece.Type.ROOK);
         board.addPiece(whiteRook, 'e', 1);
-        assertEquals(5.0, board.getEvoluationWhitePieces(), 0.001);
-        assertEquals(9.0, board.getEvoluationBlackPieces(), 0.001);
+        assertEquals(5.0, board.getStrengthWhitePiece(), 0.001);
+        assertEquals(9.0, board.getStrengthBlackPiece(), 0.001);
 
         Piece blackBishop = Piece.createBlackPiece(Piece.Type.BISHOP);
         board.addPiece(blackBishop, 'd', 7);
-        assertEquals(5.0, board.getEvoluationWhitePieces(), 0.001);
-        assertEquals(12.0, board.getEvoluationBlackPieces(), 0.001);
+        assertEquals(5.0, board.getStrengthWhitePiece(), 0.001);
+        assertEquals(12.0, board.getStrengthBlackPiece(), 0.001);
 
         board.addPiece(Piece.createBlackPiece(Piece.Type.ROOK), 'c', 8);
         board.addPiece(Piece.createBlackPiece(Piece.Type.KING), 'b', 8);
@@ -123,47 +125,21 @@ public class BoardTest extends  TestCase{
 
         board.addPiece(Piece.createWhitePiece(Piece.Type.KING), 'f', 1);
 
-        board.calculationPawnPoints();
 
-        assertEquals(19.5, board.getEvoluationWhitePieces(), 0.001);
-        assertEquals(20, board.getEvoluationBlackPieces(), 0.001);
+        assertEquals(19.5, board.getStrengthWhitePiece(), 0.001);
+        assertEquals(20, board.getStrengthBlackPiece(), 0.001);
 
         String blankRank = StringUtil.appendNewLine("........");
         assertEquals(
-                        StringUtil.appendNewLine(".KR....." )+
-                        StringUtil.appendNewLine("P.PB...." )+
-                        StringUtil.appendNewLine(".P..Q..." )+
+                StringUtil.appendNewLine(".KR.....") +
+                        StringUtil.appendNewLine("P.PB....") +
+                        StringUtil.appendNewLine(".P..Q...") +
                         blankRank +
-                        StringUtil.appendNewLine(".....nq." ) +
-                        StringUtil.appendNewLine(".....p.p" ) +
-                        StringUtil.appendNewLine(".....pp." ) +
-                        StringUtil.appendNewLine("....rk.." ),
-                        board.print()
+                        StringUtil.appendNewLine(".....nq.") +
+                        StringUtil.appendNewLine(".....p.p") +
+                        StringUtil.appendNewLine(".....pp.") +
+                        StringUtil.appendNewLine("....rk.."),
+                board.print()
         );
-        board.printRanks();
-
-        board.strengthBlack = 0;
-        board.strengthWhite = 0;
-        board.calculateFinal();
-    }
-
-    public void testMatriz() {
-        board = new Board();
-        board.createBoard();
-
-        board.addPiece(Piece.createWhitePiece(Piece.Type.PAWN), 'h', 3);
-        board.addPiece(Piece.createWhitePiece(Piece.Type.PAWN), 'f', 3);
-
-        board.addPiece(Piece.createWhitePiece(Piece.Type.PAWN), 'g', 2);
-        board.addPiece(Piece.createWhitePiece(Piece.Type.PAWN), 'h', 2);
-
-        board.addPiece(Piece.createWhitePiece(Piece.Type.PAWN), 'f', 8);
-
-        board.addPiece(Piece.createWhitePiece(Piece.Type.PAWN), 'h', 6);
-
-        System.out.println(board.getEvoluationWhitePieces());
-        System.out.println(board.getEvoluationBlackPieces());
-
-        assertEquals('.',board.getTamanhoMatriz(4,4));
     }
 }
