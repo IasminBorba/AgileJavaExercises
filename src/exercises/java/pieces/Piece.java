@@ -6,9 +6,9 @@ public class Piece {
     public enum Color {WHITE, BLACK}
 
     public enum Type {
-        PAWN(0), KNIGHT(2.5F), ROOK(5), BISHOP(3), QUEEN(9), KING(0), NO_PIECE(0);
+        PAWN(1), KNIGHT(2.5F), ROOK(5), BISHOP(3), QUEEN(9), KING(0), NO_PIECE(0);
 
-    public float strengthPiece;
+    public final float strengthPiece;
         Type(float strength){
             strengthPiece = strength;
         }
@@ -17,14 +17,9 @@ public class Piece {
     private Color color;
     private final Type type;
     private final char representation;
-
-    public static char PAWN_REPRESENTATION;
-    public static char ROOK_REPRESENTATION;
-    public static char KNIGHT_REPRESENTATION;
-    public static char BISHOP_REPRESENTATION;
-    public static char QUEEN_REPRESENTATION;
-    public static char KING_REPRESENTATION;
-    public static char NO_PIECE_REPRESENTATION;
+    public float strength = 0;
+    public static char PAWN_REPRESENTATION, ROOK_REPRESENTATION, KNIGHT_REPRESENTATION, BISHOP_REPRESENTATION, QUEEN_REPRESENTATION, KING_REPRESENTATION, NO_PIECE_REPRESENTATION;
+    public static float PAWN_STRENGTH, ROOK_STRENGTH, KNIGHT_STRENGTH, BISHOP_STRENGTH, QUEEN_STRENGTH, KING__STRENGTH, NO_PIECE_STRENGTH = 0;
 
     private Piece(Color color, Type type) {
         this.color = color;
@@ -52,6 +47,15 @@ public class Piece {
             };
         }
 
+        this.strength = switch (type){
+            case PAWN -> PAWN_STRENGTH = 1F;
+            case ROOK -> ROOK_STRENGTH = 5F;
+            case KNIGHT -> KNIGHT_STRENGTH = 2.5F;
+            case BISHOP -> BISHOP_STRENGTH = 3F;
+            case QUEEN -> QUEEN_STRENGTH = 9F;
+            case KING -> KING__STRENGTH = 0F;
+            case NO_PIECE -> NO_PIECE_STRENGTH = 0F;
+        };
     }
 
     private Piece() {

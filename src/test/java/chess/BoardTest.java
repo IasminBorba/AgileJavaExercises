@@ -147,4 +147,23 @@ public class BoardTest extends  TestCase{
         board.calculateFinal();
     }
 
+    public void testMatriz() {
+        board = new Board();
+        board.createBoard();
+
+        board.addPiece(Piece.createWhitePiece(Piece.Type.PAWN), 'h', 3);
+        board.addPiece(Piece.createWhitePiece(Piece.Type.PAWN), 'f', 3);
+
+        board.addPiece(Piece.createWhitePiece(Piece.Type.PAWN), 'g', 2);
+        board.addPiece(Piece.createWhitePiece(Piece.Type.PAWN), 'h', 2);
+
+        board.addPiece(Piece.createWhitePiece(Piece.Type.PAWN), 'f', 8);
+
+        board.addPiece(Piece.createWhitePiece(Piece.Type.PAWN), 'h', 6);
+
+        System.out.println(board.getEvoluationWhitePieces());
+        System.out.println(board.getEvoluationBlackPieces());
+
+        assertEquals('.',board.getTamanhoMatriz(4,4));
+    }
 }

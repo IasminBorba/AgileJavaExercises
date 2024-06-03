@@ -12,12 +12,12 @@ public class Board {
     int piecesBlack;
     private final ArrayList<Piece> pieces = new ArrayList<>();
     private final ArrayList<ArrayList<Piece>> ranks = new ArrayList<>();
-//    public HashMap<int, int> pawnsWhiteInColumns = new HashMap<int, int>();
-//    public HashMap<int, int> pawnsBlackInColumns = new HashMap<int, int>();
     public static final StringBuilder piecesOnTheBoard = new StringBuilder();
     public int index = 0;
     float strengthWhite = 0;
     float strengthBlack = 0;
+    Piece[][] board;
+
 
     public void initialize() {
         this.piecesWhite = getPiecesWhite();
@@ -31,6 +31,7 @@ public class Board {
     }
 
     public void createBoard() {
+        board = new Piece[8][8];
         addPiecesBlank(8);
     }
 
@@ -41,6 +42,7 @@ public class Board {
             for (int z = 0; z < 8; z++) {
                 aux.add(blank);
                 piecesOnTheBoard.append(blank.getRepresentation());
+                board[z][x] = blank;
             }
             piecesOnTheBoard.append(StringUtil.NEWLINE);
             index++;
@@ -87,11 +89,58 @@ public class Board {
 
         pieces.add(piece);
 
+        board[file][aux] = piece;
+
         alterPrint(piece, file, rank);
+        if (piece.getType() == Piece.Type.PAWN){
+            alterPawnForceSameColumn(file, aux);
+        }
+        calculeteForce();
 //        teste(piece, files, rank);
         evoluationPieces(piece);
     }
 
+    void calculeteForce(){
+        float auxWhiteStrength = 0;
+        float auxBlackStrength = 0;
+
+        for (int x = 0; x < 8; x++) {
+            for (int z = 0; z < 8; z++) {
+                Piece auxPIece = board[z][x];
+                if (auxPIece.getType() != Piece.Type.NO_PIECE){
+                    if (auxPIece.isWhite()) {
+                        auxWhiteStrength += auxPIece.strength;
+                    }
+                    else {
+                        auxBlackStrength += auxPIece.strength;
+                    }
+                }
+            }
+        }
+        strengthWhite = auxWhiteStrength;
+        strengthBlack = auxBlackStrength;
+    }
+
+    void alterPawnForceSameColumn(int column, int rank) {
+        boolean sameColumnPawn = false;
+        for (int i = 0; i < 8; i++) {
+            if (i != rank && board[column][i].getRepresentation() == board[column][rank].getRepresentation()) { //VERIFICA DE TEM OUTRO PEÃO NA MESMA COLUNA
+                sameColumnPawn = true;
+                if (board[column][i].strength == 1) { //SE TEM OUTRO PEÃO NA MESMA COLUNA, VERIFICA SE A FORÇA DELE É 0.5
+                    board[column][i].strength -= 0.5f;
+                }
+            }
+        }
+        if (sameColumnPawn) {
+            if (board[column][rank].strength == 1) {
+                board[column][rank].strength -= 0.5f;
+            }
+        }
+    }
+
+    char getTamanhoMatriz(int column, int rank){
+        return board[column][rank].getRepresentation();
+    }
     void evoluationPieces(Piece piece){
         switch (piece.getType()) {
             case Piece.Type.QUEEN -> {

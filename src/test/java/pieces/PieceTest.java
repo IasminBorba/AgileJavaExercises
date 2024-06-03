@@ -15,6 +15,7 @@ public class PieceTest extends TestCase {
         assertEquals('.', blank.getRepresentation());
         assertEquals(Piece.Type.NO_PIECE, blank.getType());
     }
+
     private void verifyCreation(Piece whitePiece, Piece blackPiece, Piece.Type type, char representation) {
         assertTrue(whitePiece.isWhite());
         assertEquals(type, whitePiece.getType());
