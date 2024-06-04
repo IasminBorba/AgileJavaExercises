@@ -4,17 +4,24 @@ import java.util.Objects;
 
 public class Piece {
     public enum Color {WHITE, BLACK}
-    public enum Type {PAWN, KNIGHT, ROOK, BISHOP, QUEEN, KING, NO_PIECE}
+    public enum Type {
+        PAWN(1), KNIGHT(2.5), ROOK(5), BISHOP(3), QUEEN(9), KING(0), NO_PIECE(0);
+        public final double points;
+        Type(double points){
+            this.points = points;
+        }
+    }
     private Color color;
     private final Type type;
     private final char representation;
-    public float strength = 0;
+
+    public double points;
     public static char PAWN_REPRESENTATION, ROOK_REPRESENTATION, KNIGHT_REPRESENTATION, BISHOP_REPRESENTATION, QUEEN_REPRESENTATION, KING_REPRESENTATION, NO_PIECE_REPRESENTATION;
-    public static float PAWN_STRENGTH, ROOK_STRENGTH, KNIGHT_STRENGTH, BISHOP_STRENGTH, QUEEN_STRENGTH, KING__STRENGTH, NO_PIECE_STRENGTH = 0;
 
     private Piece(Color color, Type type) {
         this.color = color;
         this.type = type;
+        this.points = type.points;
 
         if (color == Color.WHITE) {
             this.representation = switch (type) {
@@ -37,16 +44,6 @@ public class Piece {
                 case NO_PIECE -> NO_PIECE_REPRESENTATION = '.';
             };
         }
-
-        this.strength = switch (type){
-            case PAWN -> PAWN_STRENGTH = 1F;
-            case ROOK -> ROOK_STRENGTH = 5F;
-            case KNIGHT -> KNIGHT_STRENGTH = 2.5F;
-            case BISHOP -> BISHOP_STRENGTH = 3F;
-            case QUEEN -> QUEEN_STRENGTH = 9F;
-            case KING -> KING__STRENGTH = 0F;
-            case NO_PIECE -> NO_PIECE_STRENGTH = 0F;
-        };
     }
 
     private Piece() {
@@ -90,14 +87,19 @@ public class Piece {
         return Objects.equals(color.name().toLowerCase(), "white");
     }
 
+    public void setPoints(double points) {
+        this.points = points;
+    }
+
+    public double getPoints() {
+        return points;
+    }
+
     public Type getType() {
         return type;
     }
 
     public char getRepresentation() {
         return representation;
-    }
-    public float getStrength(Piece piece) {
-        return piece.strength;
     }
 }

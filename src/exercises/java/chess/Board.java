@@ -12,8 +12,8 @@ public class Board {
     private final ArrayList<Piece> pieces = new ArrayList<>();
     public final StringBuilder piecesOnTheBoard = new StringBuilder();
     public int index = 0;
-    float strengthWhite = 0;
-    float strengthBlack = 0;
+    double strengthWhite = 0;
+    double strengthBlack = 0;
     Piece[][] board;
 
     public void initialize() {
@@ -93,23 +93,22 @@ public class Board {
         if (piece.getType() == Piece.Type.PAWN){
             alterPawnForceSameColumn(file, aux);
         }
-
         calculateStrength();
     }
 
     void calculateStrength(){
-        float auxWhiteStrength = 0;
-        float auxBlackStrength = 0;
+        double auxWhiteStrength = 0;
+        double auxBlackStrength = 0;
 
         for (int x = 0; x < 8; x++) {
             for (int z = 0; z < 8; z++) {
                 Piece auxPIece = board[z][x];
                 if (auxPIece.getType() != Piece.Type.NO_PIECE){
                     if (auxPIece.isWhite()) {
-                        auxWhiteStrength += auxPIece.strength;
+                        auxWhiteStrength += auxPIece.getPoints();
                     }
                     else {
-                        auxBlackStrength += auxPIece.strength;
+                        auxBlackStrength += auxPIece.getPoints();
                     }
                 }
             }
@@ -121,16 +120,18 @@ public class Board {
     void alterPawnForceSameColumn(int column, int rank) {
         boolean sameColumnPawn = false;
         for (int i = 0; i < 8; i++) {
-            if (i != rank && board[column][i].getRepresentation() == board[column][rank].getRepresentation()) { //VERIFICA DE TEM OUTRO PEÃO NA MESMA COLUNA
+            if (i != rank && board[column][i].getRepresentation() == board[column][rank].getRepresentation()) {
                 sameColumnPawn = true;
-                if (board[column][i].strength == 1) { //SE TEM OUTRO PEÃO NA MESMA COLUNA, VERIFICA SE A FORÇA DELE É 0.5
-                    board[column][i].strength -= 0.5f;
+                Piece auxPiece = board[column][i];
+                if (auxPiece.getPoints() == 1) {
+                    auxPiece.setPoints(0.5);
                 }
             }
         }
         if (sameColumnPawn) {
-            if (board[column][rank].strength == 1) {
-                board[column][rank].strength -= 0.5f;
+            Piece auxPiece = board[column][rank];
+            if (auxPiece.getPoints() == 1) {
+                auxPiece.setPoints(0.5);
             }
         }
     }
@@ -165,10 +166,10 @@ public class Board {
         return pieces.size();
     }
 
-    float getStrengthBlackPiece(){
+    double getStrengthBlackPiece(){
         return strengthBlack;
     }
-    float getStrengthWhitePiece(){
+    double getStrengthWhitePiece(){
         return strengthWhite;
     }
 
