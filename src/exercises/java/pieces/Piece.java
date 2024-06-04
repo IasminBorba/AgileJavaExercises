@@ -5,18 +5,29 @@ import java.util.Objects;
 public class Piece {
     public enum Color {WHITE, BLACK}
     public enum Type {
-        PAWN(1), KNIGHT(2.5), ROOK(5), BISHOP(3), QUEEN(9), KING(0), NO_PIECE(0);
+        PAWN(1,'P'),
+        KNIGHT(2.5,'N'),
+        ROOK(5,'R'),
+        BISHOP(3,'B'),
+        QUEEN(9,'Q'),
+        KING(0,'K'),
+        NO_PIECE(0,'.');
         public final double points;
-        Type(double points){
+        private final char representation;
+
+        Type(double points, char representation){
             this.points = points;
+            this.representation = representation;
+        }
+
+        char getRepresentation(){
+            return representation;
         }
     }
     private Color color;
     private final Type type;
-    private final char representation;
-
     public double points;
-    public static char PAWN_REPRESENTATION, ROOK_REPRESENTATION, KNIGHT_REPRESENTATION, BISHOP_REPRESENTATION, QUEEN_REPRESENTATION, KING_REPRESENTATION, NO_PIECE_REPRESENTATION;
+    public char representation;
 
     private Piece(Color color, Type type) {
         this.color = color;
@@ -24,31 +35,13 @@ public class Piece {
         this.points = type.points;
 
         if (color == Color.WHITE) {
-            this.representation = switch (type) {
-                case PAWN -> PAWN_REPRESENTATION = 'p';
-                case ROOK -> ROOK_REPRESENTATION = 'r';
-                case KNIGHT -> KNIGHT_REPRESENTATION = 'n';
-                case BISHOP -> BISHOP_REPRESENTATION = 'b';
-                case QUEEN -> QUEEN_REPRESENTATION = 'q';
-                case KING -> KING_REPRESENTATION = 'k';
-                case NO_PIECE -> NO_PIECE_REPRESENTATION = '.';
-            };
-        } else {
-            this.representation = switch (type) {
-                case PAWN -> PAWN_REPRESENTATION = 'P';
-                case ROOK -> ROOK_REPRESENTATION = 'R';
-                case KNIGHT -> KNIGHT_REPRESENTATION = 'N';
-                case BISHOP -> BISHOP_REPRESENTATION = 'B';
-                case QUEEN -> QUEEN_REPRESENTATION = 'Q';
-                case KING -> KING_REPRESENTATION = 'K';
-                case NO_PIECE -> NO_PIECE_REPRESENTATION = '.';
-            };
+            this.representation = Character.toLowerCase(type.representation);
         }
     }
 
     private Piece() {
-        this.representation = '.';
         this.type = Type.NO_PIECE;
+        this.representation = '.';
     }
 
     public static Piece createWhitePiece(Type type) {
