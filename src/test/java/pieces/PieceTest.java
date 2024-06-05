@@ -5,11 +5,11 @@ import junit.framework.TestCase;
 public class PieceTest extends TestCase {
     public void testCreate() {
     verifyCreation(Piece.createWhitePiece(Piece.Type.PAWN), Piece.createBlackPiece(Piece.Type.PAWN), Piece.Type.PAWN, Piece.Type.PAWN.getRepresentation());
-//    verifyCreation(Piece.createWhitePiece(Piece.Type.ROOK), Piece.createBlackPiece(Piece.Type.ROOK), Piece.Type.ROOK, Piece.Type.ROOK.getRepresentation());
-//    verifyCreation(Piece.createWhitePiece(Piece.Type.KNIGHT), Piece.createBlackPiece(Piece.Type.KNIGHT), Piece.Type.KNIGHT, Piece.Type.KNIGHT.getRepresentation());
-//    verifyCreation(Piece.createWhitePiece(Piece.Type.BISHOP), Piece.createBlackPiece(Piece.Type.BISHOP),Piece.Type.BISHOP, Piece.Type.BISHOP.getRepresentation());
-//    verifyCreation(Piece.createWhitePiece(Piece.Type.QUEEN), Piece.createBlackPiece(Piece.Type.QUEEN), Piece.Type.QUEEN, Piece.Type.QUEEN.getRepresentation());
-//    verifyCreation(Piece.createWhitePiece(Piece.Type.KING), Piece.createBlackPiece(Piece.Type.KING), Piece.Type.KING, Piece.Type.KING.getRepresentation());
+    verifyCreation(Piece.createWhitePiece(Piece.Type.ROOK), Piece.createBlackPiece(Piece.Type.ROOK), Piece.Type.ROOK, Piece.Type.ROOK.getRepresentation());
+    verifyCreation(Piece.createWhitePiece(Piece.Type.KNIGHT), Piece.createBlackPiece(Piece.Type.KNIGHT), Piece.Type.KNIGHT, Piece.Type.KNIGHT.getRepresentation());
+    verifyCreation(Piece.createWhitePiece(Piece.Type.BISHOP), Piece.createBlackPiece(Piece.Type.BISHOP),Piece.Type.BISHOP, Piece.Type.BISHOP.getRepresentation());
+    verifyCreation(Piece.createWhitePiece(Piece.Type.QUEEN), Piece.createBlackPiece(Piece.Type.QUEEN), Piece.Type.QUEEN, Piece.Type.QUEEN.getRepresentation());
+    verifyCreation(Piece.createWhitePiece(Piece.Type.KING), Piece.createBlackPiece(Piece.Type.KING), Piece.Type.KING, Piece.Type.KING.getRepresentation());
 
     Piece blank = Piece.noPiece();
     assertEquals('.', blank.getRepresentation());
@@ -20,7 +20,8 @@ public class PieceTest extends TestCase {
     private void verifyCreation(Piece whitePiece, Piece blackPiece, Piece.Type type, char representation) {
         assertTrue(whitePiece.isWhite());
         assertEquals(type, whitePiece.getType());
-//        assertEquals(Piece.type.getRepresentation(), whitePiece.getRepresentation());
+        System.out.println(whitePiece.getRepresentation());
+        assertEquals(Character.toLowerCase(type.getRepresentation()), whitePiece.getRepresentation());
         assertTrue(blackPiece.isBlack());
         assertEquals(type, blackPiece.getType());
         assertEquals(representation, blackPiece.getRepresentation());

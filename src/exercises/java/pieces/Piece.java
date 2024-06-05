@@ -36,6 +36,8 @@ public class Piece {
 
         if (color == Color.WHITE) {
             this.representation = Character.toLowerCase(type.representation);
+        } else {
+            this.representation = type.representation;
         }
     }
 
