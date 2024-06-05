@@ -9,7 +9,7 @@ import java.util.Objects;
 public class Board {
     int piecesWhite;
     int piecesBlack;
-    private final ArrayList<Piece> pieces = new ArrayList<>();
+    private ArrayList<Piece> pieces = new ArrayList<>();
     public final StringBuilder piecesOnTheBoard = new StringBuilder();
     public int index = 0;
     double strengthWhite = 0;
@@ -59,14 +59,18 @@ public class Board {
     public void addPiece(Piece piece, int file, int rank) {
         int aux = rank - 1;
 
-        pieces.add(piece);
+        if (!pieces.isEmpty() && pieces.getFirst() == null){
+            pieces.set(0, piece);
+        } else {
+            pieces.add(piece);
+
+        }
         board[file][aux] = piece;
         alterPrint(piece, file, rank);
 
         if (piece.getType() == Piece.Type.PAWN){
             alterPawnForceSameColumn(file, aux);
         }
-
         calculateStrength();
     }
 
@@ -82,9 +86,12 @@ public class Board {
         }
     }
 
-    public void addPiece(Piece piece, char files, int rank) {
-        int file = transformPosition(files);
+    public boolean addPiece(Piece piece, char files, int rank) {
         int aux = rank - 1;
+        int file = transformPosition(files);
+        if (file == 9){
+            return false;
+        }
 
         pieces.add(piece);
         board[file][aux] = piece;
@@ -94,6 +101,32 @@ public class Board {
             alterPawnForceSameColumn(file, aux);
         }
         calculateStrength();
+
+        return true;
+    }
+
+    public void removePiece(Piece piece) {
+        ArrayList<Piece> auxArray = new ArrayList<>();
+        for (int x = 0; x < pieces.size(); x++) {
+            if (pieces.size() == 1) {
+                auxArray.add(null);
+            } else {
+                if (piece != pieces.get(x)) {
+                    auxArray.add(pieces.get(x));
+                }
+            }
+        }
+        pieces = auxArray;
+
+        for (int x = 0; x < 8; x++) {
+            for (int z = 0; z < 8; z++) {
+                if (piece == board[z][x]) {
+                    Piece blank = Piece.noPiece();
+                    board[z][x] = blank;
+                    alterPrint(blank,z,x+1);
+                }
+            }
+        }
     }
 
     void calculateStrength(){
@@ -115,6 +148,56 @@ public class Board {
         }
         strengthWhite = auxWhiteStrength;
         strengthBlack = auxBlackStrength;
+    }
+
+    public boolean newKingPosition(Piece piece, char files, int rank){
+        boolean permission = false;
+        int aux = rank - 1;
+        int file = transformPosition(files);
+        if (file == 9){
+            return false;
+        }
+
+        for (int x = 0; x < 8; x++) {
+            for (int z = 0; z < 8; z++) {
+                if (piece == board[z][x]) {
+                    if ((file == 1 + z) && (aux == x)){
+                        removePiece(piece);
+                        addPiece(piece, file,rank);
+                        permission = true;
+                    } else if((file == 1 + z) && aux == x-1) {
+                        removePiece(piece);
+                        addPiece(piece, file,rank);
+                        permission = true;
+                    } else if((file == 1 + z) && aux == x+1) {
+                        removePiece(piece);
+                        addPiece(piece, file,rank);
+                        permission = true;
+                    } else if((file == z - 1) && aux == x) {
+                        removePiece(piece);
+                        addPiece(piece, file,rank);
+                        permission = true;
+                    } else if((file == z - 1) && aux == x-1) {
+                        removePiece(piece);
+                        addPiece(piece, file,rank);
+                        permission = true;
+                    } else if((file == z - 1) && aux == x+1) {
+                        removePiece(piece);
+                        addPiece(piece, file,rank);
+                        permission = true;
+                    } else if((file == z) && (aux == x+1)) {
+                        removePiece(piece);
+                        addPiece(piece, file,rank);
+                        permission = true;
+                    } else if((file == z) && (aux == x-1)) {
+                        removePiece(piece);
+                        addPiece(piece, file,rank);
+                        permission = true;
+                    }
+                }
+            }
+        }
+        return permission;
     }
 
     void alterPawnForceSameColumn(int column, int rank) {
@@ -139,12 +222,11 @@ public class Board {
     public void alterPrint(Piece piece, int files, int rank){
         int lines = 8-rank;
         int positionPiece = (lines*8) + files + lines;
-
         piecesOnTheBoard.setCharAt(positionPiece, piece.getRepresentation());
     }
 
     int transformPosition(char file){
-        int num = 0;
+        int num;
         switch (file) {
             case 'a' -> num = 0;
             case 'b' -> num = 1;
@@ -154,6 +236,7 @@ public class Board {
             case 'f' -> num = 5;
             case 'g' -> num = 6;
             case 'h' -> num = 7;
+            default -> num = 9;
         }
         return num;
     }
@@ -182,31 +265,33 @@ public class Board {
         return rankPiece.toString();
     }
     int getPiecesWhite(){
+        int aux = 0;
         for (int x = 0; x < 8; x++) {
             for (int z = 0; z < 8; z++) {
                 Piece auxPIece = board[z][x];
                 if (auxPIece.getType() != Piece.Type.NO_PIECE){
                     if (auxPIece.isWhite()) {
-                        piecesWhite ++;
+                        aux++;
                     }
                 }
             }
         }
-        return piecesWhite;
+        return piecesWhite = aux;
     }
 
     int getPiecesBlack(){
+        int aux = 0;
         for (int x = 0; x < 8; x++) {
             for (int z = 0; z < 8; z++) {
                 Piece auxPIece = board[z][x];
                 if (auxPIece.getType() != Piece.Type.NO_PIECE){
                     if (auxPIece.isBlack()) {
-                        piecesBlack ++;
+                        aux++;
                     }
                 }
             }
         }
-        return piecesBlack;
+        return piecesBlack = aux;
     }
 
     char getPiece(char files, int rank){
