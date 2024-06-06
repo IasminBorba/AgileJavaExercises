@@ -63,12 +63,6 @@ public class Board {
         }
         board[file][aux] = piece;
         alterPrint(piece, file, rank);
-
-//        if (piece.getType() == Piece.Type.PAWN){
-//            game.alterPawnForceSameColumn(file, aux);
-//        }
-//        game.calculateStrength();
-
     }
 
     private void addPiecesBlank() {
@@ -92,11 +86,6 @@ public class Board {
         pieces.add(piece);
         board[file][aux] = piece;
         alterPrint(piece, file, rank);
-
-//        if (piece.getType() == Piece.Type.PAWN){
-//            game.alterPawnForceSameColumn(file, aux);
-//        }
-//        game.calculateStrength();
 
         return true;
     }
@@ -200,5 +189,9 @@ public class Board {
 
     public Piece getPiece(int file, int rank) {
         return board[file][rank - 1];
+    }
+
+    public Piece[][] getBoard() {
+        return board;
     }
 }

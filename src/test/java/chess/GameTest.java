@@ -17,7 +17,7 @@ public class GameTest extends TestCase {
 
     public void testCalculateStrength() {
         board.createBoard();
-//        assertFalse(board.addPiece(Piece.createBlackPiece(Piece.Type.KING), 'i', 8));
+        assertFalse(board.addPiece(Piece.createBlackPiece(Piece.Type.KING), 'i', 8));
 
 
         board.addPiece(Piece.createBlackPiece(Piece.Type.KING), 'b', 8);
@@ -68,28 +68,28 @@ public class GameTest extends TestCase {
         assertTrue(game.newKingPosition(kingWhite, 'd', 3));
 
         assertEquals(1, board.pieceCount());
-//        assertEquals(1, board.getPiecesWhite());
-//        assertEquals(0, board.getPiecesBlack());
+        assertEquals(1, board.getPiecesWhite());
+        assertEquals(0, board.getPiecesBlack());
 
 
         Piece kingBlack = Piece.createBlackPiece(Piece.Type.KING);
         board.addPiece(kingBlack,'h', 8);
         assertFalse(game.newKingPosition(kingBlack, 'i', 8));
         assertEquals(2, board.pieceCount());
-//        assertEquals(1, board.getPiecesWhite());
-//        assertEquals(1, board.getPiecesBlack());
+        assertEquals(1, board.getPiecesWhite());
+        assertEquals(1, board.getPiecesBlack());
 
 
         assertTrue(game.newKingPosition(kingBlack, 'h', 7));
         assertEquals(2, board.pieceCount());
-//        assertEquals(1, board.getPiecesWhite());
-//        assertEquals(1, board.getPiecesBlack());
+        assertEquals(1, board.getPiecesWhite());
+        assertEquals(1, board.getPiecesBlack());
 
 
         assertTrue(game.newKingPosition(kingBlack, 'g', 8));
         assertEquals(2, board.pieceCount());
-//        assertEquals(1, board.getPiecesWhite());
-//        assertEquals(1, board.getPiecesBlack());
+        assertEquals(1, board.getPiecesWhite());
+        assertEquals(1, board.getPiecesBlack());
     }
 
 }

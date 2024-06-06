@@ -2,6 +2,8 @@ package chess;
 
 import pieces.Piece;
 
+import static chess.Board.transformPosition;
+
 
 public class Game {
     private final Board board;
@@ -12,7 +14,7 @@ public class Game {
         this.board = board;
     }
 
-    public void calculateStrength(double strengthWhite, double strengthBlack) {
+    public void calculateStrength() {
         double auxWhiteStrength = 0;
         double auxBlackStrength = 0;
 
@@ -33,10 +35,40 @@ public class Game {
         strengthBlack = auxBlackStrength;
     }
 
+    public void alterPawnForceSameColumn() {
+        Piece[][] boardArray = board.getBoard();
+
+        for (int column = 0; column < 8; column++) {
+            boolean sameColumnPawn = false;
+            for (int row = 0; row < 8; row++) {
+                Piece piece = boardArray[column][row];
+                if (piece.getType() == Piece.Type.PAWN) {
+                    for (int checkRow = 0; checkRow < 8; checkRow++) {
+                        if (checkRow != row && boardArray[column][checkRow].getType() == Piece.Type.PAWN && boardArray[column][checkRow].getRepresentation() == piece.getRepresentation()) {
+                            sameColumnPawn = true;
+                            Piece auxPiece = boardArray[column][checkRow];
+                            if (auxPiece.getPoints() == 1) {
+                                auxPiece.setPoints(0.5);
+                            }
+                        }
+                    }
+                }
+            }
+            if (sameColumnPawn) {
+                for (int row = 0; row < 8; row++) {
+                    Piece piece = boardArray[column][row];
+                    if (piece.getPoints() == 1) {
+                        piece.setPoints(0.5);
+                    }
+                }
+            }
+        }
+    }
+
     public boolean newKingPosition(Piece piece, char files, int rank) {
         boolean permission = false;
         int aux = rank - 1;
-        int file = board.transformPosition(files);
+        int file = transformPosition(files);
         if (file == 9) {
             return false;
         }
@@ -83,33 +115,14 @@ public class Game {
         return permission;
     }
 
-    public void alterPawnForceSameColumn(int column, int rank) {
-        boolean sameColumnPawn = false;
-        for (int i = 0; i < 8; i++) {
-            if (i != rank && board.getPiece(column, i + 1).getRepresentation() == board.getPiece(column, rank).getRepresentation()) {
-                sameColumnPawn = true;
-                Piece auxPiece = board.getPiece(column, i + 1);
-                if (auxPiece.getPoints() == 1) {
-                    auxPiece.setPoints(0.5);
-                }
-            }
-        }
-        if (sameColumnPawn) {
-            Piece auxPiece = board.getPiece(column, rank);
-            if (auxPiece.getPoints() == 1) {
-                auxPiece.setPoints(0.5);
-            }
-        }
-    }
-
     double getStrengthBlackPiece(){
-//        alterPawnForceSameColumn();
-//        calculateStrength();
+        alterPawnForceSameColumn();
+        calculateStrength();
         return strengthBlack;
     }
     double getStrengthWhitePiece(){
-//        alterPawnForceSameColumn();
-//        calculateStrength();
+        alterPawnForceSameColumn();
+        calculateStrength();
         return strengthWhite;
     }
 }
