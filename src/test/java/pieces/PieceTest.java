@@ -20,7 +20,6 @@ public class PieceTest extends TestCase {
     private void verifyCreation(Piece whitePiece, Piece blackPiece, Piece.Type type, char representation) {
         assertTrue(whitePiece.isWhite());
         assertEquals(type, whitePiece.getType());
-        System.out.println(whitePiece.getRepresentation());
         assertEquals(Character.toLowerCase(type.getRepresentation()), whitePiece.getRepresentation());
         assertTrue(blackPiece.isBlack());
         assertEquals(type, blackPiece.getType());

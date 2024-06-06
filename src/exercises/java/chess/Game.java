@@ -65,56 +65,93 @@ public class Game {
         }
     }
 
-    public boolean newKingPosition(Piece piece, char files, int rank) {
+    public boolean movePiece(Piece piece, char files, int rank) {
         boolean permission = false;
-        int aux = rank - 1;
+        if (rank > 8){
+            return false;
+        }
         int file = transformPosition(files);
         if (file == 9) {
             return false;
         }
 
+        permission = switch (piece.getType()){
+            case KING ->  newKingPosition(piece, file, rank);
+            case PAWN -> false;
+            case KNIGHT -> false;
+            case ROOK -> false;
+            case BISHOP -> false;
+            case QUEEN -> newQueenPosition(piece, file, rank);
+            case NO_PIECE -> false;
+        };
+
+
+        return permission;
+    }
+
+    public boolean newKingPosition(Piece piece, int column, int rank) {
+        int aux = rank - 1;
         for (int x = 0; x < 8; x++) {
             for (int z = 0; z < 8; z++) {
                 if (piece == board.getPiece(z, x + 1)) {
-                    if ((file == 1 + z) && (aux == x)) {
+                    if ((column == 1 + z) && (aux == x)) {
                         board.removePiece(piece);
-                        board.addPiece(piece, file, rank);
-                        permission = true;
-                    } else if ((file == 1 + z) && aux == x - 1) {
+                        board.addPiece(piece, column, rank);
+                        return true;
+                    } else if ((column == 1 + z) && aux == x - 1) {
                         board.removePiece(piece);
-                        board.addPiece(piece, file, rank);
-                        permission = true;
-                    } else if ((file == 1 + z) && aux == x + 1) {
+                        board.addPiece(piece, column, rank);
+                        return true;
+                    } else if ((column == 1 + z) && aux == x + 1) {
                         board.removePiece(piece);
-                        board.addPiece(piece, file, rank);
-                        permission = true;
-                    } else if ((file == z - 1) && aux == x) {
+                        board.addPiece(piece, column, rank);
+                        return true;
+                    } else if ((column == z - 1) && aux == x) {
                         board.removePiece(piece);
-                        board.addPiece(piece, file, rank);
-                        permission = true;
-                    } else if ((file == z - 1) && aux == x - 1) {
+                        board.addPiece(piece, column, rank);
+                        return true;
+                    } else if ((column == z - 1) && aux == x - 1) {
                         board.removePiece(piece);
-                        board.addPiece(piece, file, rank);
-                        permission = true;
-                    } else if ((file == z - 1) && aux == x + 1) {
+                        board.addPiece(piece, column, rank);
+                        return true;
+                    } else if ((column == z - 1) && aux == x + 1) {
                         board.removePiece(piece);
-                        board.addPiece(piece, file, rank);
-                        permission = true;
-                    } else if ((file == z) && (aux == x + 1)) {
+                        board.addPiece(piece, column, rank);
+                        return true;
+                    } else if ((column == z) && (aux == x + 1)) {
                         board.removePiece(piece);
-                        board.addPiece(piece, file, rank);
-                        permission = true;
-                    } else if ((file == z) && (aux == x - 1)) {
+                        board.addPiece(piece, column, rank);
+                        return true;
+                    } else if ((column == z) && (aux == x - 1)) {
                         board.removePiece(piece);
-                        board.addPiece(piece, file, rank);
-                        permission = true;
+                        board.addPiece(piece, column, rank);
+                        return true;
                     }
                 }
             }
         }
-        return permission;
+        return false;
     }
 
+    public boolean newQueenPosition(Piece piece, int column, int rank) {
+        int aux = rank - 1;
+        for (int x = 0; x < 8; x++) {
+            for (int z = 0; z < 8; z++) {
+                if (piece == board.getPiece(z, x + 1)) {
+                    if (column == z){
+                        board.removePiece(piece);
+                        board.addPiece(piece, column, rank);
+                        return true;
+                    } else if (aux == x) {
+                        board.removePiece(piece);
+                        board.addPiece(piece, column, rank);
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
     double getStrengthBlackPiece(){
         alterPawnForceSameColumn();
         calculateStrength();

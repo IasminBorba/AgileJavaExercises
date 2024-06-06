@@ -59,13 +59,13 @@ public class GameTest extends TestCase {
                 board.print()
         );
     }
-    public void testkingMove() {
+    public void testKingMove() {
         board.createBoard();
 
         Piece kingWhite = Piece.createWhitePiece(Piece.Type.KING);
         board.addPiece(kingWhite,'d', 4);
-        assertFalse(game.newKingPosition(kingWhite, 'a', 2));
-        assertTrue(game.newKingPosition(kingWhite, 'd', 3));
+        assertFalse(game.movePiece(kingWhite, 'a', 2));
+        assertTrue(game.movePiece(kingWhite, 'd', 3));
 
         assertEquals(1, board.pieceCount());
         assertEquals(1, board.getPiecesWhite());
@@ -74,22 +74,57 @@ public class GameTest extends TestCase {
 
         Piece kingBlack = Piece.createBlackPiece(Piece.Type.KING);
         board.addPiece(kingBlack,'h', 8);
-        assertFalse(game.newKingPosition(kingBlack, 'i', 8));
+        assertFalse(game.movePiece(kingBlack, 'i', 8));
         assertEquals(2, board.pieceCount());
         assertEquals(1, board.getPiecesWhite());
         assertEquals(1, board.getPiecesBlack());
 
 
-        assertTrue(game.newKingPosition(kingBlack, 'h', 7));
+        assertTrue(game.movePiece(kingBlack, 'h', 7));
         assertEquals(2, board.pieceCount());
         assertEquals(1, board.getPiecesWhite());
         assertEquals(1, board.getPiecesBlack());
 
 
-        assertTrue(game.newKingPosition(kingBlack, 'g', 8));
+        assertTrue(game.movePiece(kingBlack, 'g', 8));
         assertEquals(2, board.pieceCount());
         assertEquals(1, board.getPiecesWhite());
         assertEquals(1, board.getPiecesBlack());
     }
 
+    public void testQueenMove() {
+        board.createBoard();
+
+        Piece queenWhite = Piece.createWhitePiece(Piece.Type.QUEEN);
+        board.addPiece(queenWhite,'a', 8);
+        assertFalse(game.movePiece(queenWhite, 'a', 9));
+        assertFalse(game.movePiece(queenWhite, 'i', 8));
+        assertFalse(game.movePiece(queenWhite, 'b', 7));
+        assertTrue(game.movePiece(queenWhite, 'a', 7));
+
+        assertEquals(1, board.pieceCount());
+        assertEquals(1, board.getPiecesWhite());
+        assertEquals(0, board.getPiecesBlack());
+
+
+        Piece queenBlack = Piece.createBlackPiece(Piece.Type.QUEEN);
+        board.addPiece(queenBlack,'f', 5);
+        assertFalse(game.movePiece(queenBlack, 'f', 9));
+        assertEquals(2, board.pieceCount());
+        assertEquals(1, board.getPiecesWhite());
+        assertEquals(1, board.getPiecesBlack());
+
+
+        assertTrue(game.movePiece(queenBlack, 'c', 5));
+        assertEquals(2, board.pieceCount());
+        assertEquals(1, board.getPiecesWhite());
+        assertEquals(1, board.getPiecesBlack());
+        
+
+        assertFalse(game.movePiece(queenBlack, 'f', 2));
+        assertTrue(game.movePiece(queenBlack, 'c', 2));
+        assertEquals(2, board.pieceCount());
+        assertEquals(1, board.getPiecesWhite());
+        assertEquals(1, board.getPiecesBlack());
+    }
 }
