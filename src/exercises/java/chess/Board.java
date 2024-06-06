@@ -2,7 +2,6 @@ package chess;
 
 import pieces.Piece;
 import util.StringUtil;
-
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -11,10 +10,7 @@ public class Board {
     int piecesBlack;
     private ArrayList<Piece> pieces = new ArrayList<>();
     public final StringBuilder piecesOnTheBoard = new StringBuilder();
-    public int index = 0;
-    double strengthWhite = 0;
-    double strengthBlack = 0;
-    Piece[][] board;
+    private Piece[][] board;
 
     public void initialize() {
         createBoard();
@@ -68,10 +64,11 @@ public class Board {
         board[file][aux] = piece;
         alterPrint(piece, file, rank);
 
-        if (piece.getType() == Piece.Type.PAWN){
-            alterPawnForceSameColumn(file, aux);
-        }
-        calculateStrength();
+//        if (piece.getType() == Piece.Type.PAWN){
+//            game.alterPawnForceSameColumn(file, aux);
+//        }
+//        game.calculateStrength();
+
     }
 
     private void addPiecesBlank() {
@@ -82,7 +79,6 @@ public class Board {
                 board[z][x] = blank;
             }
             piecesOnTheBoard.append(StringUtil.NEWLINE);
-            index++;
         }
     }
 
@@ -97,22 +93,22 @@ public class Board {
         board[file][aux] = piece;
         alterPrint(piece, file, rank);
 
-        if (piece.getType() == Piece.Type.PAWN){
-            alterPawnForceSameColumn(file, aux);
-        }
-        calculateStrength();
+//        if (piece.getType() == Piece.Type.PAWN){
+//            game.alterPawnForceSameColumn(file, aux);
+//        }
+//        game.calculateStrength();
 
         return true;
     }
 
     public void removePiece(Piece piece) {
         ArrayList<Piece> auxArray = new ArrayList<>();
-        for (int x = 0; x < pieces.size(); x++) {
+        for (Piece p : pieces) {
             if (pieces.size() == 1) {
                 auxArray.add(null);
             } else {
-                if (piece != pieces.get(x)) {
-                    auxArray.add(pieces.get(x));
+                if (piece != p) {
+                    auxArray.add(p);
                 }
             }
         }
@@ -129,116 +125,24 @@ public class Board {
         }
     }
 
-    void calculateStrength(){
-        double auxWhiteStrength = 0;
-        double auxBlackStrength = 0;
-
-        for (int x = 0; x < 8; x++) {
-            for (int z = 0; z < 8; z++) {
-                Piece auxPIece = board[z][x];
-                if (auxPIece.getType() != Piece.Type.NO_PIECE){
-                    if (auxPIece.isWhite()) {
-                        auxWhiteStrength += auxPIece.getPoints();
-                    }
-                    else {
-                        auxBlackStrength += auxPIece.getPoints();
-                    }
-                }
-            }
-        }
-        strengthWhite = auxWhiteStrength;
-        strengthBlack = auxBlackStrength;
-    }
-
-    public boolean newKingPosition(Piece piece, char files, int rank){
-        boolean permission = false;
-        int aux = rank - 1;
-        int file = transformPosition(files);
-        if (file == 9){
-            return false;
-        }
-
-        for (int x = 0; x < 8; x++) {
-            for (int z = 0; z < 8; z++) {
-                if (piece == board[z][x]) {
-                    if ((file == 1 + z) && (aux == x)){
-                        removePiece(piece);
-                        addPiece(piece, file,rank);
-                        permission = true;
-                    } else if((file == 1 + z) && aux == x-1) {
-                        removePiece(piece);
-                        addPiece(piece, file,rank);
-                        permission = true;
-                    } else if((file == 1 + z) && aux == x+1) {
-                        removePiece(piece);
-                        addPiece(piece, file,rank);
-                        permission = true;
-                    } else if((file == z - 1) && aux == x) {
-                        removePiece(piece);
-                        addPiece(piece, file,rank);
-                        permission = true;
-                    } else if((file == z - 1) && aux == x-1) {
-                        removePiece(piece);
-                        addPiece(piece, file,rank);
-                        permission = true;
-                    } else if((file == z - 1) && aux == x+1) {
-                        removePiece(piece);
-                        addPiece(piece, file,rank);
-                        permission = true;
-                    } else if((file == z) && (aux == x+1)) {
-                        removePiece(piece);
-                        addPiece(piece, file,rank);
-                        permission = true;
-                    } else if((file == z) && (aux == x-1)) {
-                        removePiece(piece);
-                        addPiece(piece, file,rank);
-                        permission = true;
-                    }
-                }
-            }
-        }
-        return permission;
-    }
-
-    void alterPawnForceSameColumn(int column, int rank) {
-        boolean sameColumnPawn = false;
-        for (int i = 0; i < 8; i++) {
-            if (i != rank && board[column][i].getRepresentation() == board[column][rank].getRepresentation()) {
-                sameColumnPawn = true;
-                Piece auxPiece = board[column][i];
-                if (auxPiece.getPoints() == 1) {
-                    auxPiece.setPoints(0.5);
-                }
-            }
-        }
-        if (sameColumnPawn) {
-            Piece auxPiece = board[column][rank];
-            if (auxPiece.getPoints() == 1) {
-                auxPiece.setPoints(0.5);
-            }
-        }
-    }
-
     public void alterPrint(Piece piece, int files, int rank){
         int lines = 8-rank;
         int positionPiece = (lines*8) + files + lines;
         piecesOnTheBoard.setCharAt(positionPiece, piece.getRepresentation());
     }
 
-    int transformPosition(char file){
-        int num;
-        switch (file) {
-            case 'a' -> num = 0;
-            case 'b' -> num = 1;
-            case 'c' -> num = 2;
-            case 'd' -> num = 3;
-            case 'e' -> num = 4;
-            case 'f' -> num = 5;
-            case 'g' -> num = 6;
-            case 'h' -> num = 7;
-            default -> num = 9;
-        }
-        return num;
+    static int transformPosition(char file){
+        return switch (file) {
+            case 'a' -> 0;
+            case 'b' -> 1;
+            case 'c' -> 2;
+            case 'd' -> 3;
+            case 'e' -> 4;
+            case 'f' -> 5;
+            case 'g' -> 6;
+            case 'h' -> 7;
+            default ->  9;
+        };
     }
 
     public String print(){
@@ -249,13 +153,6 @@ public class Board {
         return pieces.size();
     }
 
-    double getStrengthBlackPiece(){
-        return strengthBlack;
-    }
-    double getStrengthWhitePiece(){
-        return strengthWhite;
-    }
-
     String getRank(int rank) {
         StringBuilder rankPiece = new StringBuilder();
         for (int x = 0; x < 8; x++) {
@@ -264,6 +161,7 @@ public class Board {
         }
         return rankPiece.toString();
     }
+
     int getPiecesWhite(){
         int aux = 0;
         for (int x = 0; x < 8; x++) {
@@ -294,9 +192,13 @@ public class Board {
         return piecesBlack = aux;
     }
 
-    char getPiece(char files, int rank){
+    char getPieceRepresentation(char files, int rank){
         int file = transformPosition(files);
         Piece piece = board[file][rank-1];
         return piece.getRepresentation();
+    }
+
+    public Piece getPiece(int file, int rank) {
+        return board[file][rank - 1];
     }
 }
