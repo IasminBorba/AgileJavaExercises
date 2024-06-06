@@ -1,10 +1,15 @@
 package pieces;
 
+import chess.Board;
+import chess.Game;
+
 import java.util.Objects;
 
-public class Piece {
-    public enum Color {WHITE, BLACK}
-    public enum Type {
+import static chess.Board.transformPosition;
+
+abstract public class Piece implements Comparable<Piece> {
+    protected enum Color {WHITE, BLACK}
+    protected enum Type {
         PAWN(1,'P'),
         KNIGHT(2.5,'N'),
         ROOK(5,'R'),
@@ -12,7 +17,7 @@ public class Piece {
         QUEEN(9,'Q'),
         KING(0,'K'),
         NO_PIECE(0,'.');
-        public final double points;
+        private final double points;
         private final char representation;
 
         Type(double points, char representation){
@@ -26,10 +31,10 @@ public class Piece {
     }
     private Color color;
     private final Type type;
-    public double points;
-    public char representation;
+    private double points;
+    private final char representation;
 
-    private Piece(Color color, Type type) {
+    protected Piece(Color color, Type type) {
         this.color = color;
         this.type = type;
         this.points = type.points;
@@ -39,6 +44,11 @@ public class Piece {
         } else {
             this.representation = type.representation;
         }
+    }
+
+    @Override
+    public int compareTo(Piece o) {
+        return 0;
     }
 
     private Piece() {
@@ -70,9 +80,33 @@ public class Piece {
         };
     }
 
-    public static Piece noPiece() {
-        return new Piece();
+    public boolean movePiece(Piece piece, char files, int rank) {
+        boolean permission = false;
+        if (rank > 8){
+            return false;
+        }
+        int file = Board.transformPosition(files);
+        if (file == 9) {
+            return false;
+        }
+
+        permission = switch (piece.getType()){
+            case KING -> Game.newKingPosition(piece, file, rank);
+            case PAWN -> false;
+            case KNIGHT -> false;
+            case ROOK -> false;
+            case BISHOP -> false;
+            case QUEEN -> Game.newQueenPosition(piece, file, rank);
+            case NO_PIECE -> false;
+        };
+
+
+        return permission;
     }
+
+//    public static Piece noPiece() {
+//        return new Piece();
+//    }
 
     public boolean isBlack() {
         return Objects.equals(color.name().toLowerCase(), "black");

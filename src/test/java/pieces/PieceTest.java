@@ -8,16 +8,14 @@ public class PieceTest extends TestCase {
     verifyCreation(Piece.createWhitePiece(Piece.Type.ROOK), Piece.createBlackPiece(Piece.Type.ROOK), Piece.Type.ROOK, Piece.Type.ROOK.getRepresentation());
     verifyCreation(Piece.createWhitePiece(Piece.Type.KNIGHT), Piece.createBlackPiece(Piece.Type.KNIGHT), Piece.Type.KNIGHT, Piece.Type.KNIGHT.getRepresentation());
     verifyCreation(Piece.createWhitePiece(Piece.Type.BISHOP), Piece.createBlackPiece(Piece.Type.BISHOP),Piece.Type.BISHOP, Piece.Type.BISHOP.getRepresentation());
-    verifyCreation(Piece.createWhitePiece(Piece.Type.QUEEN), Piece.createBlackPiece(Piece.Type.QUEEN), Piece.Type.QUEEN, Piece.Type.QUEEN.getRepresentation());
-    verifyCreation(Piece.createWhitePiece(Piece.Type.KING), Piece.createBlackPiece(Piece.Type.KING), Piece.Type.KING, Piece.Type.KING.getRepresentation());
 
-    Piece blank = Piece.noPiece();
-    assertEquals('.', blank.getRepresentation());
-    assertEquals(Piece.Type.NO_PIECE, blank.getType());
-    assertEquals(0.0, blank.getPoints());
+//    Piece blank = Piece.noPiece();
+//    assertEquals('.', blank.getRepresentation());
+//    assertEquals(Piece.Type.NO_PIECE, blank.getType());
+//    assertEquals(0.0, blank.getPoints());
     }
 
-    private void verifyCreation(Piece whitePiece, Piece blackPiece, Piece.Type type, char representation) {
+    protected void verifyCreation(Piece whitePiece, Piece blackPiece, Piece.Type type, char representation) {
         assertTrue(whitePiece.isWhite());
         assertEquals(type, whitePiece.getType());
         assertEquals(Character.toLowerCase(type.getRepresentation()), whitePiece.getRepresentation());

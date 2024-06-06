@@ -120,7 +120,7 @@ public class Board {
         piecesOnTheBoard.setCharAt(positionPiece, piece.getRepresentation());
     }
 
-    static int transformPosition(char file){
+    public static int transformPosition(char file){
         return switch (file) {
             case 'a' -> 0;
             case 'b' -> 1;

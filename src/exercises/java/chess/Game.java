@@ -65,31 +65,7 @@ public class Game {
         }
     }
 
-    public boolean movePiece(Piece piece, char files, int rank) {
-        boolean permission = false;
-        if (rank > 8){
-            return false;
-        }
-        int file = transformPosition(files);
-        if (file == 9) {
-            return false;
-        }
-
-        permission = switch (piece.getType()){
-            case KING ->  newKingPosition(piece, file, rank);
-            case PAWN -> false;
-            case KNIGHT -> false;
-            case ROOK -> false;
-            case BISHOP -> false;
-            case QUEEN -> newQueenPosition(piece, file, rank);
-            case NO_PIECE -> false;
-        };
-
-
-        return permission;
-    }
-
-    public boolean newKingPosition(Piece piece, int column, int rank) {
+    public  boolean newKingPosition(Piece piece, int column, int rank) {
         int aux = rank - 1;
         for (int x = 0; x < 8; x++) {
             for (int z = 0; z < 8; z++) {
