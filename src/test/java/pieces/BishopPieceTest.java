@@ -1,17 +1,19 @@
 package pieces;
 
-public class BishopPieceTest extends PieceTest{
-    protected Piece createBishopPiece(Piece.Color color) {
-        return BishopPiece.create(color);
-    }
+import static pieces.BishopPiece.*;
 
+public class BishopPieceTest extends PieceTest{
     public void testCreate() {
-        Piece bishopBlack = createBishopPiece(Piece.Color.BLACK);
-        assertEquals(Piece.Type.BISHOP, bishopBlack.getType());
+        Piece bishopBlack = createPiece(Color.BLACK, type);
+        assertEquals(Type.BISHOP, bishopBlack.getType());
         assertEquals('B', bishopBlack.getRepresentation());
 
-        Piece bishopWhite = createBishopPiece(Piece.Color.WHITE);
-        assertEquals(Piece.Type.BISHOP, bishopWhite.getType());
+        Piece bishopWhite = createPiece(Color.WHITE, type);
+        assertEquals(Type.BISHOP, bishopWhite.getType());
         assertEquals('b', bishopWhite.getRepresentation());
+    }
+
+    protected Piece createPiece(Color color, Type type) {
+        return BishopPiece.create(color);
     }
 }

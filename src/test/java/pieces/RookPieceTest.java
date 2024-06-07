@@ -1,17 +1,19 @@
 package pieces;
 
-public class RookPieceTest extends PieceTest{
-    protected Piece createRookPiece(Piece.Color color) {
-        return RookPiece.create(color);
-    }
+import static pieces.RookPiece.*;
 
+public class RookPieceTest extends PieceTest{
     public void testCreate() {
-        Piece rookBlack = createRookPiece(Piece.Color.BLACK);
-        assertEquals(Piece.Type.ROOK, rookBlack.getType());
+        Piece rookBlack = createPiece(Color.BLACK, type);
+        assertEquals(Type.ROOK, rookBlack.getType());
         assertEquals('R', rookBlack.getRepresentation());
 
-        Piece rookWhite = createRookPiece(Piece.Color.WHITE);
-        assertEquals(Piece.Type.ROOK, rookWhite.getType());
+        Piece rookWhite = createPiece(Color.WHITE, type);
+        assertEquals(Type.ROOK, rookWhite.getType());
         assertEquals('r', rookWhite.getRepresentation());
+    }
+
+    protected Piece createPiece(Color color, Type type) {
+        return RookPiece.create(color);
     }
 }

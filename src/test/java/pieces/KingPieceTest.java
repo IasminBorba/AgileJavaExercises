@@ -1,18 +1,20 @@
 package pieces;
 
-public class KingPieceTest extends PieceTest{
-    protected Piece createKingPiece(Piece.Color color) {
-        return KingPiece.create(color);
-    }
+import static pieces.KingPiece.*;
 
+public class KingPieceTest extends PieceTest{
     public void testCreate() {
-        Piece kingBlack = createKingPiece(Piece.Color.BLACK);
-        assertEquals(Piece.Type.KING, kingBlack.getType());
+        Piece kingBlack = createPiece(Color.BLACK, type);
+        assertEquals(Type.KING, kingBlack.getType());
         assertEquals('K', kingBlack.getRepresentation());
 
-        Piece kingWhite = createKingPiece(Piece.Color.WHITE);
-        assertEquals(Piece.Type.KING, kingWhite.getType());
+        Piece kingWhite = createPiece(Color.WHITE,  type);
+        assertEquals(Type.KING, kingWhite.getType());
         assertEquals('k', kingWhite.getRepresentation());
+    }
+
+    protected Piece createPiece(Color color, Type type) {
+        return KingPiece.create(color);
     }
 }
 

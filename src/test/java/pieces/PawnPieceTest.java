@@ -1,17 +1,19 @@
 package pieces;
 
-public class PawnPieceTest extends PieceTest{
-    protected Piece createPawnPiece(Piece.Color color) {
-        return PawnPiece.create(color);
-    }
+import static pieces.PawnPiece.*;
 
+public class PawnPieceTest extends PieceTest{
     public void testCreate() {
-        Piece pawnBlack = createPawnPiece(Piece.Color.BLACK);
-        assertEquals(Piece.Type.PAWN, pawnBlack.getType());
+        Piece pawnBlack = createPiece(Color.BLACK, type);
+        assertEquals(Type.PAWN, pawnBlack.getType());
         assertEquals('P', pawnBlack.getRepresentation());
 
-        Piece pawnWhite = createPawnPiece(Piece.Color.WHITE);
-        assertEquals(Piece.Type.PAWN, pawnWhite.getType());
+        Piece pawnWhite = createPiece(Color.WHITE, type);
+        assertEquals(Type.PAWN, pawnWhite.getType());
         assertEquals('p', pawnWhite.getRepresentation());
+    }
+
+    protected Piece createPiece(Color color, Type type) {
+        return PawnPiece.create(color);
     }
 }
