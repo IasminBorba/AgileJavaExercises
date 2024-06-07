@@ -12,8 +12,7 @@ abstract public class Piece implements Comparable<Piece> {
         ROOK(5,'R'),
         BISHOP(3,'B'),
         QUEEN(9,'Q'),
-        KING(0,'K'),
-        NO_PIECE(0,'.');
+        KING(0,'K');
         private final double points;
         private final char representation;
 
@@ -36,15 +35,12 @@ abstract public class Piece implements Comparable<Piece> {
         this.type = type;
         this.points = type.points;
 
-        if(type != Type.NO_PIECE){
-            if (color == Color.WHITE) {
-                this.representation = Character.toLowerCase(type.representation);
-            } else {
-                this.representation = type.representation;
-            }
+        if (color == Color.WHITE) {
+            this.representation = Character.toLowerCase(type.representation);
         } else {
-            this.representation = '.';
+            this.representation = type.representation;
         }
+
     }
 
     @Override
@@ -56,7 +52,7 @@ abstract public class Piece implements Comparable<Piece> {
         return this.getColor().compareTo(that.getColor());
     }
 
-    public abstract boolean getPossibleMoves(int column, int rank);
+    public abstract boolean getPossibleMoves(Piece piece, int column, int rank);
 
     public boolean isBlack() {
         return Objects.equals(color.name().toLowerCase(), "black");
@@ -84,5 +80,9 @@ abstract public class Piece implements Comparable<Piece> {
 
     public char getRepresentation() {
         return representation;
+    }
+
+    public boolean moves(Piece piece, int column, int rank){
+        return getPossibleMoves(piece, column, rank);
     }
 }

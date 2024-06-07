@@ -8,16 +8,11 @@ abstract public class PieceTest extends TestCase {
     private Piece noPiece;
     public void setUp(){
         piece = createPiece(Piece.Color.WHITE, Piece.Type.ROOK);
-        noPiece = createPiece(Piece.Color.WHITE, Piece.Type.NO_PIECE);
     }
 
     abstract protected Piece createPiece(Piece.Color color, Piece.Type type);
 
     public void testCreate() {
-        assertEquals('.', noPiece.getRepresentation());
-        assertEquals(Piece.Type.NO_PIECE, noPiece.getType());
-        assertEquals(0.0, noPiece.getPoints());
-
         assertEquals('R', piece.getRepresentation());
         assertEquals(Piece.Type.ROOK, piece.getType());
         assertEquals(0.0, piece.getPoints());

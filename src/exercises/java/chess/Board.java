@@ -9,8 +9,8 @@ public class Board {
     int piecesWhite;
     int piecesBlack;
     private ArrayList<Piece> pieces = new ArrayList<>();
-    public final StringBuilder piecesOnTheBoard = new StringBuilder();
-    private Piece[][] board;
+    public  StringBuilder piecesOnTheBoard = new StringBuilder();
+    public Piece[][] board;
 
     public void initialize() {
         createBoard();
@@ -25,7 +25,7 @@ public class Board {
         addPiecesBlank();
     }
 
-    private void addPiecesOfRank(Piece.Color color) {
+    public void addPiecesOfRank(Piece.Color color) {
         int rank;
 
         if (Objects.equals(color, Piece.Color.WHITE)) {
@@ -44,7 +44,7 @@ public class Board {
         Piece rook2 = RookPiece.create(color); addPiece(rook2, 7, rank);
     }
 
-    private void addPiecesPawnOfRank(Piece.Color color) {
+    public void addPiecesPawnOfRank(Piece.Color color) {
         for (int z = 0; z < 8; z++) {
             if (Objects.equals(color, Piece.Color.WHITE)) {
                 addPiece(PawnPiece.create(color),z,2);
@@ -67,7 +67,7 @@ public class Board {
         alterPrint(piece, file, rank);
     }
 
-    private void addPiecesBlank() {
+    public void addPiecesBlank() {
         for (int x = 0; x < 8; x++) {
             for (int z = 0; z < 8; z++) {
                 piecesOnTheBoard.append('.');

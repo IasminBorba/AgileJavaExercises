@@ -1,7 +1,10 @@
 package pieces;
 
+import chess.Board;
+
 public class QueenPiece extends Piece {
     public static Type Class = Type.QUEEN;
+    private Board board;
 
     protected QueenPiece(Color color, Type type) {
         super(color, type);
@@ -12,28 +15,34 @@ public class QueenPiece extends Piece {
     }
 
     @Override
-    public boolean getPossibleMoves(int files, int rank){
+    public boolean getPossibleMoves(Piece piece, int column, int rank){
         boolean permission = false;
         if (rank > 8){
             return false;
         }
-//        int file = Board.transformPosition(files);
-//        if (file == 9) {
-//            return false;
-//        }
-//
-//        permission = switch (piece.getType()){
-//            case KING -> Game.newKingPosition(piece, file, rank);
-//            case PAWN -> false;
-//            case KNIGHT -> false;
-//            case ROOK -> false;
-//            case BISHOP -> false;
-//            case QUEEN -> Game.newQueenPosition(piece, file, rank);
-//            case NO_PIECE -> false;
-//        };
 
+        if (column == 9) {
+            return false;
+        }
 
-        return permission;
+        int aux = rank - 1;
+        for (int x = 0; x < 8; x++) {
+            for (int z = 0; z < 8; z++) {
+                if (piece == board.getPiece(z, x + 1)) {
+                    if (column == z){
+                        board.removePiece(piece);
+                        board.addPiece(piece, column, rank);
+                        return true;
+                    } else if (aux == x) {
+                        board.removePiece(piece);
+                        board.addPiece(piece, column, rank);
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
-
 }
