@@ -2,6 +2,7 @@ package pieces;
 
 public class KingPiece extends Piece {
     public static Type Class = Type.KING;
+
     protected KingPiece(Color color, Type type) {
         super(color, type);
     }

@@ -1,14 +1,39 @@
 package pieces;
 
 public class QueenPiece extends Piece {
-    public static Type type = Type.QUEEN;
+    public static Type Class = Type.QUEEN;
 
-    private QueenPiece(Color color, Type type) {
+    protected QueenPiece(Color color, Type type) {
         super(color, type);
     }
 
     public static QueenPiece create(Color color) {
-        return new QueenPiece(color, type);
+        return new QueenPiece(color, Class);
+    }
+
+    @Override
+    public boolean getPossibleMoves(int files, int rank){
+        boolean permission = false;
+        if (rank > 8){
+            return false;
+        }
+//        int file = Board.transformPosition(files);
+//        if (file == 9) {
+//            return false;
+//        }
+//
+//        permission = switch (piece.getType()){
+//            case KING -> Game.newKingPosition(piece, file, rank);
+//            case PAWN -> false;
+//            case KNIGHT -> false;
+//            case ROOK -> false;
+//            case BISHOP -> false;
+//            case QUEEN -> Game.newQueenPosition(piece, file, rank);
+//            case NO_PIECE -> false;
+//        };
+
+
+        return permission;
     }
 
 }
