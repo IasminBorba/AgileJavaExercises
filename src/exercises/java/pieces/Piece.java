@@ -1,7 +1,7 @@
 package pieces;
 
 import chess.Board;
-import chess.Game;
+//import chess.Game;
 
 import java.util.Objects;
 
@@ -56,53 +56,53 @@ abstract public class Piece implements Comparable<Piece> {
         this.representation = '.';
     }
 
-    public static Piece createWhitePiece(Type type) {
-        return switch (type) {
-            case PAWN -> new Piece(Color.WHITE, Type.PAWN);
-            case ROOK -> new Piece(Color.WHITE, Type.ROOK);
-            case KNIGHT -> new Piece(Color.WHITE, Type.KNIGHT);
-            case BISHOP -> new Piece(Color.WHITE, Type.BISHOP);
-            case QUEEN -> new Piece(Color.WHITE, Type.QUEEN);
-            case KING -> new Piece(Color.WHITE, Type.KING);
-            case NO_PIECE -> null;
-        };
-    }
+//    public static Piece createWhitePiece(Type type) {
+//        return switch (type) {
+//            case PAWN -> new Piece(Color.WHITE, Type.PAWN);
+//            case ROOK -> new Piece(Color.WHITE, Type.ROOK);
+//            case KNIGHT -> new Piece(Color.WHITE, Type.KNIGHT);
+//            case BISHOP -> new Piece(Color.WHITE, Type.BISHOP);
+//            case QUEEN -> new Piece(Color.WHITE, Type.QUEEN);
+//            case KING -> new Piece(Color.WHITE, Type.KING);
+//            case NO_PIECE -> null;
+//        };
+//    }
+//
+//    public static Piece createBlackPiece(Type type) {
+//        return switch (type) {
+//            case PAWN -> new Piece(Color.BLACK, Type.PAWN);
+//            case ROOK -> new Piece(Color.BLACK, Type.ROOK);
+//            case KNIGHT -> new Piece(Color.BLACK, Type.KNIGHT);
+//            case BISHOP -> new Piece(Color.BLACK, Type.BISHOP);
+//            case QUEEN -> new Piece(Color.BLACK, Type.QUEEN);
+//            case KING -> new Piece(Color.BLACK, Type.KING);
+//            case NO_PIECE -> null;
+//        };
+//    }
 
-    public static Piece createBlackPiece(Type type) {
-        return switch (type) {
-            case PAWN -> new Piece(Color.BLACK, Type.PAWN);
-            case ROOK -> new Piece(Color.BLACK, Type.ROOK);
-            case KNIGHT -> new Piece(Color.BLACK, Type.KNIGHT);
-            case BISHOP -> new Piece(Color.BLACK, Type.BISHOP);
-            case QUEEN -> new Piece(Color.BLACK, Type.QUEEN);
-            case KING -> new Piece(Color.BLACK, Type.KING);
-            case NO_PIECE -> null;
-        };
-    }
-
-    public boolean movePiece(Piece piece, char files, int rank) {
-        boolean permission = false;
-        if (rank > 8){
-            return false;
-        }
-        int file = Board.transformPosition(files);
-        if (file == 9) {
-            return false;
-        }
-
-        permission = switch (piece.getType()){
-            case KING -> Game.newKingPosition(piece, file, rank);
-            case PAWN -> false;
-            case KNIGHT -> false;
-            case ROOK -> false;
-            case BISHOP -> false;
-            case QUEEN -> Game.newQueenPosition(piece, file, rank);
-            case NO_PIECE -> false;
-        };
-
-
-        return permission;
-    }
+//    public boolean getPossibleMoves(Piece piece, char files, int rank) {
+//        boolean permission = false;
+//        if (rank > 8){
+//            return false;
+//        }
+//        int file = Board.transformPosition(files);
+//        if (file == 9) {
+//            return false;
+//        }
+//
+//        permission = switch (piece.getType()){
+//            case KING -> Game.newKingPosition(piece, file, rank);
+//            case PAWN -> false;
+//            case KNIGHT -> false;
+//            case ROOK -> false;
+//            case BISHOP -> false;
+//            case QUEEN -> Game.newQueenPosition(piece, file, rank);
+//            case NO_PIECE -> false;
+//        };
+//
+//
+//        return permission;
+//    }
 
 //    public static Piece noPiece() {
 //        return new Piece();

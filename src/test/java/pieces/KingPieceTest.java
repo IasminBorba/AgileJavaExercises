@@ -1,13 +1,18 @@
 package pieces;
 
-
 public class KingPieceTest extends PieceTest{
-    protected Piece createKingPiece(Piece.Color color, Piece.Type type) {
-        return KingPiece.create(color, type);
+    protected Piece createKingPiece(Piece.Color color) {
+        return KingPiece.create(color);
     }
 
     public void testCreate() {
-        verifyCreation(Piece.createWhitePiece(Piece.Type.KING), Piece.createBlackPiece(Piece.Type.KING), Piece.Type.KING, Piece.Type.KING.getRepresentation());
+        Piece kingBlack = createKingPiece(Piece.Color.BLACK);
+        assertEquals(Piece.Type.KING, kingBlack.getType());
+        assertEquals('K', kingBlack.getRepresentation());
+
+        Piece kingWhite = createKingPiece(Piece.Color.WHITE);
+        assertEquals(Piece.Type.KING, kingWhite.getType());
+        assertEquals('k', kingWhite.getRepresentation());
     }
 }
 

@@ -1,11 +1,14 @@
 package pieces;
 
 public class KingPiece extends Piece {
-    public static KingPiece create(Color color, Type type) {
+
+//    public enum Class { KING}
+    public static KingPiece create(Color color) {
+        Type type = Type.KING;
         return new KingPiece(color, type);
     }
 
-    private KingPiece(Color color, Type type) {
+    protected KingPiece(Color color, Type type) {
         super(color, type);
     }
 }
