@@ -40,16 +40,17 @@ public class Game {
             boolean sameColumnPawn = false;
             for (int row = 0; row < 8; row++) {
                 Piece piece = boardArray[column][row];
-                System.out.println(piece);
                 if(piece != null) {
-                    System.out.println(piece);
+
                     if (piece.getType() == Piece.Type.PAWN) {
                         for (int checkRow = 0; checkRow < 8; checkRow++) {
-                            if (checkRow != row && boardArray[column][checkRow].getType() == Piece.Type.PAWN && boardArray[column][checkRow].getRepresentation() == piece.getRepresentation()) {
-                                sameColumnPawn = true;
-                                Piece auxPiece = boardArray[column][checkRow];
-                                if (auxPiece.getPoints() == 1) {
-                                    auxPiece.setPoints(0.5);
+                            if(boardArray[column][checkRow] != null) {
+                                if (checkRow != row && boardArray[column][checkRow].getType() == Piece.Type.PAWN && boardArray[column][checkRow].getRepresentation() == piece.getRepresentation()) {
+                                    sameColumnPawn = true;
+                                    Piece auxPiece = boardArray[column][checkRow];
+                                    if (auxPiece.getPoints() == 1) {
+                                        auxPiece.setPoints(0.5);
+                                    }
                                 }
                             }
                         }
@@ -59,8 +60,10 @@ public class Game {
             if (sameColumnPawn) {
                 for (int row = 0; row < 8; row++) {
                     Piece piece = boardArray[column][row];
-                    if (piece.getPoints() == 1) {
-                        piece.setPoints(0.5);
+                    if(piece != null) {
+                        if (piece.getPoints() == 1) {
+                            piece.setPoints(0.5);
+                        }
                     }
                 }
             }

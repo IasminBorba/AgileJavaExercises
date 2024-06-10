@@ -40,7 +40,6 @@ abstract public class Piece implements Comparable<Piece> {
         } else {
             this.representation = type.representation;
         }
-
     }
 
     @Override
@@ -82,7 +81,7 @@ abstract public class Piece implements Comparable<Piece> {
         return representation;
     }
 
-    public boolean moves(Piece piece, int column, int rank){
-        return getPossibleMoves(piece, column, rank);
-    }
+//    public boolean moves(Piece piece, int column, int rank){
+//        return getPossibleMoves(piece, column, rank);
+//    }
 }

@@ -25,10 +25,10 @@ public class GameTest extends TestCase {
 
         board.addPiece(PawnPiece.create(Piece.Color.BLACK), 'a', 7);
         board.addPiece(PawnPiece.create(Piece.Color.BLACK), 'c', 7);
-        board.addPiece(BishopPiece.create(Piece.Color.WHITE), 'd', 7);
+        board.addPiece(BishopPiece.create(Piece.Color.BLACK), 'd', 7);
 
         board.addPiece(PawnPiece.create(Piece.Color.BLACK), 'b', 6);
-        board.addPiece(QueenPiece.create(Piece.Color.WHITE), 'e', 6);
+        board.addPiece(QueenPiece.create(Piece.Color.BLACK), 'e', 6);
 
         board.addPiece(KnightPiece.create(Piece.Color.WHITE), 'f', 4);
         board.addPiece(QueenPiece.create(Piece.Color.WHITE), 'g', 4);
