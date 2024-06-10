@@ -51,7 +51,7 @@ abstract public class Piece implements Comparable<Piece> {
         return this.getColor().compareTo(that.getColor());
     }
 
-    public abstract boolean getPossibleMoves(Piece piece, int column, int rank);
+    public abstract boolean getPossibleMoves(char column, int rank);
 
     public boolean isBlack() {
         return Objects.equals(color.name().toLowerCase(), "black");

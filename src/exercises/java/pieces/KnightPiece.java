@@ -12,7 +12,7 @@ public class KnightPiece extends Piece {
     }
 
     @Override
-    public boolean getPossibleMoves(Piece piece, int files, int rank){
+    public boolean getPossibleMoves(char files, int rank){
         boolean permission = false;
         if (rank > 8){
             return false;

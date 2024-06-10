@@ -37,8 +37,8 @@ public class Board {
         Piece rook = RookPiece.create(color); addPiece(rook, 0, rank);
         Piece knight = KnightPiece.create(color); addPiece(knight, 1, rank);
         Piece bishop = BishopPiece.create(color); addPiece(bishop, 2, rank);
-        Piece queen = QueenPiece.create(color); addPiece(queen, 3, rank);
-        Piece king = KingPiece.create(color); addPiece(king, 4, rank);
+        Piece queen = QueenPiece.create(color, Board.this); addPiece(queen, 3, rank);
+        Piece king = KingPiece.create(color, Board.this); addPiece(king, 4, rank);
         Piece bishop2 = BishopPiece.create(color); addPiece(bishop2, 5, rank);
         Piece knight2 = KnightPiece.create(color); addPiece(knight2, 6, rank);
         Piece rook2 = RookPiece.create(color); addPiece(rook2, 7, rank);
@@ -120,8 +120,9 @@ public class Board {
 
         if(piece == null){
             piecesOnTheBoard.setCharAt(positionPiece, '.');
+        } else {
+            piecesOnTheBoard.setCharAt(positionPiece, piece.getRepresentation());
         }
-        piecesOnTheBoard.setCharAt(positionPiece, piece.getRepresentation());
     }
 
     public static int transformPosition(char file){
