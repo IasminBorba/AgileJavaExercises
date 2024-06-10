@@ -34,22 +34,22 @@ public class Board {
             rank = 8;
         }
 
-        Piece rook = RookPiece.create(color); addPiece(rook, 0, rank);
-        Piece knight = KnightPiece.create(color); addPiece(knight, 1, rank);
-        Piece bishop = BishopPiece.create(color); addPiece(bishop, 2, rank);
-        Piece queen = QueenPiece.create(color, Board.this); addPiece(queen, 3, rank);
-        Piece king = KingPiece.create(color, Board.this); addPiece(king, 4, rank);
-        Piece bishop2 = BishopPiece.create(color); addPiece(bishop2, 5, rank);
-        Piece knight2 = KnightPiece.create(color); addPiece(knight2, 6, rank);
-        Piece rook2 = RookPiece.create(color); addPiece(rook2, 7, rank);
+        Piece rook = Rook.create(color, this); addPiece(rook, 0, rank);
+        Piece knight = Knight.create(color, this); addPiece(knight, 1, rank);
+        Piece bishop = Bishop.create(color, this); addPiece(bishop, 2, rank);
+        Piece queen = Queen.create(color, this); addPiece(queen, 3, rank);
+        Piece king = King.create(color, this); addPiece(king, 4, rank);
+        Piece bishop2 = Bishop.create(color, this); addPiece(bishop2, 5, rank);
+        Piece knight2 = Knight.create(color, this); addPiece(knight2, 6, rank);
+        Piece rook2 = Rook.create(color, this); addPiece(rook2, 7, rank);
     }
 
     public void addPiecesPawnOfRank(Piece.Color color) {
         for (int z = 0; z < 8; z++) {
             if (Objects.equals(color, Piece.Color.WHITE)) {
-                addPiece(PawnPiece.create(color),z,2);
+                addPiece(Pawn.create(color, this),z,2);
             } else {
-                addPiece(PawnPiece.create(color), z, 7);
+                addPiece(Pawn.create(color, this), z, 7);
             }
         }
     }

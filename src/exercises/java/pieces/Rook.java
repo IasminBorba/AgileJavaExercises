@@ -2,21 +2,21 @@ package pieces;
 
 import chess.Board;
 
-public class QueenPiece extends Piece {
-    public static Type Class = Type.QUEEN;
+public class Rook extends Piece {
+    public static Type Class = Type.ROOK;
     private final Board board;
 
-    protected QueenPiece(Color color, Board board) {
+    protected Rook(Color color, Board board) {
         super(color, Class);
         this.board = board;
     }
 
-    public static QueenPiece create(Color color, Board board) {
-        return new QueenPiece(color, board);
+    public static Rook create(Color color, Board board) {
+        return new Rook(color, board);
     }
 
     @Override
-    public boolean getPossibleMoves(char file, int rank) {
+    public boolean getPossibleMoves(char file, int rank){
         if (rank > 8){
             return false;
         }
@@ -26,8 +26,6 @@ public class QueenPiece extends Piece {
             return false;
         }
 
-
-        int aux = rank - 1;
         for (int x = 0; x < 8; x++) {
             for (int z = 0; z < 8; z++) {
                 if (this == board.getPiece(z, x + 1)) {
@@ -35,7 +33,7 @@ public class QueenPiece extends Piece {
                         board.removePiece(this);
                         board.addPiece(this, column, rank);
                         return true;
-                    } else if (aux == x) {
+                    } else if (rank - 1 == x) {
                         board.removePiece(this);
                         board.addPiece(this, column, rank);
                         return true;
@@ -45,6 +43,7 @@ public class QueenPiece extends Piece {
                 }
             }
         }
-        return true;
+
+        return false;
     }
 }

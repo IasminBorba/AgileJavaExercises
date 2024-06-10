@@ -2,46 +2,51 @@ package pieces;
 
 import chess.Board;
 
-public class KingPiece extends Piece {
-    public static Type Class = Type.KING;
+public class Queen extends Piece {
+    public static Type Class = Type.QUEEN;
     private final Board board;
-    public boolean allow;
 
-    protected KingPiece(Color color, Board board) {
+    protected Queen(Color color, Board board) {
         super(color, Class);
         this.board = board;
     }
 
-    public static KingPiece create(Color color, Board board) {
-        return new KingPiece(color, board);
+    public static Queen create(Color color, Board board) {
+        return new Queen(color, board);
     }
 
     @Override
-    public boolean getPossibleMoves(char file, int rank){
-        boolean permission = false;
+    public boolean getPossibleMoves(char file, int rank) {
         if (rank > 8){
             return false;
         }
-
         int column = Board.transformPosition(file);
 
         if (column == 9) {
             return false;
         }
-
         int aux = rank - 1;
+
         for (int x = 0; x < 8; x++) {
             for (int z = 0; z < 8; z++) {
                 if (this == board.getPiece(z, x + 1)) {
-                    if ((column == 1 + z) && (aux == x)) {
+                    if (column == z){
                         board.removePiece(this);
                         board.addPiece(this, column, rank);
                         return true;
-                    } else if ((column == 1 + z) && aux == x - 1) {
+                    } else if (aux == x) {
                         board.removePiece(this);
                         board.addPiece(this, column, rank);
                         return true;
-                    } else if ((column == 1 + z) && aux == x + 1) {
+                    } else if ((column == z + 1) && aux == x) {
+                        board.removePiece(this);
+                        board.addPiece(this, column, rank);
+                        return true;
+                    } else if ((column == z + 1) && aux == x - 1) {
+                        board.removePiece(this);
+                        board.addPiece(this, column, rank);
+                        return true;
+                    } else if ((column == z + 1) && aux == x + 1) {
                         board.removePiece(this);
                         board.addPiece(this, column, rank);
                         return true;
@@ -57,11 +62,15 @@ public class KingPiece extends Piece {
                         board.removePiece(this);
                         board.addPiece(this, column, rank);
                         return true;
-                    } else if ((column == z) && (aux == x + 1)) {
+                    } else if ((column + aux) - (z + x)  == (column-z)*2){
                         board.removePiece(this);
                         board.addPiece(this, column, rank);
                         return true;
-                    } else if ((column == z) && (aux == x - 1)) {
+                    } else if (column + aux == z + x) {
+                        board.removePiece(this);
+                        board.addPiece(this, column, rank);
+                        return true;
+                    } else if ((z + x) - (column + aux) == (z-column)*2){
                         board.removePiece(this);
                         board.addPiece(this, column, rank);
                         return true;
@@ -71,7 +80,6 @@ public class KingPiece extends Piece {
                 }
             }
         }
-        allow = permission;
-        return permission;
+        return true;
     }
 }

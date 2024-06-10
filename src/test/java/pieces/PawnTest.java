@@ -1,9 +1,9 @@
 package pieces;
 
-import static pieces.PawnPiece.*;
-import static pieces.QueenPiece.Class;
+import static pieces.Pawn.*;
+import static pieces.Queen.Class;
 
-public class PawnPieceTest extends PieceTest{
+public class PawnTest extends PieceTest{
     public void testCreate() {
         Piece pawnBlack = createPiece(Color.BLACK, Class);
         assertEquals(Type.PAWN, pawnBlack.getType());
@@ -15,6 +15,6 @@ public class PawnPieceTest extends PieceTest{
     }
 
     protected Piece createPiece(Color color, Type type) {
-        return PawnPiece.create(color);
+        return Pawn.create(color, null);
     }
 }

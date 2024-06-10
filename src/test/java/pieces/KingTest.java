@@ -1,8 +1,8 @@
 package pieces;
 
-import static pieces.KingPiece.*;
+import static pieces.King.*;
 
-public class KingPieceTest extends PieceTest{
+public class KingTest extends PieceTest{
     public void testCreate() {
         Piece kingBlack = createPiece(Color.BLACK, Class);
         assertEquals(Type.KING, kingBlack.getType());
@@ -14,7 +14,7 @@ public class KingPieceTest extends PieceTest{
     }
 
     protected Piece createPiece(Color color, Type type) {
-        return KingPiece.create(color, null);
+        return King.create(color, null);
     }
 }
 

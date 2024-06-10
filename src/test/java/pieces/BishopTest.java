@@ -1,9 +1,9 @@
 package pieces;
 
-import static pieces.BishopPiece.*;
-import static pieces.QueenPiece.Class;
+import static pieces.Bishop.*;
+import static pieces.Queen.Class;
 
-public class BishopPieceTest extends PieceTest{
+public class BishopTest extends PieceTest{
     public void testCreate() {
         Piece bishopBlack = createPiece(Color.BLACK, Class);
         assertEquals(Type.BISHOP, bishopBlack.getType());
@@ -15,6 +15,6 @@ public class BishopPieceTest extends PieceTest{
     }
 
     protected Piece createPiece(Color color, Type type) {
-        return BishopPiece.create(color);
+        return Bishop.create(color, null);
     }
 }
