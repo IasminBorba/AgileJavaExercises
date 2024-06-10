@@ -6,11 +6,11 @@ import static pieces.Queen.Class;
 public class PawnTest extends PieceTest{
     public void testCreate() {
         Piece pawnBlack = createPiece(Color.BLACK, Class);
-        assertEquals(Type.PAWN, pawnBlack.getType());
+        assertEquals(Pawn.Class, pawnBlack.getType());
         assertEquals('P', pawnBlack.getRepresentation());
 
         Piece pawnWhite = createPiece(Color.WHITE, Class);
-        assertEquals(Type.PAWN, pawnWhite.getType());
+        assertEquals(Pawn.Class, pawnWhite.getType());
         assertEquals('p', pawnWhite.getRepresentation());
     }
 

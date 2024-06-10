@@ -5,11 +5,11 @@ import static pieces.King.*;
 public class KingTest extends PieceTest{
     public void testCreate() {
         Piece kingBlack = createPiece(Color.BLACK, Class);
-        assertEquals(Type.KING, kingBlack.getType());
+        assertEquals(King.Class, kingBlack.getType());
         assertEquals('K', kingBlack.getRepresentation());
 
         Piece kingWhite = createPiece(Color.WHITE,  Class);
-        assertEquals(Type.KING, kingWhite.getType());
+        assertEquals(King.Class, kingWhite.getType());
         assertEquals('k', kingWhite.getRepresentation());
     }
 
