@@ -54,6 +54,78 @@ public class Board {
         }
     }
 
+    public void put(String str, Piece piece){
+        int column = transformPosition2(str).getFirst();
+        int rank = transformPosition2(str).getLast();
+
+        addPiece(piece, column, rank);
+    }
+
+    public ArrayList<Integer> transformPosition2(String str){
+        ArrayList position = new ArrayList<Integer>();
+        int column;
+        int rank;
+        column = switch (str.charAt(0)) {
+            case 'a' -> 0;
+            case 'b' -> 1;
+            case 'c' -> 2;
+            case 'd' -> 3;
+            case 'e' -> 4;
+            case 'f' -> 5;
+            case 'g' -> 6;
+            case 'h' -> 7;
+            default ->  9;
+        };
+        position.add(column);
+
+        rank = switch (str.charAt(1)) {
+            case '1' -> 0;
+            case '2' -> 1;
+            case '3' -> 2;
+            case '4' -> 3;
+            case '5' -> 4;
+            case '6' -> 5;
+            case '7' -> 6;
+            case '8' -> 7;
+            default ->  9;
+        };
+        position.add(rank);
+
+        return  position;
+    }
+
+    public String transformPositionString(int columnInt, int rankInt){
+        StringBuilder str = new StringBuilder();
+
+        String columnChar = switch (columnInt) {
+            case 0 -> "a";
+            case 1 -> "b";
+            case 2 -> "c";
+            case 3 -> "d";
+            case 4 -> "e";
+            case 5 -> "f";
+            case 6 -> "g";
+            case 7 -> "h";
+            default -> "Error";
+        };
+        str.append(columnChar);
+
+        String rankChar = switch (rankInt) {
+            case 0 -> "1";
+            case 1 -> "2";
+            case 2 -> "3";
+            case 3 -> "4";
+            case 4 -> "5";
+            case 5 -> "6";
+            case 6 -> "7";
+            case 7 -> "8";
+            default -> "ERROR";
+        };
+        str.append(rankChar);
+
+        return  str.toString();
+    }
+
     public void addPiece(Piece piece, int file, int rank) {
         int aux = rank - 1;
 
@@ -65,6 +137,14 @@ public class Board {
         }
         board[file][aux] = piece;
         alterPrint(piece, file, rank);
+    }
+
+    public void movePiece(String position, Piece piece){
+        int column = transformPosition2(position).getFirst();
+        int rank = transformPosition2(position).getLast();
+
+        removePiece(piece);
+        addPiece(piece, column, rank);
     }
 
     public void addPiecesBlank() {

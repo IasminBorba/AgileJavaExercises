@@ -2,6 +2,8 @@ package pieces;
 
 import chess.Board;
 
+import java.util.ArrayList;
+
 public class Pawn extends Piece {
     public static Type Class = Type.PAWN;
     private final Board board;
@@ -16,42 +18,29 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean getPossibleMoves(char file, int rank){
-        if (rank > 8){
-            return false;
-        }
-        int column = Board.transformPosition(file);
+    public ArrayList<String> getPossibleMoves(String position){
+        ArrayList<String> moves = new ArrayList<>();
+        int column = board.transformPosition2(position).getFirst();
+        int rank = board.transformPosition2(position).getLast();
 
-        if (column == 9) {
-            return false;
+        if (rank == 9 || column == 9) {
+            return moves;
         }
 
-        int aux = rank - 1;
         for (int x = 0; x < 8; x++) {
             for (int z = 0; z < 8; z++) {
-                if (this == board.getPiece(z, x + 1)) {
-                    if(this.isWhite()) {
-                        if (column == z && aux == x + 1) {
-                            board.removePiece(this);
-                            board.addPiece(this, column, rank);
-                            return true;
+                if (this == board.getPiece(z, x+1)) {
+                    if (x < 7){
+                        if(this.isWhite()) {
+                            moves.add(board.transformPositionString(z,x+2));
                         } else {
-                            return false;
-                        }
-                    } else {
-                        if (column == z && aux == x - 1) {
-                            board.removePiece(this);
-                            board.addPiece(this, column, rank);
-                            return true;
-                        } else {
-                            return false;
+                            moves.add(board.transformPositionString(z, x));
                         }
                     }
                 }
             }
         }
 
-
-        return false;
+        return moves;
     }
 }

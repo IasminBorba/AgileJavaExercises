@@ -2,6 +2,7 @@ package pieces;
 
 //import chess.Game;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 abstract public class Piece implements Comparable<Piece> {
@@ -51,7 +52,7 @@ abstract public class Piece implements Comparable<Piece> {
         return this.getColor().compareTo(that.getColor());
     }
 
-    public abstract boolean getPossibleMoves(char column, int rank);
+    public abstract ArrayList<String> getPossibleMoves(String position);
 
     public boolean isBlack() {
         return Objects.equals(color.name().toLowerCase(), "black");
