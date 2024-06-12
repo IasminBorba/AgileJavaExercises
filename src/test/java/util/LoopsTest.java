@@ -50,16 +50,19 @@ public class LoopsTest  extends TestCase {
         Vector<String> expected = new Vector<>(List.of("1"));
         assertEquals(expected, Loops.vectorString(string1));
         assertEquals(string1, Loops.vectorStringEnumeration(expected));
+        assertEquals(string1, Loops.notParameterizedTypes(expected));
 
         String string2 = Loops.continueControl(5);
         Vector<String> expected2 = new Vector<>(List.of("1","2", "3", "4", "5*"));
         assertEquals(expected2, Loops.vectorString(string2));
         assertEquals(string2, Loops.vectorStringEnumeration(expected2));
+        assertEquals(string2, Loops.notParameterizedTypes(expected2));
 
         String string3 = Loops.continueControl(12);
         Vector<String> expected3 = new Vector<>(List.of("1","2", "3", "4", "5*", "6", "7", "8", "9", "10*", "11", "12"));
         assertEquals(expected3, Loops.vectorString(string3));
         assertEquals(string3, Loops.vectorStringEnumeration(expected3));
+        assertEquals(string3, Loops.notParameterizedTypes(expected3));
 
         String string4 = Loops.continueControl(19);
         Vector<String> expected4 = new Vector<>(List.of(
@@ -68,6 +71,7 @@ public class LoopsTest  extends TestCase {
         ));
         assertEquals(expected4, Loops.vectorString(string4));
         assertEquals(string4, Loops.vectorStringEnumeration(expected4));
+        assertEquals(string4, Loops.notParameterizedTypes(expected4));
 
         String string5 = Loops.continueControl(25);
         Vector<String> expected5 = new Vector<>(List.of(
@@ -77,6 +81,7 @@ public class LoopsTest  extends TestCase {
         ));
         assertEquals(expected5, Loops.vectorString(string5));
         assertEquals(string5, Loops.vectorStringEnumeration(expected5));
+        assertEquals(string5, Loops.notParameterizedTypes(expected5));
     }
 
 }

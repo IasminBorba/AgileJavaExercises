@@ -99,4 +99,17 @@ public class Loops {
 
         return str.toString();
     }
+
+    public static String notParameterizedTypes(Vector<String> vector){
+        StringBuilder str = new StringBuilder();
+        Iterator it = vector.iterator();
+
+        while (it.hasNext()){
+            str.append((String)it.next());
+            str.append(" ");
+        }
+        str.deleteCharAt(str.lastIndexOf(" "));
+
+        return str.toString();
+    }
 }
