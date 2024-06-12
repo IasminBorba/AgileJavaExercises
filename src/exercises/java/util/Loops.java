@@ -86,4 +86,17 @@ public class Loops {
 
         return vector;
     }
+
+    public static String vectorStringEnumeration(Vector<String> vector){
+        StringBuilder str = new StringBuilder();
+        for (Enumeration<String> string = vector.elements(); string.hasMoreElements(); ) {
+            str.append(string.nextElement());
+            if(!string.hasMoreElements()){
+                continue;
+            }
+            str.append(" ");
+        }
+
+        return str.toString();
+    }
 }
