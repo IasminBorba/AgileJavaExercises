@@ -40,7 +40,7 @@ public class Pawn extends Piece {
                 }
             }
         }
-
+        moves.removeIf(move -> move.contains("error"));
         return moves;
     }
 }

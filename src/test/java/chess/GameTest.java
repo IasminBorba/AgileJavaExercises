@@ -3,6 +3,9 @@ package chess;
 import pieces.*;
 import junit.framework.TestCase;
 import util.StringUtil;
+
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertNotEquals;
 
 public class GameTest extends TestCase {
@@ -61,39 +64,44 @@ public class GameTest extends TestCase {
         );
     }
 
-//    public void testKingMove() {
-//        board.createBoard();
-//
-//        King kingWhite = King.create(Piece.Color.WHITE, board);
-//        board.addPiece(kingWhite,'d', 4);
-//        assertFalse(kingWhite.getPossibleMoves('a', 2));
-//        assertFalse(kingWhite.getPossibleMoves('a', 2));
-//        assertTrue(kingWhite.getPossibleMoves('d', 3));
-//
-//        assertEquals(1, board.pieceCount());
-//        assertEquals(1, board.getPiecesWhite());
-//        assertEquals(0, board.getPiecesBlack());
-//
-//
-//        King kingBlack = King.create(Piece.Color.BLACK, board);
-//        board.addPiece(kingBlack,'h', 8);
-//        assertFalse(kingBlack.getPossibleMoves('i', 8));
-//        assertEquals(2, board.pieceCount());
-//        assertEquals(1, board.getPiecesWhite());
-//        assertEquals(1, board.getPiecesBlack());
-//
-//
-//        assertTrue(kingBlack.getPossibleMoves('h', 7));
-//        assertEquals(2, board.pieceCount());
-//        assertEquals(1, board.getPiecesWhite());
-//        assertEquals(1, board.getPiecesBlack());
-//
-//
-//        assertTrue(kingBlack.getPossibleMoves('g', 8));
-//        assertEquals(2, board.pieceCount());
-//        assertEquals(1, board.getPiecesWhite());
-//        assertEquals(1, board.getPiecesBlack());
-//    }
+    public void testKingMove() {
+        board.createBoard();
+
+        King kingWhite = King.create(Piece.Color.WHITE, board);
+        board.put("d4", kingWhite);
+        ArrayList<String> possibleMoves = kingWhite.getPossibleMoves("d4");
+        assertFalse(possibleMoves.contains("b2"));
+        assertFalse(possibleMoves.contains("b4"));
+        assertFalse(possibleMoves.contains("f4"));
+        assertTrue(possibleMoves.contains("d5"));
+
+        assertEquals(1, board.pieceCount());
+        assertEquals(1, board.getPiecesWhite());
+        assertEquals(0, board.getPiecesBlack());
+
+
+        King kingBlack = King.create(Piece.Color.BLACK, board);
+        board.put("h8", kingBlack);
+        possibleMoves = kingBlack.getPossibleMoves("h8");
+        assertFalse(possibleMoves.contains("i8"));
+        assertEquals(2, board.pieceCount());
+        assertEquals(1, board.getPiecesWhite());
+        assertEquals(1, board.getPiecesBlack());
+
+
+        assertTrue(possibleMoves.contains("h7"));
+        board.movePiece("h7", kingBlack);
+        assertEquals(2, board.pieceCount());
+        assertEquals(1, board.getPiecesWhite());
+        assertEquals(1, board.getPiecesBlack());
+
+
+        assertTrue(possibleMoves.contains("g8"));
+        board.movePiece("g8", kingBlack);
+        assertEquals(2, board.pieceCount());
+        assertEquals(1, board.getPiecesWhite());
+        assertEquals(1, board.getPiecesBlack());
+    }
 //
 //    public void testQueenMove() {
 //        board.createBoard();
@@ -255,53 +263,65 @@ public class GameTest extends TestCase {
 //        assertEquals(1, board.getPiecesBlack());
 //    }
 //
-//    public void testKnightMove() {
-//        board.createBoard();
-//
-//        Knight knightWhite = Knight.create(Piece.Color.WHITE, board);
-//        board.addPiece(knightWhite,'d', 5);
-//        assertFalse(knightWhite.getPossibleMoves('d', 9));
-//        assertFalse(knightWhite.getPossibleMoves('d', 4));
-//        assertFalse(knightWhite.getPossibleMoves( 'd', 3));
-//        assertFalse(knightWhite.getPossibleMoves( 'd', 6));
-//        assertFalse(knightWhite.getPossibleMoves( 'd', 7));
-//        assertFalse(knightWhite.getPossibleMoves( 'e', 5));
-//        assertFalse(knightWhite.getPossibleMoves( 'f', 5));
-//        assertFalse(knightWhite.getPossibleMoves( 'c', 5));
-//        assertFalse(knightWhite.getPossibleMoves( 'b', 5));
-//        assertFalse(knightWhite.getPossibleMoves( 'e', 6));
-//        assertFalse(knightWhite.getPossibleMoves( 'e', 4));
-//        assertFalse(knightWhite.getPossibleMoves( 'c', 6));
-//        assertFalse(knightWhite.getPossibleMoves( 'c', 4));
-//        assertFalse(knightWhite.getPossibleMoves( 'f', 7));
-//        assertFalse(knightWhite.getPossibleMoves( 'f', 3));
-//        assertFalse(knightWhite.getPossibleMoves( 'b', 7));
-//        assertFalse(knightWhite.getPossibleMoves( 'b', 3));
-//        assertTrue(knightWhite.getPossibleMoves( 'c', 7));
-//
-//        assertEquals(1, board.pieceCount());
-//        assertEquals(1, board.getPiecesWhite());
-//        assertEquals(0, board.getPiecesBlack());
-//
-//
-//        Knight knightBlack = Knight.create(Piece.Color.BLACK, board);
-//        board.addPiece(knightBlack,'e', 3);
-//        assertFalse(knightBlack.getPossibleMoves('g', 5));
-//        assertEquals(2, board.pieceCount());
-//        assertEquals(1, board.getPiecesWhite());
-//        assertEquals(1, board.getPiecesBlack());
-//
-//
-//        assertTrue(knightBlack.getPossibleMoves('c', 4));
-//        assertEquals(2, board.pieceCount());
-//        assertEquals(1, board.getPiecesWhite());
-//        assertEquals(1, board.getPiecesBlack());
-//
-//
-//        assertFalse(knightBlack.getPossibleMoves('a', 6));
-//        assertTrue(knightBlack.getPossibleMoves('d', 6));
-//        assertEquals(2, board.pieceCount());
-//        assertEquals(1, board.getPiecesWhite());
-//        assertEquals(1, board.getPiecesBlack());
-//    }
+    public void testKnightMove() {
+        board.createBoard();
+
+        Knight knightWhite = Knight.create(Piece.Color.WHITE, board);
+        board.put("d5", knightWhite);
+        ArrayList<String> possibleMoves = knightWhite.getPossibleMoves("d5");
+        assertFalse(possibleMoves.contains("d9"));
+        assertFalse(possibleMoves.contains("d4"));
+        assertFalse(possibleMoves.contains("d3"));
+        assertFalse(possibleMoves.contains("d6"));
+        assertFalse(possibleMoves.contains("d7"));
+        assertFalse(possibleMoves.contains("b3"));
+        assertFalse(possibleMoves.contains("b5"));
+        assertFalse(possibleMoves.contains("b7"));
+        assertFalse(possibleMoves.contains("c2"));
+        assertFalse(possibleMoves.contains("c4"));
+        assertFalse(possibleMoves.contains("c5"));
+        assertFalse(possibleMoves.contains("c6"));
+        assertFalse(possibleMoves.contains("c8"));
+        assertFalse(possibleMoves.contains("e2"));
+        assertFalse(possibleMoves.contains("e4"));
+        assertFalse(possibleMoves.contains("e5"));
+        assertFalse(possibleMoves.contains("e6"));
+        assertFalse(possibleMoves.contains("e8"));
+        assertFalse(possibleMoves.contains("f3"));
+        assertFalse(possibleMoves.contains("f5"));
+        assertFalse(possibleMoves.contains("f7"));
+        assertTrue(possibleMoves.contains("e7"));
+
+
+        assertEquals(1, board.pieceCount());
+        assertEquals(1, board.getPiecesWhite());
+        assertEquals(0, board.getPiecesBlack());
+
+
+        Knight knightBlack = Knight.create(Piece.Color.BLACK, board);
+        board.put("e3", knightBlack);
+        possibleMoves = knightBlack.getPossibleMoves("e3");
+
+        assertFalse(possibleMoves.contains("g5"));
+        assertEquals(2, board.pieceCount());
+        assertEquals(1, board.getPiecesWhite());
+        assertEquals(1, board.getPiecesBlack());
+
+
+        assertTrue(possibleMoves.contains("c4"));
+        board.movePiece("c4", knightBlack);
+        possibleMoves = knightBlack.getPossibleMoves("c4");
+        assertEquals(2, board.pieceCount());
+        assertEquals(1, board.getPiecesWhite());
+        assertEquals(1, board.getPiecesBlack());
+
+    System.out.println(possibleMoves);
+
+        assertFalse(possibleMoves.contains("a6"));
+        assertTrue(possibleMoves.contains("d6"));
+        board.movePiece("d6", knightBlack);
+        assertEquals(2, board.pieceCount());
+        assertEquals(1, board.getPiecesWhite());
+        assertEquals(1, board.getPiecesBlack());
+    }
 }

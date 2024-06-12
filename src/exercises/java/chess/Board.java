@@ -62,7 +62,7 @@ public class Board {
     }
 
     public ArrayList<Integer> transformPosition2(String str){
-        ArrayList position = new ArrayList<Integer>();
+        ArrayList<Integer> position = new ArrayList<Integer>();
         int column;
         int rank;
         column = switch (str.charAt(0)) {
@@ -106,7 +106,7 @@ public class Board {
             case 5 -> "f";
             case 6 -> "g";
             case 7 -> "h";
-            default -> "Error";
+            default -> "error";
         };
         str.append(columnChar);
 
@@ -119,7 +119,7 @@ public class Board {
             case 5 -> "6";
             case 6 -> "7";
             case 7 -> "8";
-            default -> "ERROR";
+            default -> "error";
         };
         str.append(rankChar);
 
