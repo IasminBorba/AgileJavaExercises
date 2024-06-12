@@ -1,5 +1,7 @@
 package util;
 
+import java.util.*;
+
 public class Loops {
     public static int testWhile(int n){
         int factorialN = 1;
@@ -76,5 +78,12 @@ public class Loops {
             string.append(" ");
         }
         return string.toString();
+    }
+
+    public static Vector<String> vectorString(String str){
+        Vector<String> vector = new Vector<>();
+        Collections.addAll(vector, str.split(" "));
+
+        return vector;
     }
 }

@@ -2,6 +2,9 @@ package util;
 
 import junit.framework.TestCase;
 
+import java.util.List;
+import java.util.Vector;
+
 public class LoopsTest  extends TestCase {
 
     public void testFactorial(){
@@ -40,6 +43,35 @@ public class LoopsTest  extends TestCase {
         assertEquals("1 2 3 4 5* 6 7 8 9 10* 11 12", Loops.continueControl(12));
         assertEquals("1 2 3 4 5* 6 7 8 9 10* 11 12 13 14 15* 16 17 18 19", Loops.continueControl(19));
         assertEquals("1 2 3 4 5* 6 7 8 9 10* 11 12 13 14 15* 16 17 18 19 20* 21 22 23 24 25*", Loops.continueControl(25));
+    }
+
+    public void testVectorString(){
+        String string1 = Loops.continueControl(1);
+        Vector<String> expected = new Vector<>(List.of("1"));
+        assertEquals(expected, Loops.vectorString(string1));
+
+        String string2 = Loops.continueControl(5);
+        Vector<String> expected2 = new Vector<>(List.of("1","2", "3", "4", "5*"));
+        assertEquals(expected2, Loops.vectorString(string2));
+
+        String string3 = Loops.continueControl(12);
+        Vector<String> expected3 = new Vector<>(List.of("1","2", "3", "4", "5*", "6", "7", "8", "9", "10*", "11", "12"));
+        assertEquals(expected3, Loops.vectorString(string3));
+
+        String string4 = Loops.continueControl(19);
+        Vector<String> expected4 = new Vector<>(List.of(
+            "1","2", "3", "4", "5*", "6", "7", "8", "9", "10*",
+                     "11", "12", "13", "14", "15*", "16", "17", "18", "19"
+        ));
+        assertEquals(expected4, Loops.vectorString(string4));
+
+        String string5 = Loops.continueControl(25);
+        Vector<String> expected5 = new Vector<>(List.of(
+                "1","2", "3", "4", "5*", "6", "7", "8", "9", "10*",
+                "11", "12", "13", "14", "15*", "16", "17", "18", "19", "20*",
+                "21", "22", "23", "24", "25*"
+        ));
+        assertEquals(expected5, Loops.vectorString(string5));
     }
 
 }
