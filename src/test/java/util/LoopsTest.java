@@ -34,4 +34,12 @@ public class LoopsTest  extends TestCase {
         assertEquals(120, Loops.testTrue(5));
     }
 
+    public void testContinueControl(){
+        assertEquals("1", Loops.continueControl(1));
+        assertEquals("1 2 3 4 5*", Loops.continueControl(5));
+        assertEquals("1 2 3 4 5* 6 7 8 9 10* 11 12", Loops.continueControl(12));
+        assertEquals("1 2 3 4 5* 6 7 8 9 10* 11 12 13 14 15* 16 17 18 19", Loops.continueControl(19));
+        assertEquals("1 2 3 4 5* 6 7 8 9 10* 11 12 13 14 15* 16 17 18 19 20* 21 22 23 24 25*", Loops.continueControl(25));
+    }
+
 }

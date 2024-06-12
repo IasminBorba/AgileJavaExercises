@@ -59,4 +59,22 @@ public class Loops {
         }
         return factorialN;
     }
+
+    public static String continueControl(int n){
+        StringBuilder string = new StringBuilder();
+
+        for (int i = 1; i <= n; i++) {
+            String aux = i + "";
+            string.append(aux);
+
+            if ((i % 5) == 0) {
+                string.append("*");
+            }
+            if (i == n) {
+                continue;
+            }
+            string.append(" ");
+        }
+        return string.toString();
+    }
 }
