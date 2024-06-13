@@ -34,11 +34,11 @@ public class GameTest extends TestCase {
         board.addPiece(Knight.create(Piece.Color.WHITE, board), 'f', 4);
         board.addPiece(Queen.create(Piece.Color.WHITE, board), 'g', 4);
 
-        board.addPiece(Pawn.create(Piece.Color.BLACK, board), 'f', 3);
-        board.addPiece(Pawn.create(Piece.Color.BLACK, board), 'h', 3);
+        board.addPiece(Pawn.create(Piece.Color.WHITE, board), 'f', 3);
+        board.addPiece(Pawn.create(Piece.Color.WHITE, board), 'h', 3);
 
-        board.addPiece(Pawn.create(Piece.Color.BLACK, board), 'f', 2);
-        board.addPiece(Pawn.create(Piece.Color.BLACK, board), 'g', 2);
+        board.addPiece(Pawn.create(Piece.Color.WHITE, board), 'f', 2);
+        board.addPiece(Pawn.create(Piece.Color.WHITE, board), 'g', 2);
 
         board.addPiece(Rook.create(Piece.Color.WHITE, board), 'e', 1);
         board.addPiece(King.create(Piece.Color.WHITE, board), 'f', 1);
@@ -46,6 +46,7 @@ public class GameTest extends TestCase {
 
         assertEquals(19.5, game.getStrengthWhitePiece(), 0.001);
         assertEquals(20, game.getStrengthBlackPiece(), 0.001);
+
 
         String blankRank = StringUtil.appendNewLine("........");
         assertEquals(
