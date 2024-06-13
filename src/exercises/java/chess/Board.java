@@ -135,6 +135,7 @@ public class Board {
         }
         board[file][rank] = piece;
         alterPrint(piece, file, rank+1);
+        alterPosition(piece, file, rank);
     }
 
     public void movePiece(String position, Piece piece){
@@ -165,8 +166,13 @@ public class Board {
         pieces.add(piece);
         board[file][aux] = piece;
         alterPrint(piece, file, rank);
+        alterPosition(piece, file, rank);
 
         return true;
+    }
+
+    public void alterPosition(Piece piece, int column, int rank){
+        piece.setPosition(column, rank);
     }
 
     public void removePiece(Piece piece) {
@@ -279,5 +285,13 @@ public class Board {
 
     public Piece[][] getBoard() {
         return board;
+    }
+
+    public ArrayList<String> getPieces(){
+        ArrayList<String> representationPieces = new ArrayList<>();
+        for(Piece piece: pieces){
+            representationPieces.add(piece.getType().toString());
+        }
+        return representationPieces;
     }
 }

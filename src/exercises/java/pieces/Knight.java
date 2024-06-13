@@ -20,27 +20,14 @@ public class Knight extends Piece {
     @Override
     public ArrayList<String> getPossibleMoves(String position){
         ArrayList<String> moves = new ArrayList<>();
-        int column = board.transformPosition2(position).getFirst();
-        int rank = board.transformPosition2(position).getLast();
 
-        if (rank == 9 || column == 9) {
-            return moves;
+        for(int i = 1, j = 2; i < 3; i++, j--){
+            moves.add(board.transformPositionString(column+i, rank+j));
+            moves.add(board.transformPositionString(column+i, rank-j));
+            moves.add(board.transformPositionString(column-i, rank-j));
+            moves.add(board.transformPositionString(column-i, rank+j));
         }
 
-        for (int x = 0; x < 8; x++) {
-            for (int z = 0; z < 8; z++) {
-                if (this == board.getPiece(z, x )) {
-                    moves.add(board.transformPositionString(z+1, x+2));
-                    moves.add(board.transformPositionString(z+1, x-2));
-                    moves.add(board.transformPositionString(z+2, x+1));
-                    moves.add(board.transformPositionString(z+2, x-1));
-                    moves.add(board.transformPositionString(z-1, x+2));
-                    moves.add(board.transformPositionString(z-1, x-2));
-                    moves.add(board.transformPositionString(z-2, x+1));
-                    moves.add(board.transformPositionString(z-2, x-1));
-                }
-            }
-        }
         moves.removeIf(move -> move.contains("error"));
         return moves;
     }

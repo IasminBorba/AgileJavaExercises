@@ -20,26 +20,15 @@ public class Pawn extends Piece {
     @Override
     public ArrayList<String> getPossibleMoves(String position){
         ArrayList<String> moves = new ArrayList<>();
-        int column = board.transformPosition2(position).getFirst();
-        int rank = board.transformPosition2(position).getLast();
 
-        if (rank == 9 || column == 9) {
-            return moves;
-        }
-
-        for (int x = 0; x < 8; x++) {
-            for (int z = 0; z < 8; z++) {
-                if (this == board.getPiece(z, x)) {
-                    if (x < 7){
-                        if(this.isWhite()) {
-                            moves.add(board.transformPositionString(z,x+1));
-                        } else {
-                            moves.add(board.transformPositionString(z, x-1));
-                        }
-                    }
-                }
+        if (rank < 7){
+            if(this.isWhite()) {
+                moves.add(board.transformPositionString(column,rank+1));
+            } else {
+                moves.add(board.transformPositionString(column, rank-1));
             }
         }
+
         moves.removeIf(move -> move.contains("error"));
         return moves;
     }

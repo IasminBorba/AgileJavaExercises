@@ -20,27 +20,14 @@ public class King extends Piece {
     @Override
     public ArrayList<String> getPossibleMoves(String position) {
         ArrayList<String> moves = new ArrayList<>();
-        int column = board.transformPosition2(position).getFirst();
-        int rank = board.transformPosition2(position).getLast();
 
-        if (rank == 9 || column == 9) {
-            return moves;
+        moves.add(board.transformPositionString(column,rank-1));
+        moves.add(board.transformPositionString(column,rank+1));
+        for(int aux = -1; aux < 2; aux++){
+            moves.add(board.transformPositionString(column+1,rank+aux));
+            moves.add(board.transformPositionString(column-1,rank+aux));
         }
 
-        for (int x = 0; x < 8; x++) {
-            for (int z = 0; z < 8; z++) {
-                if (this == board.getPiece(z, x )) {
-                    moves.add(board.transformPositionString(z+1,x-1));
-                    moves.add(board.transformPositionString(z+1,x));
-                    moves.add(board.transformPositionString(z+1,x+1));
-                    moves.add(board.transformPositionString(z-1,x-1));
-                    moves.add(board.transformPositionString(z-1,x));
-                    moves.add(board.transformPositionString(z-1,x+1));
-                    moves.add(board.transformPositionString(z,x-1));
-                    moves.add(board.transformPositionString(z,x+1));
-                }
-            }
-        }
         moves.removeIf(move -> move.contains("error"));
         return moves;
     }

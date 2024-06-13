@@ -47,6 +47,8 @@ public class BoardTest extends  TestCase{
                         StringUtil.appendNewLine("rnbqkbnr"),
                 board.print()
         );
+
+        System.out.println(board.getPieces());
     }
 
     public void testCreateBoard(){
@@ -68,6 +70,8 @@ public class BoardTest extends  TestCase{
         Piece blackKing = King.create(Piece.Color.BLACK, board);
         board.addPiece(blackKing, 'b', 6);
         assertEquals('K', board.getPieceRepresentation('b', 6));
+
+        System.out.println(blackKing.getPiecePosition());
 
         Piece blackRook = Rook.create(Piece.Color.BLACK, board);
         board.addPiece(blackRook, 'b', 5);

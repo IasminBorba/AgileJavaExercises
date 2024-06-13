@@ -30,6 +30,8 @@ abstract public class Piece implements Comparable<Piece> {
     private final Type type;
     private double points;
     private final char representation;
+    protected int column;
+    protected int rank;
 
     protected Piece(Color color, Type type) {
         this.color = color;
@@ -82,7 +84,16 @@ abstract public class Piece implements Comparable<Piece> {
         return representation;
     }
 
-//    public boolean moves(Piece piece, int column, int rank){
-//        return getPossibleMoves(piece, column, rank);
-//    }
+    public void setPosition(int column, int rank){
+        this.column = column;
+        this.rank = rank;
+    }
+
+    public ArrayList<Integer> getPiecePosition(){
+        ArrayList<Integer> piecePosition = new ArrayList<>();
+        piecePosition.add(this.column);
+        piecePosition.add(this.rank);
+
+        return piecePosition;
+    }
 }
