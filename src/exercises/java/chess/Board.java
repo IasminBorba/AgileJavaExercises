@@ -29,9 +29,9 @@ public class Board {
         int rank;
 
         if (Objects.equals(color, Piece.Color.WHITE)) {
-            rank = 1;
+            rank = 0;
         } else {
-            rank = 8;
+            rank = 7;
         }
 
         Piece rook = Rook.create(color, this); addPiece(rook, 0, rank);
@@ -47,9 +47,9 @@ public class Board {
     public void addPiecesPawnOfRank(Piece.Color color) {
         for (int z = 0; z < 8; z++) {
             if (Objects.equals(color, Piece.Color.WHITE)) {
-                addPiece(Pawn.create(color, this),z,2);
+                addPiece(Pawn.create(color, this),z,1);
             } else {
-                addPiece(Pawn.create(color, this), z, 7);
+                addPiece(Pawn.create(color, this), z, 6);
             }
         }
     }
@@ -134,7 +134,7 @@ public class Board {
 
         }
         board[file][rank] = piece;
-        alterPrint(piece, file, rank);
+        alterPrint(piece, file, rank+1);
     }
 
     public void movePiece(String position, Piece piece){
