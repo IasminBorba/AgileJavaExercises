@@ -62,7 +62,7 @@ public class Board {
     }
 
     public ArrayList<Integer> transformPosition2(String str){
-        ArrayList<Integer> position = new ArrayList<Integer>();
+        ArrayList<Integer> position = new ArrayList<>();
         int column;
         int rank;
         column = switch (str.charAt(0)) {
@@ -127,15 +127,13 @@ public class Board {
     }
 
     public void addPiece(Piece piece, int file, int rank) {
-        int aux = rank - 1;
-
         if (!pieces.isEmpty() && pieces.getFirst() == null){
             pieces.set(0, piece);
         } else {
             pieces.add(piece);
 
         }
-        board[file][aux] = piece;
+        board[file][rank] = piece;
         alterPrint(piece, file, rank);
     }
 
@@ -276,7 +274,7 @@ public class Board {
     }
 
     public Piece getPiece(int file, int rank) {
-        return board[file][rank - 1];
+        return board[file][rank];
     }
 
     public Piece[][] getBoard() {

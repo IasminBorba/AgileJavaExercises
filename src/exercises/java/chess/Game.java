@@ -18,7 +18,7 @@ public class Game {
 
         for (int x = 0; x < 8; x++) {
             for (int z = 0; z < 8; z++) {
-                Piece auxPiece = board.getPiece(z, x + 1);
+                Piece auxPiece = board.getPiece(z, x);
                 if (auxPiece != null) {
                     if (auxPiece.isWhite()) {
                         auxWhiteStrength += auxPiece.getPoints();

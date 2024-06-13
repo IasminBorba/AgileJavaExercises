@@ -29,12 +29,12 @@ public class Pawn extends Piece {
 
         for (int x = 0; x < 8; x++) {
             for (int z = 0; z < 8; z++) {
-                if (this == board.getPiece(z, x+1)) {
+                if (this == board.getPiece(z, x)) {
                     if (x < 7){
                         if(this.isWhite()) {
-                            moves.add(board.transformPositionString(z,x+2));
+                            moves.add(board.transformPositionString(z,x+1));
                         } else {
-                            moves.add(board.transformPositionString(z, x));
+                            moves.add(board.transformPositionString(z, x-1));
                         }
                     }
                 }

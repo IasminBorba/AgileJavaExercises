@@ -18,43 +18,40 @@ public class Bishop extends Piece {
     }
 
     @Override
-//    public boolean getPossibleMoves(char file, int rank){
-//        if (rank > 8){
-//            return false;
-//        }
-//        int column = Board.transformPosition(file);
-//
-//        if (column == 9) {
-//            return false;
-//        }
-//        int aux = rank-1;
-//
-//        for (int x = 0; x < 8; x++) {
-//            for (int z = 0; z < 8; z++) {
-//                if (this == board.getPiece(z, x + 1)) {
-//                    if ((column + aux) - (z + x)  == (column-z)*2){
-//                        board.removePiece(this);
-//                        board.addPiece(this, column, rank);
-//                        return true;
-//                    } else if (column + aux == z + x) {
-//                        board.removePiece(this);
-//                        board.addPiece(this, column, rank);
-//                        return true;
-//                    } else if ((z + x) - (column + aux) == (z-column)*2) {
-//                        board.removePiece(this);
-//                        board.addPiece(this, column, rank);
-//                        return true;
-//                    } else {
-//                        return false;
-//                    }
-//                }
-//            }
-//        }
-//        return false;
-//    }
-
-    public ArrayList<String> getPossibleMoves(String position) {
+    public ArrayList<String> getPossibleMoves(String position){
         ArrayList<String> moves = new ArrayList<>();
+        int column = board.transformPosition2(position).getFirst();
+        int rank = board.transformPosition2(position).getLast();
+
+        if (rank == 9 || column == 9) {
+            return moves;
+        }
+
+        for (int x = 0; x < 8; x++) {
+            for (int z = 0; z < 8; z++) {
+                if (this == board.getPiece(z, x)) {
+                    System.out.println();
+                    for (int auxColumn = z-1, auxRankUp = x+1, auxRankDown = x-1; auxColumn >= 0; auxColumn--, auxRankDown--, auxRankUp++) {
+                        if(auxRankUp < 8){
+                            moves.add(board.transformPositionString(auxColumn, auxRankUp));
+                        }
+                        if(auxRankUp >= 0){
+                            moves.add(board.transformPositionString(auxColumn, auxRankDown));
+                        }
+                    }
+
+                    for (int auxColumn = z+1, auxRankUp = x+1, auxRankDown = x-1; auxColumn < 8; auxColumn++, auxRankDown--, auxRankUp++) {
+                        if(auxRankUp < 8){
+                            moves.add(board.transformPositionString(auxColumn, auxRankUp));
+                        }
+                        if(auxRankUp >= 0){
+                            moves.add(board.transformPositionString(auxColumn, auxRankDown));
+                        }
+                    }
+                }
+            }
+        }
+        moves.removeIf(move -> move.contains("error"));
         return moves;
     }
 }

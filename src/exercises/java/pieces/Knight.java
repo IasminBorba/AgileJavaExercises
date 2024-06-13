@@ -29,19 +29,15 @@ public class Knight extends Piece {
 
         for (int x = 0; x < 8; x++) {
             for (int z = 0; z < 8; z++) {
-                if (this == board.getPiece(z, x + 1)) {
-//                    if (column == z + 1 && (aux == x + 2 || aux == x - 2)){
-                        moves.add(board.transformPositionString(z+1, x+3));
-                        moves.add(board.transformPositionString(z+1, x-1));
-//                    } else if (column == z + 2 && (aux == x + 1 || aux == x - 1)){
-                    moves.add(board.transformPositionString(z+2, x+2));
-                    moves.add(board.transformPositionString(z+2, x));
-//                    } else if (column == z - 1 && (aux == x + 2 || aux == x - 2)){
-                    moves.add(board.transformPositionString(z-1, x+3));
-                    moves.add(board.transformPositionString(z-1, x-1));
-//                    } else if (column == z - 2 && (aux == x + 1 || aux == x - 1)){
-                    moves.add(board.transformPositionString(z-2, x+2));
-                    moves.add(board.transformPositionString(z-2, x));
+                if (this == board.getPiece(z, x )) {
+                    moves.add(board.transformPositionString(z+1, x+2));
+                    moves.add(board.transformPositionString(z+1, x-2));
+                    moves.add(board.transformPositionString(z+2, x+1));
+                    moves.add(board.transformPositionString(z+2, x-1));
+                    moves.add(board.transformPositionString(z-1, x+2));
+                    moves.add(board.transformPositionString(z-1, x-2));
+                    moves.add(board.transformPositionString(z-2, x+1));
+                    moves.add(board.transformPositionString(z-2, x-1));
                 }
             }
         }
