@@ -1,6 +1,8 @@
 package util;
 
 import junit.framework.TestCase;
+import java.util.logging.*;
+import java.util.logging.Level;
 
 public class ExercisesTest extends TestCase {
     Exercises test = new Exercises();
@@ -112,6 +114,7 @@ public class ExercisesTest extends TestCase {
         catch (RuntimeException success) {
         }
     }
+
     public void testExceptionOrder6() {
         try {
             test.rethrows();
@@ -223,6 +226,36 @@ public class ExercisesTest extends TestCase {
 
     private void complexOperationWithSideEffects() throws Exception {
         throw new Exception("");
+    }
+
+    private void testLog(Exception e) {
+        e.printStackTrace();
+    }
+
+    public void logExceptionInReverseOrder(Exception e) {
+        Logger logger = Logger.getLogger(getClass().getName());
+        StackTraceElement[] stackTrace = e.getStackTrace();
+        StringBuilder reversedStackTrace = new StringBuilder();
+
+        reversedStackTrace.append(e).append("\n");
+        for (int i = stackTrace.length - 1; i >= 0; i--) {
+            reversedStackTrace.append("\tat ").append(stackTrace[i]).append("\n");
+        }
+
+        logger.log(Level.SEVERE, reversedStackTrace.toString());
+    }
+
+    public void test9() {
+        try {
+            throw new Exception("Exemplo de exceção");
+        } catch (Exception e) {
+            logExceptionInReverseOrder(e);
+        }
+    }
+
+    private void log(String message) {
+        Logger logger = Logger.getLogger(getClass().getName());
+        logger.info(message);
     }
 
 
