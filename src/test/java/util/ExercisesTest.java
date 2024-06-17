@@ -209,8 +209,21 @@ public class ExercisesTest extends TestCase {
         } catch (Exception success) {}
     }
 
+    public void testDoSomething2() {
+        try {
+            complexOperationWithSideEffects();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     void doSomething() throws Exception {
         throw new Exception("blah");
     }
+
+    private void complexOperationWithSideEffects() throws Exception {
+        throw new Exception("");
+    }
+
 
 }
