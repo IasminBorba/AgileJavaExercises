@@ -44,7 +44,6 @@ public class LoopsTest  extends TestCase {
         assertEquals("1 2 3 4 5* 6 7 8 9 10* 11 12 13 14 15* 16 17 18 19", Loops.continueControl(19));
         assertEquals("1 2 3 4 5* 6 7 8 9 10* 11 12 13 14 15* 16 17 18 19 20* 21 22 23 24 25*", Loops.continueControl(25));
     }
-
     public void testVectorString(){
         String string1 = Loops.continueControl(1);
         Vector<String> expected = new Vector<>(List.of("1"));
@@ -83,5 +82,4 @@ public class LoopsTest  extends TestCase {
         assertEquals(string5, Loops.vectorStringEnumeration(expected5));
         assertEquals(string5, Loops.notParameterizedTypes(expected5));
     }
-
 }
