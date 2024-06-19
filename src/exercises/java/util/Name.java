@@ -1,7 +1,8 @@
 package util;
 
 public class Name {
-    String name;
+    public String name;
+
     Name(String name){
         this.name = name;
     }
