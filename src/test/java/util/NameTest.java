@@ -26,7 +26,7 @@ public class NameTest extends TestCase {
         assertTrue(!nameA.equals(null));
     }
 
-    public void testHashCodePerformance() {
+    public void testSet() {
         Set<Name> nameSet = new HashSet<>();
         nameSet.add(new Name("Foo"));
         nameSet.add(new Name("Foo1"));
