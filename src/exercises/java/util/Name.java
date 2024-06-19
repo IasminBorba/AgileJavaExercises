@@ -11,6 +11,12 @@ public class Name {
         if(object == null){
             return false;
         }
+        if(this == object){
+            return true;
+        }
+        if(this.getClass() != object.getClass()){
+            return false;
+        }
         Name that = (Name)object;
         return this.name.equals(that.name);
     }

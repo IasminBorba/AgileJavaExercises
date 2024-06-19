@@ -28,12 +28,9 @@ public class NameTest extends TestCase {
 
     public void testHashCodePerformance() {
         Set<Name> nameSet = new HashSet<>();
-        Name name1 = new Name("Foo");
-        nameSet.add(name1);
-        Name name2 = new Name("Foo1");
-        nameSet.add(name2);
-        Name name3 = new Name("Foo2");
-        nameSet.add(name3);
+        nameSet.add(new Name("Foo"));
+        nameSet.add(new Name("Foo1"));
+        nameSet.add(new Name("Foo2"));
 
         assertFalse(nameSet.contains(new Name("Foo")));
 
