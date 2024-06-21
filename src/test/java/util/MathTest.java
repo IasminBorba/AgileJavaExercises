@@ -2,6 +2,8 @@ package util;
 
 import junit.framework.TestCase;
 import java.math.*;
+import java.util.*;
+
 import static java.lang.Math.*;
 import static org.junit.Assert.assertNotEquals;
 
@@ -95,6 +97,16 @@ public class MathTest extends TestCase {
         assertEquals(Float.NaN, Float.NEGATIVE_INFINITY / Float.POSITIVE_INFINITY);
         assertEquals(Float.NaN, Float.POSITIVE_INFINITY * 0);
         assertEquals(Float.NaN, Float.NEGATIVE_INFINITY * 0);
+    }
 
+    public void testIntegerDivision(){
+        Set<Integer> listNumber = new HashSet<>(Arrays.asList(7,15,20,249,75,3,10));
+        List<Integer> number3 = new ArrayList<>(Arrays.asList(3,249, 75,15));
+
+        List<Integer> result1 = Math.divisibleBy3(listNumber);
+        assertEquals(number3, result1);
+
+        List<Integer> result2 = Math.divisibleBy3Plus(listNumber);
+        assertEquals(number3, result2);
     }
 }

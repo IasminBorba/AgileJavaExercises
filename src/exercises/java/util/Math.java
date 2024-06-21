@@ -1,5 +1,9 @@
 package util;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import static java.lang.Math.*;
 
 public class Math {
@@ -56,6 +60,28 @@ public class Math {
             }
         }
 
+        return result;
+    }
+
+    public static List<Integer> divisibleBy3(Set<Integer> listNumbers){
+        List<Integer> result = new ArrayList<>();
+        for(int number : listNumbers){
+            if (number % 3 == 0){
+                result.add(number);
+            }
+        }
+        return result;
+    }
+
+    public static List<Integer> divisibleBy3Plus(Set<Integer> listNumbers){
+        List<Integer> result = new ArrayList<>();
+        boolean permission = true;
+        for(int number : listNumbers){
+            int aux = number/3;
+            if (aux * 3 == number) {
+                result.add(number);
+            }
+        }
         return result;
     }
 }
