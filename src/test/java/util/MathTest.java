@@ -1,9 +1,8 @@
 package util;
 
 import junit.framework.TestCase;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-
+import java.math.*;
+import static java.lang.Math.*;
 import static org.junit.Assert.assertNotEquals;
 
 public class MathTest extends TestCase {
@@ -57,8 +56,45 @@ public class MathTest extends TestCase {
         int valueDecimal2 = Math.hexDecimal("0xDEAD");
         assertEquals(57005, valueDecimal2);
 
-        
+
         String valueOctal = new BigInteger(String.valueOf(valueDecimal)).toString(8);
         assertEquals("157255", valueOctal);
+    }
+
+    public void testNaNInfinity(){
+        //Usamdp float, mas tudo se aplica pra o tipo Double;
+
+        assertEquals(Float.NaN, (0.0f/0));
+        assertEquals(Float.NaN, (float) sqrt(-1));
+        assertEquals(Float.NaN, (10.0f % 0.0f));
+        assertEquals(Float.NaN, Float.NaN * 1f);
+        assertEquals(Float.NaN, Float.NaN / 1f);
+        assertEquals(Float.NaN, Float.NaN + 1f);
+        assertEquals(Float.NaN, Float.NaN - 1f);
+        assertEquals(Float.NaN, Float.NaN * Float.NaN);
+        assertEquals(Float.NaN, Float.NaN / Float.NaN);
+        assertEquals(Float.NaN, Float.NaN + Float.NaN);
+        assertEquals(Float.NaN, Float.NaN - Float.NaN);
+
+
+        assertEquals(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY - Float.NEGATIVE_INFINITY);
+        assertEquals(Float.POSITIVE_INFINITY, (1.0f/0));
+
+        assertEquals(Float.NEGATIVE_INFINITY, Float.NEGATIVE_INFINITY - Float.POSITIVE_INFINITY);
+        assertEquals(Float.NEGATIVE_INFINITY, Float.NEGATIVE_INFINITY + Float.NEGATIVE_INFINITY);
+        assertEquals(Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY * Float.NEGATIVE_INFINITY);
+        assertEquals(Float.NEGATIVE_INFINITY, Float.NEGATIVE_INFINITY * Float.POSITIVE_INFINITY);
+        assertEquals(Float.NEGATIVE_INFINITY, (-1.0f/0));
+
+
+        assertEquals(Float.NaN, Float.POSITIVE_INFINITY + Float.NEGATIVE_INFINITY);
+        assertEquals(Float.NaN, Float.NEGATIVE_INFINITY - Float.NEGATIVE_INFINITY);
+        assertEquals(Float.NaN, Float.POSITIVE_INFINITY - Float.POSITIVE_INFINITY);
+        assertEquals(Float.NaN, Float.NEGATIVE_INFINITY + Float.POSITIVE_INFINITY);
+        assertEquals(Float.NaN, Float.POSITIVE_INFINITY / Float.NEGATIVE_INFINITY);
+        assertEquals(Float.NaN, Float.NEGATIVE_INFINITY / Float.POSITIVE_INFINITY);
+        assertEquals(Float.NaN, Float.POSITIVE_INFINITY * 0);
+        assertEquals(Float.NaN, Float.NEGATIVE_INFINITY * 0);
+
     }
 }
