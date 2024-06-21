@@ -1,8 +1,8 @@
 package util;
 
 import junit.framework.TestCase;
-
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import static org.junit.Assert.assertNotEquals;
 
@@ -46,5 +46,19 @@ public class MathTest extends TestCase {
 //        float x = 0.01;  ERROR
         float x = 0.01f;
         float y = (float)0.01;
+    }
+
+    public void testSpikeDecimalValue(){
+        String strValue = "0xDEAD";
+
+        int valueDecimal = Integer.decode("0xDEAD");
+        assertEquals(57005, valueDecimal);
+
+        int valueDecimal2 = Math.hexDecimal("0xDEAD");
+        assertEquals(57005, valueDecimal2);
+
+        
+        String valueOctal = new BigInteger(String.valueOf(valueDecimal)).toString(8);
+        assertEquals("157255", valueOctal);
     }
 }
