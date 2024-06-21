@@ -25,4 +25,26 @@ public class MathTest extends TestCase {
         BigDecimal bigDecimalNotPrime = new BigDecimal("10").divide(bigDecimalScale);
         assertEquals(testBigDecimal2, bigDecimalNotPrime);
     }
+
+    public void testFloat(){
+        float number1 = 0.9f;
+        float number2 = 0.005f*2.0f;
+        assertNotEquals(number1, number2);
+
+        float precisionFloat = 0.9f;
+        double precisionDouble = 0.9;
+        assertEquals(number1, number2, precisionFloat);
+        assertEquals(number1, number2, precisionDouble);
+
+        double number12 = 0.9;
+        double number22 = 0.005*2.0;
+        assertEquals(number1, number2, precisionFloat);
+        assertEquals(number1, number2, precisionDouble);
+    }
+
+    public static class CompilerError{
+//        float x = 0.01;  ERROR
+        float x = 0.01f;
+        float y = (float)0.01;
+    }
 }
