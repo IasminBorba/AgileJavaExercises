@@ -2,6 +2,7 @@ package util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import static java.lang.Math.*;
@@ -83,5 +84,10 @@ public class Math {
             }
         }
         return result;
+    }
+
+    public static int random(int limit, int initial){
+        Random random = new Random();
+        return initial + random.nextInt(limit-1);
     }
 }

@@ -4,6 +4,7 @@ import junit.framework.TestCase;
 import java.math.*;
 import java.util.*;
 import static java.lang.Math.*;
+import static java.util.Arrays.asList;
 import static org.junit.Assert.assertNotEquals;
 
 public class MathTest extends TestCase {
@@ -99,8 +100,8 @@ public class MathTest extends TestCase {
     }
 
     public void testIntegerDivision(){
-        Set<Integer> listNumber = new HashSet<>(Arrays.asList(7,15,20,249,75,3,10));
-        List<Integer> number3 = new ArrayList<>(Arrays.asList(3,249, 75,15));
+        Set<Integer> listNumber = new HashSet<>(asList(7,15,20,249,75,3,10));
+        List<Integer> number3 = new ArrayList<>(asList(3,249, 75,15));
 
         List<Integer> result1 = Math.divisibleBy3(listNumber);
         assertEquals(number3, result1);
@@ -218,5 +219,25 @@ public class MathTest extends TestCase {
         //1111_1111_1111_1111_1111_1111_1111_0110 = -10
         // 0111_1111_1111_1111_1111_1111_1111_1011 = 2147483643
         assertEquals(2147483643,-10>>>1);
+    }
+
+    public void testRandom(){
+        int number = Math.random(50,1);
+        assertTrue(number > 0 && number <= 50);
+
+        ArrayList<Integer> list = new ArrayList<>(asList(7,15,20,249,75,3,10));
+        int listSize = list.size();
+        for(int x = 0; x < 100; x++){
+            int index = Math.random(listSize,1);
+            list.set(index, Math.random(100,1));
+        }
+
+        assertTrue(list.size() == listSize);
+        assertTrue(!list.equals(new ArrayList<>(asList(7, 15, 20, 249, 75, 3, 10))));
+
+        Random random = new Random();
+        assertNotEquals(random.nextDouble(1), random.nextDouble());
+        System.out.println(random.nextDouble(1));
+        System.out.println(random.nextDouble());
     }
 }
