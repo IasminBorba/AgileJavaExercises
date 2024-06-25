@@ -109,4 +109,21 @@ public class MathTest extends TestCase {
         List<Integer> result2 = Math.divisibleBy3Plus(listNumber);
         assertEquals(number3, result2);
     }
+
+    public void testRounding(){
+        int number11 = (int)1.9;
+        System.out.println(number11);
+
+        double number12 = rint(1.9);
+        System.out.println(number12);
+
+        double numberA13 = rint(1.5);
+        System.out.println(numberA13);
+        double numberB13 = rint(2.5);
+        System.out.println(numberB13);
+        double numberC13 = rint(3.5);
+        System.out.println(numberC13);
+        double numberD13 = rint(4.5);
+        System.out.println(numberD13);
+    }
 }
