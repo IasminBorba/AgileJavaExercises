@@ -3,7 +3,6 @@ package util;
 import junit.framework.TestCase;
 import java.math.*;
 import java.util.*;
-
 import static java.lang.Math.*;
 import static org.junit.Assert.assertNotEquals;
 
@@ -125,5 +124,72 @@ public class MathTest extends TestCase {
         System.out.println(numberC13);
         double numberD13 = rint(4.5);
         System.out.println(numberD13);
+    }
+
+    public void testExpressions() {
+        int x = 5;
+        int y = 10;
+        double numberA = x * 5 + (double) y++ * 7 / 4;
+        System.out.println("numberA = " + numberA + "\nx = " + x + "\ny = " + y);
+
+        x = 5;
+        y = 10;
+        int numberB = ++ x * 5 * y++;
+        System.out.println("numberB = " + numberB + "\nx = " + x + "\ny = " + y);
+
+        x = 5;
+        y = 10;
+        int numberC = x++ * 5 * ++y;
+        System.out.println("numberC = " + numberC + "\nx = " + x + "\ny = " + y);
+
+        x = 5;
+        y = 10;
+        int numberD = ++ x + 5 * 7 + y++;
+        System.out.println("numberD = " + numberD + "\nx = " + x + "\ny = " + y);
+
+//        int numberE = ++ y++ % ++x++;
+        x = 5; y = 10;
+
+        x++; y++;
+        // 11 ++ % 6++
+        int numberE = y++ % x++;
+        System.out.println("numberE = " + numberE + "\nx = " + x + "\ny = " + y);
+
+//        int numberF = x * 7 == 35 || y++ == 0;
+        x = 5;
+        y = 10;
+//        // 5*7 = 35  || 10 != 0
+        boolean numberF = ((x * 7 == 35) || y++ == 0);
+        System.out.println("numberF = " + numberF + "\nx = " + x + "\ny = " + y);
+
+        x = 5;
+        y = 10;
+        int numberG = ++ x * ++y;
+        System.out.println("numberG = " + numberG + "\nx = " + x + "\ny = " + y);
+
+        x = 5;
+        y = 10;
+        int numberH = x++ * y++;
+        System.out.println("numberH = " + numberH + "\nx = " + x + "\ny = " + y);
+
+//        true && x * 7
+        x = 5;
+        y = 10;
+        // true and 5 * 7 = 35
+        boolean numberI = true && (x * 7 == 35);
+        System.out.println("numberI = " + numberI + "\nx = " + x + "\ny = " + y);
+
+
+//        x * 2 == y || ++y == 10
+        x = 5;
+        y = 10;
+        // x * 2 = 10 = y
+        // 11 != 10
+        boolean numberJ = (x * 2 == y || ++y == 10);
+        System.out.println("numberJ = " + numberJ + "\nx = " + x + "\ny = " + y);
+        x = 5;
+        y = 10;
+        boolean numberK = (x * 2 == y && ++y == 10);
+        System.out.println("numberK = " + numberK + "\nx = " + x + "\ny = " + y);
     }
 }
