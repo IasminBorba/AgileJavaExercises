@@ -240,4 +240,16 @@ public class MathTest extends TestCase {
         System.out.println(random.nextDouble(1));
         System.out.println(random.nextDouble());
     }
+
+    public void testXor(){
+        int number1 = 5;
+        int number2 = 7;
+
+        number1 = number1 ^ number2;
+        number2 = number1 ^ number2;
+        assertEquals(5, number2);
+
+        number1 = number2 ^ number1;
+        assertEquals(7, number1);
+    }
 }
