@@ -252,4 +252,13 @@ public class MathTest extends TestCase {
         number1 = number2 ^ number1;
         assertEquals(7, number1);
     }
+
+    public void testBitCount(){
+        // char(16), byte(8), short(16), int(32), long(64)
+        assertEquals(16, Math.bitCount((long) Character.MAX_VALUE)-1);
+        assertEquals(8, Math.bitCount((long) Byte.MAX_VALUE));
+        assertEquals(16, Math.bitCount((long) Short.MAX_VALUE));
+        assertEquals(32, Math.bitCount((long) Integer.MAX_VALUE));
+        assertEquals(64, Math.bitCount(Long.MAX_VALUE));
+    }
 }

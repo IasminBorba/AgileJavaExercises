@@ -90,4 +90,15 @@ public class Math {
         Random random = new Random();
         return initial + random.nextInt(limit-1);
     }
+
+    public static int bitCount(Long value) {
+        int bits = 0;
+        while (value != 0) {
+            value >>= 1;
+            bits++;
+        }
+        bits++;
+
+        return bits;
+    }
 }
