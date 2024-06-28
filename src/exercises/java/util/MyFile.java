@@ -2,11 +2,11 @@ package util;
 
 import java.io.*;
 
-public class MyFIle {
+public class MyFile {
     File file;
     String filename;
 
-    public MyFIle(String filename){
+    public MyFile(String filename){
         this.file = new File(filename);
         this.filename = filename;
     }

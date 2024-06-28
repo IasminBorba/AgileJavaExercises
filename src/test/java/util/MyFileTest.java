@@ -7,10 +7,10 @@ import static org.junit.Assert.assertNotEquals;
 public class MyFileTest extends TestCase {
     public void testCreate() throws IOException {
         String filename = "testMyFile.txt";
-        MyFIle file = new MyFIle(filename);
+        MyFile file = new MyFile(filename);
         assertEquals(filename, file.filename);
 
-        MyFIle file2 = new MyFIle("testMyFIle2.txt");
+        MyFile file2 = new MyFile("testMyFIle2.txt");
         assertEquals("testMyFIle2.txt", file2.filename);
 
         String text = "Test abcd\n 123";
@@ -26,7 +26,7 @@ public class MyFileTest extends TestCase {
     }
 
     public void testExclude() throws IOException {
-        MyFIle fileExclude = new MyFIle("testExclude.txt");
+        MyFile fileExclude = new MyFile("testExclude.txt");
         fileExclude.write("test");
         assertEquals("test", fileExclude.read());
 
@@ -39,7 +39,7 @@ public class MyFileTest extends TestCase {
     }
 
     public void testOverWrite() throws IOException{
-        MyFIle fileExist = new MyFIle("testExist.txt");
+        MyFile fileExist = new MyFile("testExist.txt");
         fileExist.write("test1");
         assertEquals("test1", fileExist.read());
 
