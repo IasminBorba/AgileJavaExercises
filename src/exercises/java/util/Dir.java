@@ -35,25 +35,16 @@ public class Dir {
 
     public MyFile addMyFile(String filename){
         File fileAux = new File(directory, filename);
-        return new MyFile(fileAux.getPath());
+        MyFile myFile = new MyFile(new File(directory, filename).getPath());
+        myFiles.add(myFile);
+        return myFile;
     }
 
-    public void listMyFiles() throws IOException {
-        File[] files = directory.listFiles();
-        if (files == null) {
-            throw new IOException("Failed to list files in directory: " + directory.getPath());
+    public int getMyFiles() throws Exception{
+        if(!this.directory.isDirectory())
+            throw new IOException("Directory not already exists");
+        else {
+            return myFiles.size();
         }
-
-        for (File file : files) {
-            if (file.isFile()) {
-                myFiles.add(new MyFile(file.getPath()));
-                file.delete();
-            }
-        }
-    }
-
-    public int getMyFiles() throws IOException {
-        listMyFiles();
-        return myFiles.size();
     }
 }

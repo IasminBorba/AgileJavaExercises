@@ -1,7 +1,6 @@
 package util;
 
 import junit.framework.TestCase;
-
 import java.io.IOException;
 import java.util.Objects;
 
@@ -18,7 +17,7 @@ public class DirTest extends TestCase {
             "Finalmente, forneça um método que retorne uma lista de objetos MyFile " +
     "no diretório e lance uma exceção se o diretório ainda não tiver sido criado.";
 
-    public void testCreate() throws IOException {
+    public void testCreate() throws Exception {
         String dirName = "testDir";
         Dir dir = null;
 
@@ -34,17 +33,19 @@ public class DirTest extends TestCase {
         assertEquals(0, dir.getMyFiles());
     }
 
-    public void testMyFiles() throws IOException {
+    public void testMyFiles() throws Exception {
         String dirName = "testDir";
         Dir dir = null;
 
         try {
             dir = new Dir(dirName);
         } catch (IOException e){
-            if (Objects.equals(e.getMessage(), "Directory not already exists"))
+            if (Objects.equals(e.getMessage(), "Directory not already exists")) {
                 dir = ensureExists(dirName);
-            else
+            }
+            else {
                 System.out.println(e.getMessage());
+            }
         }
 
         assertEquals("testDir", dir.dirName);
@@ -62,8 +63,12 @@ public class DirTest extends TestCase {
 
 
         assertEquals(3, dir.getMyFiles());
-//        assertTrue(dir.myFiles.contains(myFile1));
-//        assertTrue(dir.myFiles.contains(myFile2));
-//        assertTrue(dir.myFiles.contains(myFile3));
+        assertTrue(dir.myFiles.contains(myFile1));
+        assertTrue(dir.myFiles.contains(myFile2));
+        assertTrue(dir.myFiles.contains(myFile3));
+
+        myFile1.delete();
+        myFile2.delete();
+        myFile3.delete();
     }
 }
