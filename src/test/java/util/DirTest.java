@@ -1,7 +1,7 @@
 package util;
 
 import junit.framework.TestCase;
-import java.io.IOException;
+import java.io.*;
 import java.util.Objects;
 
 import static util.Dir.ensureExists;
@@ -70,5 +70,50 @@ public class DirTest extends TestCase {
         myFile1.delete();
         myFile2.delete();
         myFile3.delete();
+    }
+
+    public static void main(String[] args) {
+        DirTest test = new DirTest();
+        test.runTests();
+    }
+
+    public void runTests() {
+        System.out.println("Test without OutputStreamWriter:");
+        captureExceptionWithoutOutputStreamWriter();
+
+        System.out.println("\nTest with OutputStreamWriter:");
+        captureExceptionWithOutputStreamWriter();
+    }
+
+    private void captureExceptionWithoutOutputStreamWriter() {
+        try {
+            throw new Exception("Exception of test");
+        } catch (Exception e) {
+            try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
+                e.printStackTrace(new PrintStream(byteArrayOutputStream));
+                String stackTrace = byteArrayOutputStream.toString();
+                System.out.println(stackTrace);
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
+        }
+    }
+
+    private void captureExceptionWithOutputStreamWriter() {
+        try {
+            throw new Exception("Exception of test");
+        } catch (Exception e) {
+            try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                 OutputStreamWriter osw = new OutputStreamWriter(byteArrayOutputStream);
+                 PrintWriter pw = new PrintWriter(osw)) {
+
+                e.printStackTrace(pw);
+                pw.flush();
+                String stackTrace = byteArrayOutputStream.toString();
+                System.out.println(stackTrace);
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
+        }
     }
 }
