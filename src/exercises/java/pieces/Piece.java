@@ -2,10 +2,11 @@ package pieces;
 
 //import chess.Game;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-abstract public class Piece implements Comparable<Piece> {
+abstract public class Piece implements Comparable<Piece>, Serializable {
     public enum Color {WHITE, BLACK}
     public enum Type {
         PAWN(1,'P'),

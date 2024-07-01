@@ -2,15 +2,17 @@ package chess;
 
 import pieces.*;
 import util.StringUtil;
-import java.util.ArrayList;
-import java.util.Objects;
+import java.io.*;
+import java.util.*;
 
-public class Board {
+public class Board implements Serializable{
+    public Piece[][] board;
     int piecesWhite;
     int piecesBlack;
     private ArrayList<Piece> pieces = new ArrayList<>();
-    public  StringBuilder piecesOnTheBoard = new StringBuilder();
-    public Piece[][] board;
+    public StringBuilder piecesOnTheBoard = new StringBuilder();
+    public String filename;
+    public File file;
 
     public void initialize() {
         createBoard();
@@ -47,21 +49,21 @@ public class Board {
     public void addPiecesPawnOfRank(Piece.Color color) {
         for (int z = 0; z < 8; z++) {
             if (Objects.equals(color, Piece.Color.WHITE)) {
-                addPiece(Pawn.create(color, this),z,1);
+                addPiece(Pawn.create(color, this), z, 1);
             } else {
                 addPiece(Pawn.create(color, this), z, 6);
             }
         }
     }
 
-    public void put(String str, Piece piece){
+    public void put(String str, Piece piece) {
         int column = transformPosition2(str).getFirst();
         int rank = transformPosition2(str).getLast();
 
         addPiece(piece, column, rank);
     }
 
-    public ArrayList<Integer> transformPosition2(String str){
+    public ArrayList<Integer> transformPosition2(String str) {
         ArrayList<Integer> position = new ArrayList<>();
         int column;
         int rank;
@@ -74,7 +76,7 @@ public class Board {
             case 'f' -> 5;
             case 'g' -> 6;
             case 'h' -> 7;
-            default ->  9;
+            default -> 9;
         };
         position.add(column);
 
@@ -87,14 +89,14 @@ public class Board {
             case '6' -> 5;
             case '7' -> 6;
             case '8' -> 7;
-            default ->  9;
+            default -> 9;
         };
         position.add(rank);
 
-        return  position;
+        return position;
     }
 
-    public String transformPositionString(int columnInt, int rankInt){
+    public String transformPositionString(int columnInt, int rankInt) {
         StringBuilder str = new StringBuilder();
 
         String columnChar = switch (columnInt) {
@@ -123,22 +125,22 @@ public class Board {
         };
         str.append(rankChar);
 
-        return  str.toString();
+        return str.toString();
     }
 
     public void addPiece(Piece piece, int file, int rank) {
-        if (!pieces.isEmpty() && pieces.getFirst() == null){
+        if (!pieces.isEmpty() && pieces.getFirst() == null) {
             pieces.set(0, piece);
         } else {
             pieces.add(piece);
 
         }
         board[file][rank] = piece;
-        alterPrint(piece, file, rank+1);
+        alterPrint(piece, file, rank + 1);
         alterPosition(piece, file, rank);
     }
 
-    public void movePiece(String position, Piece piece){
+    public void movePiece(String position, Piece piece) {
         int column = transformPosition2(position).getFirst();
         int rank = transformPosition2(position).getLast();
 
@@ -159,7 +161,7 @@ public class Board {
     public boolean addPiece(Piece piece, char files, int rank) {
         int aux = rank - 1;
         int file = transformPosition(files);
-        if (file == 9){
+        if (file == 9) {
             return false;
         }
 
@@ -171,7 +173,7 @@ public class Board {
         return true;
     }
 
-    public void alterPosition(Piece piece, int column, int rank){
+    public void alterPosition(Piece piece, int column, int rank) {
         piece.setPosition(column, rank);
     }
 
@@ -192,24 +194,24 @@ public class Board {
             for (int z = 0; z < 8; z++) {
                 if (piece == board[z][x]) {
                     board[z][x] = null;
-                    alterPrint(null,z,x+1);
+                    alterPrint(null, z, x + 1);
                 }
             }
         }
     }
 
-    public void alterPrint(Piece piece, int files, int rank){
-        int lines = 8-rank;
-        int positionPiece = (lines*8) + files + lines;
+    public void alterPrint(Piece piece, int files, int rank) {
+        int lines = 8 - rank;
+        int positionPiece = (lines * 8) + files + lines;
 
-        if(piece == null){
+        if (piece == null) {
             piecesOnTheBoard.setCharAt(positionPiece, '.');
         } else {
             piecesOnTheBoard.setCharAt(positionPiece, piece.getRepresentation());
         }
     }
 
-    public static int transformPosition(char file){
+    public static int transformPosition(char file) {
         return switch (file) {
             case 'a' -> 0;
             case 'b' -> 1;
@@ -219,23 +221,23 @@ public class Board {
             case 'f' -> 5;
             case 'g' -> 6;
             case 'h' -> 7;
-            default ->  9;
+            default -> 9;
         };
     }
 
-    public String print(){
+    public String print() {
         return piecesOnTheBoard.toString();
     }
 
-    int pieceCount(){
+    int pieceCount() {
         return pieces.size();
     }
 
     String getRank(int rank) {
         StringBuilder rankPiece = new StringBuilder();
         for (int x = 0; x < 8; x++) {
-            Piece auxPIece = board[x][rank-1];
-            if(auxPIece == null){
+            Piece auxPIece = board[x][rank - 1];
+            if (auxPIece == null) {
                 rankPiece.append('.');
             } else {
                 rankPiece.append(auxPIece.getRepresentation());
@@ -244,12 +246,12 @@ public class Board {
         return rankPiece.toString();
     }
 
-    int getPiecesWhite(){
+    int getPiecesWhite() {
         int aux = 0;
         for (int x = 0; x < 8; x++) {
             for (int z = 0; z < 8; z++) {
                 Piece auxPIece = board[z][x];
-                if (auxPIece != null && auxPIece.isWhite()){
+                if (auxPIece != null && auxPIece.isWhite()) {
                     aux++;
                 }
             }
@@ -257,12 +259,12 @@ public class Board {
         return piecesWhite = aux;
     }
 
-    int getPiecesBlack(){
+    int getPiecesBlack() {
         int aux = 0;
         for (int x = 0; x < 8; x++) {
             for (int z = 0; z < 8; z++) {
                 Piece auxPIece = board[z][x];
-                if (auxPIece != null && auxPIece.isBlack()){
+                if (auxPIece != null && auxPIece.isBlack()) {
                     aux++;
                 }
             }
@@ -270,10 +272,10 @@ public class Board {
         return piecesBlack = aux;
     }
 
-    char getPieceRepresentation(char files, int rank){
+    char getPieceRepresentation(char files, int rank) {
         int file = transformPosition(files);
-        Piece piece = board[file][rank-1];
-        if(piece == null){
+        Piece piece = board[file][rank - 1];
+        if (piece == null) {
             return '.';
         }
         return piece.getRepresentation();
@@ -287,11 +289,70 @@ public class Board {
         return board;
     }
 
-    public ArrayList<String> getPieces(){
+    public ArrayList<String> getPieces() {
         ArrayList<String> representationPieces = new ArrayList<>();
-        for(Piece piece: pieces){
+        for (Piece piece : pieces) {
             representationPieces.add(piece.getType().toString());
         }
         return representationPieces;
+    }
+
+    public String readFileBoard() throws IOException {
+        StringBuilder builder = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+
+            while ((line = reader.readLine()) != null)
+                builder.append(String.format(line + "%n"));
+
+        }
+        return builder.toString();
+    }
+
+    public void writeFileBoard(String text, File file) throws IOException {
+        this.file = file;
+        this.filename = file.getName();
+        if (file.exists())
+            throw new IOException("File already exists: " + filename);
+
+        try (Writer writer = new BufferedWriter(new FileWriter(filename))) {
+            writer.write(text);
+        }
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if(object == null){
+            return false;
+        }
+        if(this == object){
+            return true;
+        }
+        if(this.getClass() != object.getClass()){
+            return false;
+        }
+        Board that = (Board) object;
+        return this.print().equals(that.print());
+    }
+
+    public void writeFileBoardObj(Board boardObj, File file) throws IOException {
+        this.file = file;
+        this.filename = file.getPath();
+        if (file.exists()) {
+            throw new IOException("File already exists: " + filename);
+        }
+
+        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(file))) {
+            output.writeObject(boardObj);
+        }
+    }
+
+    public Board readFileBoardObj() throws IOException, ClassNotFoundException {
+        Board boardObj;
+
+        try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(filename))) {
+            boardObj = (Board) input.readObject();
+        }
+        return boardObj;
     }
 }

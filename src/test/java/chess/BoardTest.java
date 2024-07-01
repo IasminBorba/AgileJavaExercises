@@ -3,6 +3,7 @@ package chess;
 import pieces.*;
 import util.StringUtil;
 import junit.framework.TestCase;
+import java.io.*;
 
 public class BoardTest extends  TestCase{
     public Board board;
@@ -89,5 +90,28 @@ public class BoardTest extends  TestCase{
                         blankRank + blankRank + blankRank,
                 board.print()
         );
+    }
+
+    public void testFileBoard() throws IOException {
+        board.initialize();
+        File fileBoard = new File("testBoard.txt");
+
+        board.writeFileBoard(board.piecesOnTheBoard.toString(), fileBoard);
+        assertEquals(board.print(), board.readFileBoard());
+
+        fileBoard.delete();
+    }
+
+    public void testFileBoardObj() throws IOException, ClassNotFoundException{
+        board.initialize();
+        String filename = "testBoardObj.txt";
+        File fileBoard = new File(filename);
+
+        try {
+            board.writeFileBoardObj(board, fileBoard);
+            assertTrue(board.equals(board.readFileBoardObj()));
+        } finally {
+            fileBoard.delete();
+        }
     }
 }
