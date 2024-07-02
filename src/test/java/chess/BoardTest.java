@@ -95,23 +95,98 @@ public class BoardTest extends  TestCase{
     public void testFileBoard() throws IOException {
         board.initialize();
         File fileBoard = new File("testBoard.txt");
+        board.insertFile(fileBoard);
 
-        board.writeFileBoard(board.piecesOnTheBoard.toString(), fileBoard);
+        board.writePiecesInFile();
+        assertTrue(fileBoard.exists() && board.file.exists());
+
+        String blankRank = StringUtil.appendNewLine("........");
+        assertEquals(StringUtil.appendNewLine("RNBQKBNR") +
+                StringUtil.appendNewLine("PPPPPPPP") +
+                blankRank + blankRank + blankRank + blankRank +
+                StringUtil.appendNewLine("pppppppp") +
+                StringUtil.appendNewLine("rnbqkbnr"),
+                board.readFileBoard()
+        );
         assertEquals(board.print(), board.readFileBoard());
 
-        fileBoard.delete();
+        board.addPiece(King.create(Piece.Color.BLACK, board), 'd', 6);
+        board.writePiecesInFile();
+        assertEquals(StringUtil.appendNewLine("RNBQKBNR") +
+                        StringUtil.appendNewLine("PPPPPPPP") +
+                        StringUtil.appendNewLine("...K....") +
+                        blankRank + blankRank + blankRank +
+                        StringUtil.appendNewLine("pppppppp") +
+                        StringUtil.appendNewLine("rnbqkbnr"),
+                board.readFileBoard()
+        );
+        assertEquals(board.print(), board.readFileBoard());
+
+
+        board.deleteFile();
+        assertFalse(board.file.exists());
+        assertFalse(fileBoard.exists());
+
+        try {
+            board.writePiecesInFile();
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            board.readFileBoard();
+        } catch (FileNotFoundException e){
+            System.out.println(e.getMessage());
+        }
+
     }
 
     public void testFileBoardObj() throws IOException, ClassNotFoundException{
         board.initialize();
         String filename = "testBoardObj.txt";
         File fileBoard = new File(filename);
+        board.insertFile(fileBoard);
+
+        board.writeFileBoardObj();
+        assertTrue(fileBoard.exists() && board.file.exists());
+        assertTrue(board.equals(board.readFileBoardObj()));
+
+        String blankRank = StringUtil.appendNewLine("........");
+        assertEquals(StringUtil.appendNewLine("RNBQKBNR") +
+                        StringUtil.appendNewLine("PPPPPPPP") +
+                        blankRank + blankRank + blankRank + blankRank +
+                        StringUtil.appendNewLine("pppppppp") +
+                        StringUtil.appendNewLine("rnbqkbnr"),
+                board.readFileBoardObj().print()
+        );
+
+        board.addPiece(King.create(Piece.Color.BLACK, board), 'd', 6);
+        board.writeFileBoardObj();
+        assertTrue(board.equals(board.readFileBoardObj()));
+        assertEquals(StringUtil.appendNewLine("RNBQKBNR") +
+                        StringUtil.appendNewLine("PPPPPPPP") +
+                        StringUtil.appendNewLine("...K....") +
+                        blankRank + blankRank + blankRank +
+                        StringUtil.appendNewLine("pppppppp") +
+                        StringUtil.appendNewLine("rnbqkbnr"),
+                board.readFileBoardObj().print()
+        );
+
+        board.deleteFile();
+        assertFalse(board.file.exists());
+        assertFalse(fileBoard.exists());
 
         try {
-            board.writeFileBoardObj(board, fileBoard);
-            assertTrue(board.equals(board.readFileBoardObj()));
-        } finally {
-            fileBoard.delete();
+            board.readFileBoardObj();
+        } catch (FileNotFoundException e){
+            System.out.println(e.getMessage());
+        }
+
+
+        try {
+            board.writeFileBoardObj();
+        } catch (Exception e){
+            System.out.println(e.getMessage());
         }
     }
 }

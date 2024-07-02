@@ -297,6 +297,15 @@ public class Board implements Serializable{
         return representationPieces;
     }
 
+    public void writePiecesInFile() throws IOException {
+        if(Objects.equals(filename, "deleted"))
+            throw new IOException("File not exists: " + filename);
+
+        try (Writer writer = new BufferedWriter(new FileWriter(filename))) {
+            writer.write(piecesOnTheBoard.toString());
+        }
+    }
+
     public String readFileBoard() throws IOException {
         StringBuilder builder = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
@@ -307,17 +316,6 @@ public class Board implements Serializable{
 
         }
         return builder.toString();
-    }
-
-    public void writeFileBoard(String text, File file) throws IOException {
-        this.file = file;
-        this.filename = file.getName();
-        if (file.exists())
-            throw new IOException("File already exists: " + filename);
-
-        try (Writer writer = new BufferedWriter(new FileWriter(filename))) {
-            writer.write(text);
-        }
     }
 
     @Override
@@ -335,15 +333,12 @@ public class Board implements Serializable{
         return this.print().equals(that.print());
     }
 
-    public void writeFileBoardObj(Board boardObj, File file) throws IOException {
-        this.file = file;
-        this.filename = file.getPath();
-        if (file.exists()) {
-            throw new IOException("File already exists: " + filename);
-        }
+    public void writeFileBoardObj() throws IOException {
+        if(Objects.equals(filename, "deleted"))
+            throw new IOException("File not exists: " + filename);
 
         try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(file))) {
-            output.writeObject(boardObj);
+            output.writeObject(this);
         }
     }
 
@@ -354,5 +349,18 @@ public class Board implements Serializable{
             boardObj = (Board) input.readObject();
         }
         return boardObj;
+    }
+
+    public void deleteFile() throws IOException{
+        if (!file.exists()){
+            throw new IOException("File not exists: " + filename);
+        }
+        file.delete();
+        filename = "deleted";
+    }
+
+    public void insertFile(File fileInsert){
+        this.file = fileInsert;
+        this.filename = file.getPath();
     }
 }
