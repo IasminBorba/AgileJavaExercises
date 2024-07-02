@@ -120,7 +120,7 @@ public class DirTest extends TestCase {
     public void testInstantiateObject() throws IOException{
         Dir dir = new Dir("testDir");
         try{
-//          Dir.Attributes attributes = new Dir.Attributes(true, false);      // Dar erro na compilação
+            Dir.Attributes attributes = new Dir.Attributes(true, false);      // Dar erro na compilação caso Attributes não fosse estatica
             Dir.Attributes attributesTrue = dir.getAttributes();             // Funciona
         } catch (Exception e){
             e.printStackTrace();
