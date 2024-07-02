@@ -47,4 +47,19 @@ public class Dir {
             return myFiles.size();
         }
     }
+
+    public Attributes getAttributes(){
+        return new Attributes(directory.canWrite(), directory.isHidden());
+    }
+
+    public static class Attributes implements Serializable{
+        boolean isReadOnly;
+
+        boolean isHidden;
+
+        Attributes(boolean isReadOnly, boolean isHidden){
+            this.isReadOnly = isReadOnly;
+            this.isHidden = isHidden;
+        }
+    }
 }
