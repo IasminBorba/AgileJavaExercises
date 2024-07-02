@@ -25,15 +25,29 @@ public class SerializableObj implements Serializable {
         return seqClass;
     }
 
-    public void serializableObj(String filename) throws IOException{
-        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(filename))) {
-            output.writeObject(this);
+    public static SerializableObj serializableObjCopy(SerializableObj obj){
+        try {
+            ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+            ObjectOutputStream output = new ObjectOutputStream(byteOut);
+            output.writeObject(obj);
+
+            ByteArrayInputStream byteIn = new ByteArrayInputStream(byteOut.toByteArray());
+            ObjectInputStream input = new ObjectInputStream(byteIn);
+            return (SerializableObj) input.readObject();
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
         }
     }
 
     public SerializableObj copyObj(String filename){
         SerializableObj obj = null;
-        try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(filename))) {
+        try {
+            ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(filename));
+            output.writeObject(this);
+            output.close();
+
+            ObjectInputStream input = new ObjectInputStream(new FileInputStream(filename));
             obj = (SerializableObj)input.readObject();
         } finally {
             return obj;
