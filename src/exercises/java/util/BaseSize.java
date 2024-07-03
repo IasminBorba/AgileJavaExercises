@@ -3,100 +3,93 @@ package util;
 import java.io.*;
 
 public class BaseSize implements Serializable {
-    public static byte[] baseChar(File file, char aChar){
-        DataOutputStream output;
-        DataInputStream input;
+    public static byte[] bytesSeq(File file) throws IOException{
+        DataInputStream input = null;
+        byte[] bytes;
+        try{
+            input = new DataInputStream(new FileInputStream(file.getPath()));
+            bytes = input.readAllBytes();
+        } finally {
+            input.close();
+        }
+        return bytes;
+    }
+
+    public byte[] baseChar(File file, char aChar, int i) throws IOException{
+        DataOutputStream output = null;
         byte[] bytes;
         try {
             output = new DataOutputStream(new FileOutputStream(file.getPath()));
             output.writeChar(aChar);
-
-            input = new DataInputStream(new FileInputStream(file.getPath()));
-            bytes = input.readAllBytes();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            bytes = bytesSeq(file);
+        } finally {
+            output.close();
         }
         return bytes;
     }
 
-    public byte[] baseInt(File file,int anInt){
-        DataOutputStream output;
-        DataInputStream input;
+    public byte[] baseInt(File file,int anInt) throws IOException{
+        DataOutputStream output = null;
         byte[] bytes;
         try {
             output = new DataOutputStream(new FileOutputStream(file.getPath()));
             output.writeInt(anInt);
-
-            input = new DataInputStream(new FileInputStream(file.getPath()));
-            bytes = input.readAllBytes();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            bytes = bytesSeq(file);
+        } finally {
+            output.close();
         }
         return bytes;
     }
 
-    public byte[] baseDouble(File file, double aDouble){
-        DataOutputStream output;
-        DataInputStream input;
+    public byte[] baseDouble(File file, double aDouble) throws IOException{
+        DataOutputStream output = null;
         byte[] bytes;
         try {
             output = new DataOutputStream(new FileOutputStream(file.getPath()));
             output.writeDouble(aDouble);
-
-            input = new DataInputStream(new FileInputStream(file.getPath()));
-            bytes = input.readAllBytes();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            bytes = bytesSeq(file);
+        } finally {
+            output.close();
         }
         return bytes;
     }
 
-    public byte[] baseLong(File file, long aLong){
-        DataOutputStream output;
-        DataInputStream input;
+    public byte[] baseLong(File file, long aLong) throws IOException{
+        DataOutputStream output = null;
         byte[] bytes;
         try {
             output = new DataOutputStream(new FileOutputStream(file.getPath()));
             output.writeLong(aLong);
-
-            input = new DataInputStream(new FileInputStream(file.getPath()));
-            bytes = input.readAllBytes();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            bytes = bytesSeq(file);
+        } finally {
+            output.close();
         }
         return bytes;
     }
 
-    public byte[] baseFloat(File file, float aFloat){
-        DataOutputStream output;
-        DataInputStream input;
+    public byte[] baseFloat(File file, float aFloat) throws IOException{
+        DataOutputStream output = null;
         byte[] bytes;
         try {
             output = new DataOutputStream(new FileOutputStream(file.getPath()));
             output.writeFloat(aFloat);
-
-            input = new DataInputStream(new FileInputStream(file.getPath()));
-            bytes = input.readAllBytes();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            bytes = bytesSeq(file);
+        } finally {
+            output.close();
         }
         return bytes;
     }
 
-    public byte[] baseShort(File file, short aShort){
-        DataOutputStream output;
-        DataInputStream input;
+    public byte[] baseShort(File file, short aShort) throws IOException{
+        DataOutputStream output = null;
         byte[] bytes;
         try {
             output = new DataOutputStream(new FileOutputStream(file.getPath()));
             output.writeShort(aShort);
-
-            input = new DataInputStream(new FileInputStream(file.getPath()));
-            bytes = input.readAllBytes();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            bytes = bytesSeq(file);
+        } finally {
+            output.close();
         }
         return bytes;
     }
-
 }

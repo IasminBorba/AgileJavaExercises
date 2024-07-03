@@ -1,7 +1,6 @@
 package util;
 
 import junit.framework.TestCase;
-
 import java.io.*;
 
 public class BaseSizeTest extends TestCase {
@@ -9,7 +8,7 @@ public class BaseSizeTest extends TestCase {
         File file = new File("testChar.txt");
         BaseSize baseSize = new BaseSize();
         char aChar = 'a';
-        byte [] bytes = BaseSize.baseChar(file, aChar);
+        byte [] bytes = baseSize.baseChar(file, aChar, 8);
         assertEquals(2, bytes.length);
         file.delete();
 
