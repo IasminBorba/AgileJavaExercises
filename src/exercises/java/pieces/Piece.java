@@ -49,7 +49,6 @@ abstract public class Piece implements Comparable<Piece>, Serializable {
     @Override
     public int compareTo(Piece that) {
         int compare = this.getType().compareTo(that.getType());
-        System.out.println(compare);
         if(compare != 0)
             return compare;
         return this.getColor().compareTo(that.getColor());

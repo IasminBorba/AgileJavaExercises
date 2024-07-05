@@ -9,7 +9,7 @@ public class Board implements Serializable{
     public Piece[][] board;
     int piecesWhite;
     int piecesBlack;
-    private ArrayList<Piece> pieces = new ArrayList<>();
+    protected ArrayList<Piece> pieces = new ArrayList<>();
     public StringBuilder piecesOnTheBoard = new StringBuilder();
     public String filename;
     public File file;

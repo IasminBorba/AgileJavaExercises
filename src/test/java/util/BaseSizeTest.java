@@ -41,17 +41,17 @@ public class BaseSizeTest extends TestCase {
         file.delete();
     }
 
-    public <T> void assertValue(T value, byte[] bytes) throws IOException{
+    public <T> void assertValue(T expectedValue, byte[] bytes) throws IOException{
         ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
         DataInputStream dis = new DataInputStream(bis);
 
-        switch (value.getClass().getSimpleName()){
-            case "Character" -> assertEquals(value, dis.readChar());
-            case "Integer" -> assertEquals(value, dis.readInt());
-            case "Double" -> assertEquals(value, dis.readDouble());
-            case "Long" -> assertEquals(value, dis.readLong());
-            case "Float" -> assertEquals(value, dis.readFloat());
-            case "Short" -> assertEquals(value, dis.readShort());
+        switch (expectedValue.getClass().getSimpleName()){
+            case "Character" -> assertEquals(expectedValue, dis.readChar());
+            case "Integer" -> assertEquals(expectedValue, dis.readInt());
+            case "Double" -> assertEquals(expectedValue, dis.readDouble());
+            case "Long" -> assertEquals(expectedValue, dis.readLong());
+            case "Float" -> assertEquals(expectedValue, dis.readFloat());
+            case "Short" -> assertEquals(expectedValue, dis.readShort());
         }
     }
 }

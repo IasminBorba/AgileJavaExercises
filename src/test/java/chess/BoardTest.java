@@ -4,6 +4,7 @@ import pieces.*;
 import util.StringUtil;
 import junit.framework.TestCase;
 import java.io.*;
+import java.util.*;
 
 public class BoardTest extends  TestCase{
     public Board board;
@@ -138,7 +139,6 @@ public class BoardTest extends  TestCase{
         } catch (FileNotFoundException e){
             System.out.println(e.getMessage());
         }
-
     }
 
     public void testFileBoardObj() throws IOException, ClassNotFoundException{
@@ -151,17 +151,12 @@ public class BoardTest extends  TestCase{
         assertTrue(fileBoard.exists() && board.file.exists());
         assertTrue(board.equals(board.readFileBoardObj()));
 
-        String blankRank = StringUtil.appendNewLine("........");
-        assertEquals(StringUtil.appendNewLine("RNBQKBNR") +
-                        StringUtil.appendNewLine("PPPPPPPP") +
-                        blankRank + blankRank + blankRank + blankRank +
-                        StringUtil.appendNewLine("pppppppp") +
-                        StringUtil.appendNewLine("rnbqkbnr"),
-                board.readFileBoardObj().print()
-        );
+        assertEquals(startingBoard(), board.readFileBoardObj().print());
 
         board.addPiece(King.create(Piece.Color.BLACK, board), 'd', 6);
         board.writeFileBoardObj();
+
+        String blankRank = StringUtil.appendNewLine("........");
         assertTrue(board.equals(board.readFileBoardObj()));
         assertEquals(StringUtil.appendNewLine("RNBQKBNR") +
                         StringUtil.appendNewLine("PPPPPPPP") +
@@ -182,11 +177,65 @@ public class BoardTest extends  TestCase{
             System.out.println(e.getMessage());
         }
 
-
         try {
             board.writeFileBoardObj();
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
+    }
+
+    public void testAnonymousInner() {
+        Board board = new Board() {
+            public void addPiecesOfRank(Piece.Color color) {
+                int rank;
+                if (Objects.equals(color, Piece.Color.WHITE)) {
+                    rank = 5;
+                } else {
+                    rank = 2;
+                }
+                Piece rook = Rook.create(color, this);
+                addPiece(rook, 6, rank);
+                Piece knight = Knight.create(color, this);
+                addPiece(knight, 7, rank);
+                Piece bishop = Bishop.create(color, this);
+                addPiece(bishop, 4, rank);
+                Piece queen = Queen.create(color, this);
+                addPiece(queen, 2, rank);
+                Piece king = King.create(color, this);
+                addPiece(king, 3, rank);
+                Piece bishop2 = Bishop.create(color, this);
+                addPiece(bishop2, 0, rank);
+                Piece knight2 = Knight.create(color, this);
+                addPiece(knight2, 1, rank);
+                Piece rook2 = Rook.create(color, this);
+                addPiece(rook2, 5, rank);
+            }
+        };
+        board.createBoard();
+        board.addPiecesOfRank(Piece.Color.WHITE);
+        board.addPiecesOfRank(Piece.Color.BLACK);
+
+        board.pieces.sort(new Comparator<Piece>() {
+            @Override
+            public int compare(Piece o1, Piece o2) {
+                return o1.compareTo(o2);
+            }
+        });
+//        assertEquals(startingBoard(), board.print());
+    }
+
+    public String startingBoard(){
+        String blankRank = StringUtil.appendNewLine("........");
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(StringUtil.appendNewLine("RNBQKBNR"));
+        stringBuilder.append(StringUtil.appendNewLine("PPPPPPPP"));
+        stringBuilder.append(blankRank);
+        stringBuilder.append(blankRank);
+        stringBuilder.append(blankRank);
+        stringBuilder.append(blankRank);
+        stringBuilder.append(StringUtil.appendNewLine("pppppppp"));
+        stringBuilder.append(StringUtil.appendNewLine("rnbqkbnr"));
+
+        return stringBuilder.toString();
     }
 }
