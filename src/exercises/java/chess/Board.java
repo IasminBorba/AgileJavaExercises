@@ -363,4 +363,33 @@ public class Board implements Serializable{
         this.file = fileInsert;
         this.filename = file.getPath();
     }
+
+    public String getSortedPositions() {
+        ArrayList<Character> positions = new ArrayList<>();
+        String ranks = print().replaceAll("\\n", "");
+
+        for(char aChar: ranks.toCharArray())
+            positions.add(aChar);
+
+        // Versão simplificada
+        // positions.sort(Character::compare);
+        positions.sort(new Comparator<Character>() {
+            @Override
+            public int compare(Character char1, Character char2) {
+                return Character.compare(char1, char2);
+            }
+        });
+
+        StringBuilder sortedString = new StringBuilder();
+        int aux = 0;
+        for (char ch : positions) {
+            sortedString.append(ch);
+            aux++;
+
+            if((aux % 8) == 0){
+                sortedString.append("\n");
+            }
+        }
+        return sortedString.toString();
+    }
 }

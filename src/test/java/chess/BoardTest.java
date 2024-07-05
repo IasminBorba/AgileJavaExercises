@@ -40,17 +40,7 @@ public class BoardTest extends  TestCase{
         char pieceE1 = board.getPieceRepresentation('e',1);
         assertEquals('k', pieceE1);
 
-        String blankRank = StringUtil.appendNewLine("........");
-        assertEquals(
-                StringUtil.appendNewLine("RNBQKBNR") +
-                        StringUtil.appendNewLine("PPPPPPPP") +
-                        blankRank + blankRank + blankRank + blankRank +
-                        StringUtil.appendNewLine("pppppppp") +
-                        StringUtil.appendNewLine("rnbqkbnr"),
-                board.print()
-        );
-
-        System.out.println(board.getPieces());
+        assertEquals(startingBoard(), board.print());
     }
 
     public void testCreateBoard(){
@@ -73,7 +63,6 @@ public class BoardTest extends  TestCase{
         board.addPiece(blackKing, 'b', 6);
         assertEquals('K', board.getPieceRepresentation('b', 6));
 
-        System.out.println(blackKing.getPiecePosition());
 
         Piece blackRook = Rook.create(Piece.Color.BLACK, board);
         board.addPiece(blackRook, 'b', 5);
@@ -101,18 +90,13 @@ public class BoardTest extends  TestCase{
         board.writePiecesInFile();
         assertTrue(fileBoard.exists() && board.file.exists());
 
-        String blankRank = StringUtil.appendNewLine("........");
-        assertEquals(StringUtil.appendNewLine("RNBQKBNR") +
-                StringUtil.appendNewLine("PPPPPPPP") +
-                blankRank + blankRank + blankRank + blankRank +
-                StringUtil.appendNewLine("pppppppp") +
-                StringUtil.appendNewLine("rnbqkbnr"),
-                board.readFileBoard()
-        );
+        assertEquals(startingBoard(), board.readFileBoard());
         assertEquals(board.print(), board.readFileBoard());
 
         board.addPiece(King.create(Piece.Color.BLACK, board), 'd', 6);
         board.writePiecesInFile();
+
+        String blankRank = StringUtil.appendNewLine("........");
         assertEquals(StringUtil.appendNewLine("RNBQKBNR") +
                         StringUtil.appendNewLine("PPPPPPPP") +
                         StringUtil.appendNewLine("...K....") +
@@ -215,13 +199,24 @@ public class BoardTest extends  TestCase{
         board.addPiecesOfRank(Piece.Color.WHITE);
         board.addPiecesOfRank(Piece.Color.BLACK);
 
-        board.pieces.sort(new Comparator<Piece>() {
-            @Override
-            public int compare(Piece o1, Piece o2) {
-                return o1.compareTo(o2);
-            }
-        });
-//        assertEquals(startingBoard(), board.print());
+        String blankRank = StringUtil.appendNewLine("........");
+        assertEquals(blankRank + blankRank + blankRank + blankRank + blankRank + blankRank +
+                StringUtil.appendNewLine("BBKNNQRR") +
+                StringUtil.appendNewLine("bbknnqrr"),
+                board.getSortedPositions()
+        );
+
+
+        Board boardA = new Board();
+        boardA.initialize();
+
+        assertEquals(blankRank + blankRank + blankRank + blankRank +
+                        StringUtil.appendNewLine("BBKNNPPP") +
+                        StringUtil.appendNewLine("PPPPPQRR") +
+                        StringUtil.appendNewLine("bbknnppp") +
+                        StringUtil.appendNewLine("pppppqrr"),
+                boardA.getSortedPositions()
+        );
     }
 
     public String startingBoard(){
