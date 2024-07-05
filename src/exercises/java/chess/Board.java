@@ -7,8 +7,8 @@ import java.util.*;
 
 public class Board implements Serializable{
     public Piece[][] board;
-    int piecesWhite;
-    int piecesBlack;
+    public int piecesWhite;
+    public int piecesBlack;
     protected ArrayList<Piece> pieces = new ArrayList<>();
     public StringBuilder piecesOnTheBoard = new StringBuilder();
     public String filename;
