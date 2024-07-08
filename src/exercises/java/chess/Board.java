@@ -20,6 +20,9 @@ public class Board implements Serializable{
         addPiecesPawnOfRank(Piece.Color.WHITE);
         addPiecesPawnOfRank(Piece.Color.BLACK);
         addPiecesOfRank(Piece.Color.BLACK);
+
+        getPiecesBlack();
+        getPiecesWhite();
     }
 
     public void createBoard() {

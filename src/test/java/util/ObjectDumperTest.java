@@ -9,8 +9,8 @@ public class ObjectDumperTest extends TestCase {
     public void testClass() throws IllegalAccessException{
         Board board = new Board();
         board.initialize();
-//        String stringDumpBoard = dumper(board);
-//        assertEquals(stringBoard(board), stringDumpBoard);
+        String stringDumpBoard = dumper(board);
+        assertEquals(stringBoard(board), stringDumpBoard);
 
         Piece piece = King.create(Piece.Color.WHITE, board);
         board.addPiece(piece, 'a', 1);
@@ -29,7 +29,7 @@ public class ObjectDumperTest extends TestCase {
         builder.append("[PRIVATE] double - points: 0.0\n");
         builder.append("[PRIVATE, FINAL] char - representation: k\n");
         builder.append("[PROTECTED] int - column: 0\n");
-        builder.append("[PROTECTED] int - rank: 1;");
+        builder.append("[PROTECTED] int - rank: 1");
 
         return builder.toString();
     }
@@ -46,25 +46,25 @@ public class ObjectDumperTest extends TestCase {
         StringBuilder builder = new StringBuilder();
 
         builder.append("Class ").append(board.getClass().getSimpleName()).append("\n\n");
-        builder.append("[Public] Two-dimensional array of Piece - board: \n").append(
-                        "\t[[lakj: [Private] Color - color: White\n" +
-                        "\t[Private] Type - type: King\n" +
-                        "\t[Private] double - points: 0\n" +
-                        "\t[Private] char - representation: k\n" +
-                        "\t[Protected] int - column: 5\n" +
-                        "\t[Protected] int - rank: 5;\n" +
+        builder.append("[PUBLIC] Two-dimensional array of Piece - board: \n").append(
+                        "\t[[lakj: [PRIVATE] Color - color: White\n" +
+                        "\t[PRIVATE] Type - type: King\n" +
+                        "\t[PRIVATE] double - points: 0\n" +
+                        "\t[PRIVATE] char - representation: k\n" +
+                        "\t[PROTECTED] int - column: 5\n" +
+                        "\t[PROTECTED] int - rank: 5;\n" +
                         "\tnull], [null, asdasd]]").append("\n");
-        builder.append("[Public] int - piecesWhite: ").append("16\n");
-        builder.append("[Public] int - piecesBlack: ").append("16\n");
-        builder.append("[Protected] ArrayList of Piece - pieces: zn").append(
+        builder.append("[PUBLIC] int - piecesWhite: ").append("16\n");
+        builder.append("[PUBLIC] int - piecesBlack: ").append("16\n");
+        builder.append("[PROTECTED] ArrayList of Piece - pieces: zn").append(
                         "\t[lakj: [Private] Color - color: White\n" +
-                        "\t[Private] Type - type: King\n" +
-                        "\t[Private] double - points: 0\n" +
-                        "\t[Private] char - representation: k\n" +
-                        "\t[Protected] int - column: 5\n" +
-                        "\t[Protected] int - rank: 5;\n" +
+                        "\t[PRIVATE] Type - type: King\n" +
+                        "\t[PRIVATE] double - points: 0\n" +
+                        "\t[PRIVATE] char - representation: k\n" +
+                        "\t[PROTECTED] int - column: 5\n" +
+                        "\t[PROTECTED] int - rank: 5;\n" +
                         "\tsasdsa]\n");
-        builder.append("[Public] StringBuilder - piecesOnTheBoard: ").append("\n").append(
+        builder.append("[PUBLIC] StringBuilder - piecesOnTheBoard: ").append("\n").append(
                         "\tRNBQKBNR\n" +
                         "\tPPPPPPPP\n" +
                         "\t........\n" +
@@ -73,8 +73,8 @@ public class ObjectDumperTest extends TestCase {
                         "\t........\n" +
                         "\tpppppppp\n" +
                         "\trnbqkbnr\n");
-        builder.append("[Public] String - filename: ").append(board.filename).append("\n");
-        builder.append("[Public] File - file: ").append(board.file).append("\n");
+        builder.append("[PUBLIC] String - filename: ").append(board.filename).append("\n");
+        builder.append("[PUBLIC] File - file: ").append(board.file);
 
         return builder.toString();
     }
