@@ -3,16 +3,17 @@ package util;
 import junit.framework.TestCase;
 import pieces.*;
 import chess.*;
-import static util.objectDumper.dumper;
+import static util.ObjectDumper.dumper;
 
 public class ObjectDumperTest extends TestCase {
     public void testClass() throws IllegalAccessException{
         Board board = new Board();
-//        board.initialize();
+        board.initialize();
 //        String stringDumpBoard = dumper(board);
 //        assertEquals(stringBoard(board), stringDumpBoard);
 
         Piece piece = King.create(Piece.Color.WHITE, board);
+        board.addPiece(piece, 'a', 1);
         String stringDumpPiece = dumper(piece);
 
 //System.out.println(stringPiece(piece));
@@ -23,12 +24,12 @@ public class ObjectDumperTest extends TestCase {
         StringBuilder builder = new StringBuilder();
 
         builder.append("Class ").append(piece.getClass().getSimpleName()).append("\n\n");
-        builder.append("[PRIVATE, FINAL] Color - color: White\n");
-        builder.append("[PRIVATE, FINAL] Type - type: King\n");
-        builder.append("[PRIVATE] double - points: 0\n");
+        builder.append("[PRIVATE, FINAL] Color - color: WHITE\n");
+        builder.append("[PRIVATE, FINAL] Type - type: KING\n");
+        builder.append("[PRIVATE] double - points: 0.0\n");
         builder.append("[PRIVATE, FINAL] char - representation: k\n");
-        builder.append("[PROTECTED] int - column: 5\n");
-        builder.append("[PROTECTED] int - rank: 5;\n");
+        builder.append("[PROTECTED] int - column: 0\n");
+        builder.append("[PROTECTED] int - rank: 1;");
 
         return builder.toString();
     }

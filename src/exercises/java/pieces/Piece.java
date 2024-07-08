@@ -1,7 +1,5 @@
 package pieces;
 
-//import chess.Game;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
