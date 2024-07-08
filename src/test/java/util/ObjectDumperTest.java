@@ -8,16 +8,19 @@ import static util.ObjectDumper.dumper;
 public class ObjectDumperTest extends TestCase {
     public void testClass() throws IllegalAccessException{
         Board board = new Board();
-        board.initialize();
+        board.createBoard();
+        Piece blackKing = King.create(Piece.Color.BLACK, board);
+        board.addPiece(blackKing, 'b', 6);
+        Piece blackRook = Rook.create(Piece.Color.BLACK, board);
+        board.addPiece(blackRook, 'b', 5);
+        Piece whiteKing = King.create(Piece.Color.WHITE, board);
+        board.addPiece(whiteKing, 'a', 1);
+
         String stringDumpBoard = dumper(board);
         assertEquals(stringBoard(board), stringDumpBoard);
 
-        Piece piece = King.create(Piece.Color.WHITE, board);
-        board.addPiece(piece, 'a', 1);
-        String stringDumpPiece = dumper(piece);
-
-//System.out.println(stringPiece(piece));
-        assertEquals(stringPiece(piece), stringDumpPiece);
+        String stringDumpPiece = dumper(whiteKing);
+        assertEquals(stringPiece(whiteKing), stringDumpPiece);
     }
 
     public String stringPiece(Piece piece){
@@ -46,33 +49,64 @@ public class ObjectDumperTest extends TestCase {
         StringBuilder builder = new StringBuilder();
 
         builder.append("Class ").append(board.getClass().getSimpleName()).append("\n\n");
-        builder.append("[PUBLIC] Two-dimensional array of Piece - board: \n").append(
-                        "\t[[lakj: [PRIVATE] Color - color: White\n" +
-                        "\t[PRIVATE] Type - type: King\n" +
-                        "\t[PRIVATE] double - points: 0\n" +
-                        "\t[PRIVATE] char - representation: k\n" +
-                        "\t[PROTECTED] int - column: 5\n" +
-                        "\t[PROTECTED] int - rank: 5;\n" +
-                        "\tnull], [null, asdasd]]").append("\n");
-        builder.append("[PUBLIC] int - piecesWhite: ").append("16\n");
-        builder.append("[PUBLIC] int - piecesBlack: ").append("16\n");
-        builder.append("[PROTECTED] ArrayList of Piece - pieces: zn").append(
-                        "\t[lakj: [Private] Color - color: White\n" +
-                        "\t[PRIVATE] Type - type: King\n" +
-                        "\t[PRIVATE] double - points: 0\n" +
-                        "\t[PRIVATE] char - representation: k\n" +
-                        "\t[PROTECTED] int - column: 5\n" +
-                        "\t[PROTECTED] int - rank: 5;\n" +
-                        "\tsasdsa]\n");
+        builder.append("[PUBLIC] Two-dimensional array of Piece - board: \n").append("Class Piece[][]\n\n");
+
+//                        "\t[[lakj: [PRIVATE] Color - color: White\n" +
+//                        "\t[PRIVATE] Type - type: King\n" +
+//                        "\t[PRIVATE] double - points: 0\n" +
+//                        "\t[PRIVATE] char - representation: k\n" +
+//                        "\t[PROTECTED] int - column: 5\n" +
+//                        "\t[PROTECTED] int - rank: 5;\n" +
+//                        "\tnull], [null, asdasd]]").append("\n");
+        builder.append("[PUBLIC] int - piecesWhite: ").append("1\n");
+        builder.append("[PUBLIC] int - piecesBlack: ").append("2\n");
+        builder.append("[PROTECTED] ArrayList of Piece - pieces: \n").append(
+                        "Class King\n\n" +
+                        "[PRIVATE, FINAL] Board - board: \n" +
+                        "Circular reference detected\n\n" +
+                        "[PRIVATE, FINAL] Color - color: \n" +
+                        "Class Color\n\n" +
+                        "[PRIVATE, FINAL] Type - type: \n" +
+                        "Class Type\n\n" +
+                        "[PRIVATE, FINAL] double - points: 0.0\n" +
+                        "[PRIVATE, FINAL] char - representation: K\n" +
+                        "[PRIVATE] double - points: 0.0\n" +
+                        "[PRIVATE, FINAL] char - representation: K\n" +
+                        "[PROTECTED] int - column: 1\n" +
+                        "[PROTECTED] int - rank: 6\n" +
+                        "Class Rook\n\n" +
+                        "[PRIVATE, FINAL] Board - board: \n" +
+                        "Circular reference detected\n\n" +
+                        "[PRIVATE, FINAL] Color - color: \n" +
+                        "Circular reference detected\n\n" +
+                        "[PRIVATE, FINAL] Type - type: \n" +
+                        "Class Type\n\n" +
+                        "[PRIVATE, FINAL] double - points: 5.0\n" +
+                        "[PRIVATE, FINAL] char - representation: R\n" +
+                        "[PRIVATE] double - points: 5.0\n" +
+                        "[PRIVATE, FINAL] char - representation: R\n" +
+                        "[PROTECTED] int - column: 1\n" +
+                        "[PROTECTED] int - rank: 5\n" +
+                        "Class King\n\n" +
+                        "[PRIVATE, FINAL] Board - board: \n" +
+                        "Circular reference detected\n\n" +
+                        "[PRIVATE, FINAL] Color - color: \n" +
+                        "Class Color\n\n" +
+                        "[PRIVATE, FINAL] Type - type: \n" +
+                        "Circular reference detected\n\n" +
+                        "[PRIVATE] double - points: 0.0\n" +
+                        "[PRIVATE, FINAL] char - representation: k\n" +
+                        "[PROTECTED] int - column: 0\n" +
+                        "[PROTECTED] int - rank: 1\n\n");
         builder.append("[PUBLIC] StringBuilder - piecesOnTheBoard: ").append("\n").append(
-                        "\tRNBQKBNR\n" +
-                        "\tPPPPPPPP\n" +
+                        "\t........\n" +
+                        "\t........\n" +
+                        "\t.K......\n" +
+                        "\t.R......\n" +
                         "\t........\n" +
                         "\t........\n" +
                         "\t........\n" +
-                        "\t........\n" +
-                        "\tpppppppp\n" +
-                        "\trnbqkbnr\n");
+                        "\tk.......\n");
         builder.append("[PUBLIC] String - filename: ").append(board.filename).append("\n");
         builder.append("[PUBLIC] File - file: ").append(board.file);
 
