@@ -20,9 +20,6 @@ public class Board implements Serializable{
         addPiecesPawnOfRank(Piece.Color.WHITE);
         addPiecesPawnOfRank(Piece.Color.BLACK);
         addPiecesOfRank(Piece.Color.BLACK);
-
-        getPiecesBlack();
-        getPiecesWhite();
     }
 
     public void createBoard() {
@@ -141,6 +138,7 @@ public class Board implements Serializable{
         board[file][rank] = piece;
         alterPrint(piece, file, rank + 1);
         alterPosition(piece, file, rank);
+        updatePieces();
     }
 
     public void movePiece(String position, Piece piece) {
@@ -172,7 +170,7 @@ public class Board implements Serializable{
         board[file][aux] = piece;
         alterPrint(piece, file, rank);
         alterPosition(piece, file, rank);
-
+        updatePieces();
         return true;
     }
 
@@ -201,6 +199,7 @@ public class Board implements Serializable{
                 }
             }
         }
+        updatePieces();
     }
 
     public void alterPrint(Piece piece, int files, int rank) {
@@ -374,8 +373,6 @@ public class Board implements Serializable{
         for(char aChar: ranks.toCharArray())
             positions.add(aChar);
 
-        // Versão simplificada
-        // positions.sort(Character::compare);
         positions.sort(new Comparator<Character>() {
             @Override
             public int compare(Character char1, Character char2) {
@@ -394,5 +391,10 @@ public class Board implements Serializable{
             }
         }
         return sortedString.toString();
+    }
+
+    public void updatePieces() {
+        getPiecesBlack();
+        getPiecesWhite();
     }
 }

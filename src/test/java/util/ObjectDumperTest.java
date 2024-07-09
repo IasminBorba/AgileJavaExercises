@@ -49,15 +49,98 @@ public class ObjectDumperTest extends TestCase {
         StringBuilder builder = new StringBuilder();
 
         builder.append("Class ").append(board.getClass().getSimpleName()).append("\n\n");
-        builder.append("[PUBLIC] Two-dimensional array of Piece - board: \n").append("Class Piece[][]\n\n");
-
-//                        "\t[[lakj: [PRIVATE] Color - color: White\n" +
-//                        "\t[PRIVATE] Type - type: King\n" +
-//                        "\t[PRIVATE] double - points: 0\n" +
-//                        "\t[PRIVATE] char - representation: k\n" +
-//                        "\t[PROTECTED] int - column: 5\n" +
-//                        "\t[PROTECTED] int - rank: 5;\n" +
-//                        "\tnull], [null, asdasd]]").append("\n");
+        builder.append("[PUBLIC] Array 2D of Piece - board: \n").append(
+                "\n" +
+                "\tClass King\n" +
+                "\t\n" +
+                "\t[PRIVATE, FINAL] Board - board: chess.Board@2d363fb3\n" +
+                "\t[PRIVATE, FINAL] Color - color: WHITE\n" +
+                "\t[PRIVATE, FINAL] Type - type: KING\n" +
+                "\t[PRIVATE] double - points: 0.0\n" +
+                "\t[PRIVATE, FINAL] char - representation: k\n" +
+                "\t[PROTECTED] int - column: 0\n" +
+                "\t[PROTECTED] int - rank: 1;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\n" +
+                "\tClass Rook\n" +
+                "\t\n" +
+                "\t[PRIVATE, FINAL] Board - board: chess.Board@2d363fb3\n" +
+                "\t[PRIVATE, FINAL] Color - color: BLACK\n" +
+                "\t[PRIVATE, FINAL] Type - type: ROOK\n" +
+                "\t[PRIVATE] double - points: 5.0\n" +
+                "\t[PRIVATE, FINAL] char - representation: R\n" +
+                "\t[PROTECTED] int - column: 1\n" +
+                "\t[PROTECTED] int - rank: 5;\n" +
+                "\n" +
+                "\tClass King\n" +
+                "\t\n" +
+                "\t[PRIVATE, FINAL] Board - board: chess.Board@2d363fb3\n" +
+                "\t[PRIVATE, FINAL] Color - color: BLACK\n" +
+                "\t[PRIVATE, FINAL] Type - type: KING\n" +
+                "\t[PRIVATE] double - points: 0.0\n" +
+                "\t[PRIVATE, FINAL] char - representation: K\n" +
+                "\t[PROTECTED] int - column: 1\n" +
+                "\t[PROTECTED] int - rank: 6;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n" +
+                "\tnull;\n\n");
         builder.append("[PUBLIC] int - piecesWhite: ").append("1\n");
         builder.append("[PUBLIC] int - piecesBlack: ").append("2\n");
         builder.append("[PROTECTED] ArrayList of Piece - pieces: \n").append(
