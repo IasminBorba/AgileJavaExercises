@@ -4,21 +4,12 @@ import java.lang.reflect.*;
 import java.util.*;
 
 public class ObjectDumper {
-
-    private static final Set<Object> visitedObjects = new HashSet<>();
-
     public static <T> String dumper(T object) throws IllegalAccessException {
         StringBuilder builder = new StringBuilder();
-        if (object == null) {
+        if (object == null)
             return builder.append("null").toString();
-        }
 
-        if (visitedObjects.contains(object)) {
-            return builder.append("Circular reference detected").toString();
-        }
-
-        visitedObjects.add(object);
-        builder.append("Class ").append(object.getClass().getSimpleName()).append("\n\n");
+        builder.append("Class ").append(object.getClass().getSimpleName()).append(":\n");
 
         Field[] fields = object.getClass().getDeclaredFields();
         Class<?> superClass = object.getClass().getSuperclass();
@@ -26,10 +17,8 @@ public class ObjectDumper {
             Field[] superFields = superClass.getDeclaredFields();
             builder.append(processFields(fields, object));
             builder.append(processFields(superFields, object));
-        } else {
+        } else
             builder.append(processFields(fields, object));
-        }
-
         builder.deleteCharAt(builder.length() - 1);
 
         return builder.toString();
@@ -43,56 +32,24 @@ public class ObjectDumper {
                 continue;
 
             field.setAccessible(true);
-
             String flag = field.accessFlags().toString();
             builder.append(flag).append(" ");
-
             Class<?> klass = field.getType();
             String typeName = klass.getSimpleName();
             String name = field.getName();
 
             if (klass.isArray()) {
-                int count = 0;
-                for (Character aChar: typeName.toCharArray()) {
-                    if (aChar.equals('['))
-                        count++;
-                }
-                typeName = "Array " + count + "D of " + typeName.substring(0, typeName.length() - (count+2));
-                builder.append(typeName).append(" - ").append(name).append(": \n");
-
-                Object[] rankArray = (Object[]) field.get(object);
-                ArrayList<Object> valueArray = new ArrayList<>();
-                for(Object obj: rankArray){
-                    valueArray.addAll(Arrays.asList((Object[]) obj));
-                }
-
-                StringBuilder auxBuilder = new StringBuilder();
-                for (Object obj: valueArray) {
-                    if (obj == null) {
-                        auxBuilder.append("\tnull;\n");
-                    } else {
-                        String dumperString = dumper(obj) + ";";
-                        auxBuilder.append("\n").append(hierarchyString(dumperString));
-                    }
-                }
-                builder.append(auxBuilder).append("\n");
+                builder.append(dumperIsArray(typeName, name, object, field)).append("\n");
             } else {
                 builder.append(typeName).append(" - ").append(name).append(": ");
-
                 if (typeName.equals("StringBuilder")) {
-                    StringBuilder aux = new StringBuilder();
-                    builder.append("\n");
-                    for (String str : field.get(object).toString().split("\n"))
-                        aux.append("\t").append(str).append("\n");
-                    builder.append(aux);
+                    builder.append("\n").append(hierarchyString(field.get(object).toString()));
                 } else {
                     Object value = field.get(object);
-                    if (value instanceof Collection) {
+                    if (value instanceof Collection)
                         builder.append("\n").append(processCollection((Collection<?>) value));
-                    } else {
-                        value = field.get(object);
+                    else
                         builder.append(value).append("\n");
-                    }
                 }
             }
         }
@@ -114,5 +71,25 @@ public class ObjectDumper {
             string.append("\t").append(str).append("\n");
 
         return string.toString();
+    }
+
+    private static String dumperIsArray(String typeName, String nameArray, Object object, Field field) throws IllegalAccessException {
+        StringBuilder builder = new StringBuilder();
+        int count = (int) typeName.chars().filter(ch -> ch == '[').count();
+
+        typeName = "Array " + count + "D of " + typeName.substring(0, typeName.length() - (count+2));
+        builder.append(typeName).append(" - ").append(nameArray);
+
+        Object[] rankArray = (Object[]) field.get(object);
+        ArrayList<Object> valueArray = new ArrayList<>();
+        for(Object obj: rankArray)
+            valueArray.addAll(Arrays.asList((Object[]) obj));
+
+        StringBuilder auxBuilder = new StringBuilder();
+        for (Object obj: valueArray)
+            auxBuilder.append("\n").append(hierarchyString(dumper(obj) + ";"));
+        builder.append(auxBuilder);
+
+        return builder.toString();
     }
 }
