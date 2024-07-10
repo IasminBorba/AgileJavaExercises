@@ -4,6 +4,28 @@ import java.lang.reflect.*;
 import java.util.*;
 
 public class ObjectDumper {
+    Map <String, Integer> map = new HashMap<>();
+    String[][][] str3D = new String[2][2][2];
+    String[] str1D = new String[2];
+    StringBuffer buffer = new StringBuffer();
+
+protected ObjectDumper(){
+    this.map.put("map1", 1);
+    this.map.put("map2", 2);
+    this.map.put("map3", 3);
+
+    str3D[0][0][0] = "initial";
+    str3D[0][0][1] = "right";
+    str3D[0][1][0] = "center";
+    str3D[1][0][0] = "left";
+
+
+    this.str1D[0] = "zero";
+    this.str1D[1] = "one";
+
+    this.buffer.append("testBuffer");
+}
+
     public static <T> String dumper(T object) throws IllegalAccessException {
         StringBuilder builder = new StringBuilder();
         if (object == null)
@@ -74,23 +96,35 @@ public class ObjectDumper {
 
     private static String dumperIsArray(String typeName, String nameArray, Object object, Field field) throws IllegalAccessException {
         StringBuilder builder = new StringBuilder();
-        int count = (int) typeName.chars().filter(ch -> ch == '[').count();
+        int dimensions = (int) typeName.chars().filter(ch -> ch == '[').count();
 
-        typeName = "Array " + count + "D of " + typeName.substring(0, typeName.length() - (count+2));
+        typeName = "Array " + dimensions + "D of " + typeName.substring(0, typeName.length() - (dimensions + 2));
         builder.append(typeName).append(" - ").append(nameArray).append(":\n");
 
         Object[] rankArray = (Object[]) field.get(object);
         ArrayList<Object> valueArray = new ArrayList<>();
-        for(Object obj: rankArray)
-            valueArray.addAll(Arrays.asList((Object[]) obj));
+
+        if (dimensions == 1) {
+            valueArray.add(field.get(object));
+        } else {
+            extractValues(field.get(object), valueArray, dimensions);
+        }
 
         StringBuilder auxBuilder = new StringBuilder();
-        for (Object obj: valueArray) {
+        for (Object obj : valueArray) {
             String auxString = hierarchyString(dumper(obj) + ";");
-            auxBuilder.append(hierarchyString(auxString));
+            auxBuilder.append(auxString);
         }
         builder.append(auxBuilder);
 
         return builder.toString();
+    }
+
+    private static void extractValues(Object array, List<Object> valueArray, int dimensions) {
+        int length = Array.getLength(array);
+        for (int i = 0; i < length; i++) {
+            Object subArray = Array.get(array, i);
+            extractValues(subArray, valueArray, dimensions - 1);
+        }
     }
 }

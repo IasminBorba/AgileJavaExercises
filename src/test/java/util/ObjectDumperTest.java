@@ -165,4 +165,10 @@ public class ObjectDumperTest extends TestCase {
             "\t[PUBLIC] File - file: " + board.file);
         return builder.toString();
     }
+
+    public void testEveryField() throws IllegalAccessException {
+        ObjectDumper objectDumper = new ObjectDumper();
+
+        System.out.println(dumper(objectDumper));
+    }
 }
