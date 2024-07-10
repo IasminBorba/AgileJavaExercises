@@ -33,17 +33,17 @@ public class ObjectDumper {
 
             field.setAccessible(true);
             String flag = field.accessFlags().toString();
-            builder.append(flag).append(" ");
+            builder.append("\t").append(flag).append(" ");
             Class<?> klass = field.getType();
             String typeName = klass.getSimpleName();
             String name = field.getName();
 
             if (klass.isArray()) {
-                builder.append(dumperIsArray(typeName, name, object, field)).append("\n");
+                builder.append(dumperIsArray(typeName, name, object, field));
             } else {
                 builder.append(typeName).append(" - ").append(name).append(": ");
                 if (typeName.equals("StringBuilder")) {
-                    builder.append("\n").append(hierarchyString(field.get(object).toString()));
+                    builder.append("\n").append(hierarchyString(hierarchyString(field.get(object).toString())));
                 } else {
                     Object value = field.get(object);
                     if (value instanceof Collection)
@@ -58,9 +58,8 @@ public class ObjectDumper {
 
     private static String processCollection(Collection<?> collection) throws IllegalAccessException {
         StringBuilder builder = new StringBuilder();
-        for (Object item : collection) {
-            builder.append(dumper(item)).append("\n\n");
-        }
+        for (Object item : collection)
+            builder.append(hierarchyString(dumper(item)));
         return hierarchyString(builder.toString());
     }
 
@@ -78,7 +77,7 @@ public class ObjectDumper {
         int count = (int) typeName.chars().filter(ch -> ch == '[').count();
 
         typeName = "Array " + count + "D of " + typeName.substring(0, typeName.length() - (count+2));
-        builder.append(typeName).append(" - ").append(nameArray);
+        builder.append(typeName).append(" - ").append(nameArray).append(":\n");
 
         Object[] rankArray = (Object[]) field.get(object);
         ArrayList<Object> valueArray = new ArrayList<>();
@@ -86,8 +85,10 @@ public class ObjectDumper {
             valueArray.addAll(Arrays.asList((Object[]) obj));
 
         StringBuilder auxBuilder = new StringBuilder();
-        for (Object obj: valueArray)
-            auxBuilder.append("\n").append(hierarchyString(dumper(obj) + ";"));
+        for (Object obj: valueArray) {
+            String auxString = hierarchyString(dumper(obj) + ";");
+            auxBuilder.append(hierarchyString(auxString));
+        }
         builder.append(auxBuilder);
 
         return builder.toString();

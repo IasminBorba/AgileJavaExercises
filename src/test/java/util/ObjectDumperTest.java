@@ -6,8 +6,8 @@ import chess.*;
 import static util.ObjectDumper.dumper;
 
 public class ObjectDumperTest extends TestCase {
+    Board board = new Board();
     public void testClass() throws IllegalAccessException{
-        Board board = new Board();
         board.createBoard();
         Piece blackKing = King.create(Piece.Color.BLACK, board);
         board.addPiece(blackKing, 'b', 6);
@@ -25,174 +25,144 @@ public class ObjectDumperTest extends TestCase {
 
     public String stringPiece(Piece piece){
         StringBuilder builder = new StringBuilder();
-
-        builder.append("Class ").append(piece.getClass().getSimpleName()).append("\n\n");
-        builder.append("[PRIVATE, FINAL] Color - color: WHITE\n");
-        builder.append("[PRIVATE, FINAL] Type - type: KING\n");
-        builder.append("[PRIVATE] double - points: 0.0\n");
-        builder.append("[PRIVATE, FINAL] char - representation: k\n");
-        builder.append("[PROTECTED] int - column: 0\n");
-        builder.append("[PROTECTED] int - rank: 1");
-
+        builder.append("Class King:\n").append(
+                            "\t[PRIVATE, FINAL] Board - board: " + board.toString() + "\n" +
+                            "\t[PRIVATE, FINAL] Color - color: WHITE\n" +
+                            "\t[PRIVATE, FINAL] Type - type: KING\n" +
+                            "\t[PRIVATE] double - points: 0.0\n" +
+                            "\t[PRIVATE, FINAL] char - representation: k\n" +
+                            "\t[PROTECTED] int - column: 0\n" +
+                            "\t[PROTECTED] int - rank: 1");
         return builder.toString();
     }
 
     public String stringBoard(Board board){
-        //Listar cada nome de campo do objeto: Para cada objeto fornecido, você precisará listar todos os nomes dos campos que ele possui.
-        //Exibir os valores atuais desses campos: Além de listar os nomes dos campos, você também deve exibir os valores que esses campos têm no momento.
-        //Fazer isso de forma recursiva: Se algum dos campos do objeto for ele próprio um objeto, você precisará também listar os campos e valores desse objeto interno, e assim por diante, criando uma saída hierárquica.
-        //Evitar classes de certos pacotes: Não percorra ou liste campos de classes que fazem parte dos pacotes java ou javax.
-        //Exibir campos privados: A utilidade deve ser capaz de acessar e exibir campos privados do objeto.
-        //Marcar campos estáticos: Campos estáticos devem ser identificados como tais na saída.
-        //Ignorar campos de superclasses: Para simplificar, você não precisa se preocupar com os campos herdados de superclasses.
-
         StringBuilder builder = new StringBuilder();
-
-        builder.append("Class ").append(board.getClass().getSimpleName()).append("\n\n");
-        builder.append("[PUBLIC] Array 2D of Piece - board: \n").append(
-                "\n" +
-                "\tClass King\n" +
-                "\t\n" +
-                "\t[PRIVATE, FINAL] Board - board: chess.Board@2d363fb3\n" +
-                "\t[PRIVATE, FINAL] Color - color: WHITE\n" +
-                "\t[PRIVATE, FINAL] Type - type: KING\n" +
-                "\t[PRIVATE] double - points: 0.0\n" +
-                "\t[PRIVATE, FINAL] char - representation: k\n" +
-                "\t[PROTECTED] int - column: 0\n" +
-                "\t[PROTECTED] int - rank: 1;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\n" +
-                "\tClass Rook\n" +
-                "\t\n" +
-                "\t[PRIVATE, FINAL] Board - board: chess.Board@2d363fb3\n" +
-                "\t[PRIVATE, FINAL] Color - color: BLACK\n" +
-                "\t[PRIVATE, FINAL] Type - type: ROOK\n" +
-                "\t[PRIVATE] double - points: 5.0\n" +
-                "\t[PRIVATE, FINAL] char - representation: R\n" +
-                "\t[PROTECTED] int - column: 1\n" +
-                "\t[PROTECTED] int - rank: 5;\n" +
-                "\n" +
-                "\tClass King\n" +
-                "\t\n" +
-                "\t[PRIVATE, FINAL] Board - board: chess.Board@2d363fb3\n" +
-                "\t[PRIVATE, FINAL] Color - color: BLACK\n" +
-                "\t[PRIVATE, FINAL] Type - type: KING\n" +
-                "\t[PRIVATE] double - points: 0.0\n" +
-                "\t[PRIVATE, FINAL] char - representation: K\n" +
-                "\t[PROTECTED] int - column: 1\n" +
-                "\t[PROTECTED] int - rank: 6;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n" +
-                "\tnull;\n\n");
-        builder.append("[PUBLIC] int - piecesWhite: ").append("1\n");
-        builder.append("[PUBLIC] int - piecesBlack: ").append("2\n");
-        builder.append("[PROTECTED] ArrayList of Piece - pieces: \n").append(
-                        "Class King\n\n" +
-                        "[PRIVATE, FINAL] Board - board: \n" +
-                        "Circular reference detected\n\n" +
-                        "[PRIVATE, FINAL] Color - color: \n" +
-                        "Class Color\n\n" +
-                        "[PRIVATE, FINAL] Type - type: \n" +
-                        "Class Type\n\n" +
-                        "[PRIVATE, FINAL] double - points: 0.0\n" +
-                        "[PRIVATE, FINAL] char - representation: K\n" +
-                        "[PRIVATE] double - points: 0.0\n" +
-                        "[PRIVATE, FINAL] char - representation: K\n" +
-                        "[PROTECTED] int - column: 1\n" +
-                        "[PROTECTED] int - rank: 6\n" +
-                        "Class Rook\n\n" +
-                        "[PRIVATE, FINAL] Board - board: \n" +
-                        "Circular reference detected\n\n" +
-                        "[PRIVATE, FINAL] Color - color: \n" +
-                        "Circular reference detected\n\n" +
-                        "[PRIVATE, FINAL] Type - type: \n" +
-                        "Class Type\n\n" +
-                        "[PRIVATE, FINAL] double - points: 5.0\n" +
-                        "[PRIVATE, FINAL] char - representation: R\n" +
-                        "[PRIVATE] double - points: 5.0\n" +
-                        "[PRIVATE, FINAL] char - representation: R\n" +
-                        "[PROTECTED] int - column: 1\n" +
-                        "[PROTECTED] int - rank: 5\n" +
-                        "Class King\n\n" +
-                        "[PRIVATE, FINAL] Board - board: \n" +
-                        "Circular reference detected\n\n" +
-                        "[PRIVATE, FINAL] Color - color: \n" +
-                        "Class Color\n\n" +
-                        "[PRIVATE, FINAL] Type - type: \n" +
-                        "Circular reference detected\n\n" +
-                        "[PRIVATE] double - points: 0.0\n" +
-                        "[PRIVATE, FINAL] char - representation: k\n" +
-                        "[PROTECTED] int - column: 0\n" +
-                        "[PROTECTED] int - rank: 1\n\n");
-        builder.append("[PUBLIC] StringBuilder - piecesOnTheBoard: ").append("\n").append(
-                        "\t........\n" +
-                        "\t........\n" +
-                        "\t.K......\n" +
-                        "\t.R......\n" +
-                        "\t........\n" +
-                        "\t........\n" +
-                        "\t........\n" +
-                        "\tk.......\n");
-        builder.append("[PUBLIC] String - filename: ").append(board.filename).append("\n");
-        builder.append("[PUBLIC] File - file: ").append(board.file);
-
+        builder.append("Class Board:\n").append(
+            "\t[PUBLIC] Array 2D of Piece - board:\n" +
+                "\t\tClass King:\n" +
+                    "\t\t\t[PRIVATE, FINAL] Board - board: " + board + "\n" +
+                    "\t\t\t[PRIVATE, FINAL] Color - color: WHITE\n" +
+                    "\t\t\t[PRIVATE, FINAL] Type - type: KING\n" +
+                    "\t\t\t[PRIVATE] double - points: 0.0\n" +
+                    "\t\t\t[PRIVATE, FINAL] char - representation: k\n" +
+                    "\t\t\t[PROTECTED] int - column: 0\n" +
+                    "\t\t\t[PROTECTED] int - rank: 1;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tClass Rook:\n" +
+                    "\t\t\t[PRIVATE, FINAL] Board - board: " + board + "\n" +
+                    "\t\t\t[PRIVATE, FINAL] Color - color: BLACK\n" +
+                    "\t\t\t[PRIVATE, FINAL] Type - type: ROOK\n" +
+                    "\t\t\t[PRIVATE] double - points: 5.0\n" +
+                    "\t\t\t[PRIVATE, FINAL] char - representation: R\n" +
+                    "\t\t\t[PROTECTED] int - column: 1\n" +
+                    "\t\t\t[PROTECTED] int - rank: 5;\n" +
+                "\t\tClass King:\n" +
+                    "\t\t\t[PRIVATE, FINAL] Board - board: " + board + "\n" +
+                    "\t\t\t[PRIVATE, FINAL] Color - color: BLACK\n" +
+                    "\t\t\t[PRIVATE, FINAL] Type - type: KING\n" +
+                    "\t\t\t[PRIVATE] double - points: 0.0\n" +
+                    "\t\t\t[PRIVATE, FINAL] char - representation: K\n" +
+                    "\t\t\t[PROTECTED] int - column: 1\n" +
+                    "\t\t\t[PROTECTED] int - rank: 6;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+                "\t\tnull;\n" +
+            "\t[PUBLIC] int - piecesWhite: 1\n" +
+            "\t[PUBLIC] int - piecesBlack: 2\n" +
+            "\t[PROTECTED] ArrayList - pieces: \n" +
+                "\t\tClass King:\n" +
+                    "\t\t\t[PRIVATE, FINAL] Board - board: " + board + "\n" +
+                    "\t\t\t[PRIVATE, FINAL] Color - color: BLACK\n" +
+                    "\t\t\t[PRIVATE, FINAL] Type - type: KING\n" +
+                    "\t\t\t[PRIVATE] double - points: 0.0\n" +
+                    "\t\t\t[PRIVATE, FINAL] char - representation: K\n" +
+                    "\t\t\t[PROTECTED] int - column: 1\n" +
+                    "\t\t\t[PROTECTED] int - rank: 6\n" +
+                "\t\tClass Rook:\n" +
+                    "\t\t\t[PRIVATE, FINAL] Board - board: " + board + "\n" +
+                    "\t\t\t[PRIVATE, FINAL] Color - color: BLACK\n" +
+                    "\t\t\t[PRIVATE, FINAL] Type - type: ROOK\n" +
+                    "\t\t\t[PRIVATE] double - points: 5.0\n" +
+                    "\t\t\t[PRIVATE, FINAL] char - representation: R\n" +
+                    "\t\t\t[PROTECTED] int - column: 1\n" +
+                    "\t\t\t[PROTECTED] int - rank: 5\n" +
+                "\t\tClass King:\n" +
+                    "\t\t\t[PRIVATE, FINAL] Board - board: " + board + "\n" +
+                    "\t\t\t[PRIVATE, FINAL] Color - color: WHITE\n" +
+                    "\t\t\t[PRIVATE, FINAL] Type - type: KING\n" +
+                    "\t\t\t[PRIVATE] double - points: 0.0\n" +
+                    "\t\t\t[PRIVATE, FINAL] char - representation: k\n" +
+                    "\t\t\t[PROTECTED] int - column: 0\n" +
+                    "\t\t\t[PROTECTED] int - rank: 1\n" +
+            "\t[PUBLIC] StringBuilder - piecesOnTheBoard: \n" +
+                "\t\t........\n" +
+                "\t\t........\n" +
+                "\t\t.K......\n" +
+                "\t\t.R......\n" +
+                "\t\t........\n" +
+                "\t\t........\n" +
+                "\t\t........\n" +
+                "\t\tk.......\n" +
+            "\t[PUBLIC] String - filename: " + board.filename + "\n" +
+            "\t[PUBLIC] File - file: " + board.file);
         return builder.toString();
     }
 }
