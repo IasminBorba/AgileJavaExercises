@@ -4,26 +4,32 @@ import java.lang.reflect.*;
 import java.util.*;
 
 public class ObjectDumper {
-    Map <String, Integer> map = new HashMap<>();
-    String[][][] str3D = new String[2][2][2];
-    String[] str1D = new String[2];
-    StringBuffer buffer = new StringBuffer();
+    public String[] testArrayString = {"test1","test2","test3"};
+    public int[] testArray1 = {1,2,3};
+//    String[][] testArray2 = new String[][] {{"Teste1"}, {"testando"}};
+//    String[][][] testArray3 = new String[][][] {{{"Teste1"}, {"testando"}}};
+//    String[][][][] testArray4 = new String[][][][] {{{{"Teste1", "testando"}}}};
+
+//    Map <String, Integer> map = new HashMap<>();
+//    String[][][] str3D = new String[2][2][2];
+//    String[] str1D = new String[2];
+//    StringBuffer buffer = new StringBuffer();
 
 protected ObjectDumper(){
-    this.map.put("map1", 1);
-    this.map.put("map2", 2);
-    this.map.put("map3", 3);
-
-    str3D[0][0][0] = "initial";
-    str3D[0][0][1] = "right";
-    str3D[0][1][0] = "center";
-    str3D[1][0][0] = "left";
-
-
-    this.str1D[0] = "zero";
-    this.str1D[1] = "one";
-
-    this.buffer.append("testBuffer");
+//    this.map.put("map1", 1);
+//    this.map.put("map2", 2);
+//    this.map.put("map3", 3);
+//
+//    str3D[0][0][0] = "initial";
+//    str3D[0][0][1] = "right";
+//    str3D[0][1][0] = "center";
+//    str3D[1][0][0] = "left";
+//
+//
+//    this.str1D[0] = "zero";
+//    this.str1D[1] = "one";
+//
+//    this.buffer.append("testBuffer");
 }
 
     public static <T> String dumper(T object) throws IllegalAccessException {
@@ -98,24 +104,39 @@ protected ObjectDumper(){
         StringBuilder builder = new StringBuilder();
         int dimensions = (int) typeName.chars().filter(ch -> ch == '[').count();
 
-        typeName = "Array " + dimensions + "D of " + typeName.substring(0, typeName.length() - (dimensions + 2));
-        builder.append(typeName).append(" - ").append(nameArray).append(":\n");
+        typeName = "Array " + dimensions + "D of " + typeName.substring(0, typeName.length() - (dimensions * 2));
+        builder.append(typeName).append(" - ").append(nameArray + ":");
 
-        Object[] rankArray = (Object[]) field.get(object);
-        ArrayList<Object> valueArray = new ArrayList<>();
-
-        if (dimensions == 1) {
-            valueArray.add(field.get(object));
+        if (field.getType().getComponentType().isPrimitive()){
+            builder.append(" {");
+            for (int i = 0; i < Array.getLength(field.get(object)); i++) {
+                Object element = Array.get(field.get(object), i);
+                builder.append(element + ", ");
+            }
+            builder.delete(builder.length()-2, builder.length()).append("}\n");
         } else {
-            extractValues(field.get(object), valueArray, dimensions);
+            builder.append("\n");
+            ArrayList<Object> valueArray = new ArrayList<>();
+            if (dimensions == 1){
+                for (int i = 0; i < Array.getLength(field.get(object)); i++) {
+                    Object element = Array.get(field.get(object), i);
+                    if (element.getClass().getName().startsWith("java.") || element.getClass().getName().startsWith("javax.")){
+                        builder.append("\t").append(hierarchyString(element + ";"));
+                    } else {
+                        builder.append("\n").append(hierarchyString(dumper(element) + ";"));
+                    }
+                }
+            } else {
+                Object[] rankArray = (Object[]) field.get(object);
+                for (Object obj : rankArray)
+                    valueArray.addAll(Arrays.asList((Object[]) obj));
+                StringBuilder auxBuilder = new StringBuilder();
+                for (Object obj : valueArray) {
+                    auxBuilder.append("\n").append(hierarchyString(obj + ";"));
+                }
+                builder.append(auxBuilder);
+            }
         }
-
-        StringBuilder auxBuilder = new StringBuilder();
-        for (Object obj : valueArray) {
-            String auxString = hierarchyString(dumper(obj) + ";");
-            auxBuilder.append(auxString);
-        }
-        builder.append(auxBuilder);
 
         return builder.toString();
     }

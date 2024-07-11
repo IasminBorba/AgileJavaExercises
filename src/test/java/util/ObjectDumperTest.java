@@ -167,8 +167,14 @@ public class ObjectDumperTest extends TestCase {
     }
 
     public void testEveryField() throws IllegalAccessException {
-        ObjectDumper objectDumper = new ObjectDumper();
+        String[] testArray1 = new String[] {"Teste1", "testando"};
+        String[][] testArray2 = new String[][] {{"Teste1"}, {"testando"}};
+        String[][][] testArray3 = new String[][][] {{{"Teste1"}, {"testando"}}};
+        String[][][][] testArray4 = new String[][][][] {{{{"Teste1", "testando"}}}};
 
-        System.out.println(dumper(objectDumper));
+
+    System.out.println(dumper(new ObjectDumper()));
+//        ObjectDumper objectDumper = new ObjectDumper();
+//        System.out.println(dumper(objectDumper));
     }
 }
