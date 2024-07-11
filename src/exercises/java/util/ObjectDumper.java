@@ -4,32 +4,21 @@ import java.lang.reflect.*;
 import java.util.*;
 
 public class ObjectDumper {
-    public String[] testArrayString = {"test1","test2","test3"};
     public int[] testArray1 = {1,2,3};
-//    String[][] testArray2 = new String[][] {{"Teste1"}, {"testando"}};
-//    String[][][] testArray3 = new String[][][] {{{"Teste1"}, {"testando"}}};
-//    String[][][][] testArray4 = new String[][][][] {{{{"Teste1", "testando"}}}};
-
-//    Map <String, Integer> map = new HashMap<>();
-//    String[][][] str3D = new String[2][2][2];
-//    String[] str1D = new String[2];
-//    StringBuffer buffer = new StringBuffer();
+    public String[] testArrayString = {"test1","test2","test3"};
+    float[][] testArray2 = new float[][] {{1f, 1f}, {2f, 2f}};
+    Float[][] testArrayFloat = new Float[][] {{11F}, {22F}};
+    String[][][] testArray3 = new String[][][] {{{"Test1.1", "Test1.2"}, {"Test2.1"}}};
+    String[][][][] testArray4 = new String[][][][] {{{{"Test1", "test1.2"}, {"test2.2",}, {"teste"}}, {{"test123", "teste"}, {"test5432"}}}};
+    Map <String, Integer> map = new HashMap<>();
+    StringBuffer buffer = new StringBuffer();
 
 protected ObjectDumper(){
-//    this.map.put("map1", 1);
-//    this.map.put("map2", 2);
-//    this.map.put("map3", 3);
-//
-//    str3D[0][0][0] = "initial";
-//    str3D[0][0][1] = "right";
-//    str3D[0][1][0] = "center";
-//    str3D[1][0][0] = "left";
-//
-//
-//    this.str1D[0] = "zero";
-//    this.str1D[1] = "one";
-//
-//    this.buffer.append("testBuffer");
+    this.map.put("map1", 1);
+    this.map.put("map2", 2);
+    this.map.put("map3", 3);
+
+    this.buffer.append("testBuffer");
 }
 
     public static <T> String dumper(T object) throws IllegalAccessException {
@@ -107,45 +96,42 @@ protected ObjectDumper(){
         typeName = "Array " + dimensions + "D of " + typeName.substring(0, typeName.length() - (dimensions * 2));
         builder.append(typeName).append(" - ").append(nameArray + ":");
 
-        if (field.getType().getComponentType().isPrimitive()){
-            builder.append(" {");
-            for (int i = 0; i < Array.getLength(field.get(object)); i++) {
-                Object element = Array.get(field.get(object), i);
-                builder.append(element + ", ");
-            }
-            builder.delete(builder.length()-2, builder.length()).append("}\n");
-        } else {
-            builder.append("\n");
-            ArrayList<Object> valueArray = new ArrayList<>();
-            if (dimensions == 1){
-                for (int i = 0; i < Array.getLength(field.get(object)); i++) {
-                    Object element = Array.get(field.get(object), i);
-                    if (element.getClass().getName().startsWith("java.") || element.getClass().getName().startsWith("javax.")){
-                        builder.append("\t").append(hierarchyString(element + ";"));
-                    } else {
-                        builder.append("\n").append(hierarchyString(dumper(element) + ";"));
-                    }
-                }
-            } else {
-                Object[] rankArray = (Object[]) field.get(object);
-                for (Object obj : rankArray)
-                    valueArray.addAll(Arrays.asList((Object[]) obj));
-                StringBuilder auxBuilder = new StringBuilder();
-                for (Object obj : valueArray) {
-                    auxBuilder.append("\n").append(hierarchyString(obj + ";"));
-                }
-                builder.append(auxBuilder);
-            }
-        }
-
+        extractValues(field, field.get(object), dimensions, builder);
         return builder.toString();
     }
 
-    private static void extractValues(Object array, List<Object> valueArray, int dimensions) {
-        int length = Array.getLength(array);
-        for (int i = 0; i < length; i++) {
-            Object subArray = Array.get(array, i);
-            extractValues(subArray, valueArray, dimensions - 1);
+    private static void extractValues(Field field, Object arrayObject, int dimensoes, StringBuilder builder) throws IllegalAccessException {
+        if (field.getType().getComponentType().isPrimitive()) {
+            builder.append(isPrimitive(field, arrayObject)); return;
         }
+        builder.append("\n");
+        for (int i = 0; i < Array.getLength(arrayObject); i++) {
+            Object element = Array.get(arrayObject, i);
+            if(element != null) {
+                if (element.getClass().isArray() && dimensoes > 1) {
+                    builder.delete(builder.length() - 1, builder.length());
+                    extractValues(field, element, dimensoes - 1, builder);
+                } else {
+                    if (element.getClass().getName().startsWith("java.") || element.getClass().getName().startsWith("javax."))
+                        builder.append("\t\t").append((element + ";"));
+                    else
+                        builder.append(hierarchyString(dumper(element) + ";\n"));
+                }
+            } else {
+                builder.append("\t\t").append((element + ";\n"));
+            }
+        }
+    }
+
+    private static String isPrimitive(Field field, Object arrayObject) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(" {");
+        for (int i = 0; i < Array.getLength(arrayObject); i++) {
+            Object element = Array.get(arrayObject, i);
+            builder.append(element + ", ");
+        }
+
+        builder.delete(builder.length()-2, builder.length()).append("} \n");
+        return builder.toString();
     }
 }
