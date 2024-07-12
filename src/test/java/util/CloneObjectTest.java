@@ -4,13 +4,14 @@ import chess.*;
 import pieces.*;
 import junit.framework.TestCase;
 
+import static util.CloneObject.shallowClone;
 import static util.ObjectDumper.dumper;
 
 public class CloneObjectTest extends TestCase {
-    public void testCreate() throws IllegalAccessException {
+    public void testCreate() throws Exception {
         Board board = new Board();
         board.initialize();
-        CloneObject cloneBoard = new CloneObject(board);
+        Object cloneBoard = shallowClone(board);
 
         String boardDumper = dumper(board);
         String cloneBoardDumper = dumper(cloneBoard);
@@ -18,7 +19,7 @@ public class CloneObjectTest extends TestCase {
 
 
         Piece blackKing = King.create(Piece.Color.BLACK, board);
-        CloneObject clonePiece = new CloneObject(blackKing);
+        Object clonePiece = shallowClone(blackKing);
 
         String stringPiece = dumper(blackKing);
         String stringClonePiece = dumper(clonePiece);
@@ -26,7 +27,7 @@ public class CloneObjectTest extends TestCase {
 
 
         ObjectDumper objectDumper = new ObjectDumper();
-        CloneObject cloneObjectDumper = new CloneObject(objectDumper);
+        Object cloneObjectDumper = shallowClone(objectDumper);
 
         String stringObjectDumper = dumper(objectDumper);
         String stringCloneObjectDumper = dumper(cloneObjectDumper);

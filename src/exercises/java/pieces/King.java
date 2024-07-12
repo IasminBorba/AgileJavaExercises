@@ -6,7 +6,9 @@ import java.util.ArrayList;
 
 public class King extends Piece {
     public static Type Class = Type.KING;
-    private final Board board;
+    private Board board;
+
+    public King(){}
 
     protected King(Color color, Board board) {
         super(color, Class);

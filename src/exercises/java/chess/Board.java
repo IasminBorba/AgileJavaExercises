@@ -14,6 +14,7 @@ public class Board implements Serializable{
     public String filename;
     public File file;
 
+    public Board(){}
     public void initialize() {
         createBoard();
         addPiecesOfRank(Piece.Color.WHITE);

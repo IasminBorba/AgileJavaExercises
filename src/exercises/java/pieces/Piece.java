@@ -25,10 +25,10 @@ abstract public class Piece implements Comparable<Piece>, Serializable {
             return representation;
         }
     }
-    private final Color color;
-    private final Type type;
+    private Color color;
+    private Type type;
     private double points;
-    private final char representation;
+    private char representation;
     protected int column;
     protected int rank;
 
@@ -43,6 +43,7 @@ abstract public class Piece implements Comparable<Piece>, Serializable {
             this.representation = type.representation;
         }
     }
+    public Piece() {}
 
     @Override
     public int compareTo(Piece that) {
