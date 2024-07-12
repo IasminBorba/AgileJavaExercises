@@ -9,7 +9,6 @@ public class WordCountTest extends TestCase {
                 "You will create WordCount class to parse through the text and count the number of instances of each word.";
 
         WordCount wordCount = new WordCount(text);
-        System.out.println(wordCount.words);
         assertEquals(2, wordCount.count("create"));
         assertEquals(3, wordCount.count("the"));
         assertEquals(3, wordCount.count("of"));
