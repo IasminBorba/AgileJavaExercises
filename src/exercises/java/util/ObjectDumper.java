@@ -55,13 +55,13 @@ protected ObjectDumper(){
             String typeName = klass.getSimpleName();
             String name = field.getName();
 
-            if (klass.isArray()) {
+            if (klass.isArray())
                 builder.append(dumperIsArray(typeName, name, object, field));
-            } else {
+            else {
                 builder.append(typeName).append(" - ").append(name).append(": ");
-                if (typeName.equals("StringBuilder")) {
+                if (typeName.equals("StringBuilder") || typeName.equals("StringBuffer"))
                     builder.append("\n").append(hierarchyString(hierarchyString(field.get(object).toString())));
-                } else {
+                else {
                     Object value = field.get(object);
                     if (value instanceof Collection)
                         builder.append("\n").append(processCollection((Collection<?>) value));
@@ -85,53 +85,45 @@ protected ObjectDumper(){
 
         for(String str: builder.split("\n"))
             string.append("\t").append(str).append("\n");
-
         return string.toString();
     }
 
     private static String dumperIsArray(String typeName, String nameArray, Object object, Field field) throws IllegalAccessException {
-        StringBuilder builder = new StringBuilder();
         int dimensions = (int) typeName.chars().filter(ch -> ch == '[').count();
-
         typeName = "Array " + dimensions + "D of " + typeName.substring(0, typeName.length() - (dimensions * 2));
-        builder.append(typeName).append(" - ").append(nameArray + ":");
 
-        extractValues(field, field.get(object), dimensions, builder);
-        return builder.toString();
+        StringBuilder builderArrays = new StringBuilder();
+        extractValues(field, field.get(object), dimensions, builderArrays);
+        return typeName + " - " + nameArray + ":" + hierarchyString(builderArrays.toString()).substring(1);
     }
 
-    private static void extractValues(Field field, Object arrayObject, int dimensoes, StringBuilder builder) throws IllegalAccessException {
+    private static void extractValues(Field field, Object arrayObject, int dimensions, StringBuilder builder) throws IllegalAccessException {
         if (field.getType().getComponentType().isPrimitive()) {
-            builder.append(isPrimitive(field, arrayObject)); return;
+            builder.append(isPrimitive(field, arrayObject));
+            return;
         }
         builder.append("\n");
         for (int i = 0; i < Array.getLength(arrayObject); i++) {
             Object element = Array.get(arrayObject, i);
-            if(element != null) {
-                if (element.getClass().isArray() && dimensoes > 1) {
-                    builder.delete(builder.length() - 1, builder.length());
-                    extractValues(field, element, dimensoes - 1, builder);
+            if (element != null) {
+                if (element.getClass().isArray() && dimensions > 1) {
+                    extractValues(field, element, dimensions - 1, builder.deleteCharAt(builder.length() - 1));
                 } else {
                     if (element.getClass().getName().startsWith("java.") || element.getClass().getName().startsWith("javax."))
-                        builder.append("\t\t").append((element + ";"));
+                        builder.append("\t").append((element + ";"));
                     else
                         builder.append(hierarchyString(dumper(element) + ";\n"));
                 }
-            } else {
-                builder.append("\t\t").append((element + ";\n"));
-            }
+            } else
+                builder.append("\t").append(element).append(";\n");
         }
     }
 
     private static String isPrimitive(Field field, Object arrayObject) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(" {");
-        for (int i = 0; i < Array.getLength(arrayObject); i++) {
-            Object element = Array.get(arrayObject, i);
-            builder.append(element + ", ");
-        }
+        StringBuilder builder = new StringBuilder(" {");
 
-        builder.delete(builder.length()-2, builder.length()).append("} \n");
-        return builder.toString();
+        for (int i = 0; i < Array.getLength(arrayObject); i++)
+            builder.append(Array.get(arrayObject, i)).append(", ");
+        return builder.delete(builder.length() - 2, builder.length()).append("} \n").toString();
     }
 }
