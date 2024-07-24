@@ -1,7 +1,6 @@
 package clock;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class Ring<T> implements Iterable<T> {
     private Node<T> current;
@@ -16,23 +15,62 @@ public class Ring<T> implements Iterable<T> {
         }
     }
 
-    public void add(T element){
+    public void add(T element) throws Exception {
         Node<T> node = new Node<>(element);
+
         if(current == null) {
             node.next = node;
             node.previous = node;
             current = node;
+        } else if(hasElement(element)){
+            throw new Exception("Este elemento já existe na lista");
         } else {
             node.next = current.next;
             node.previous = current;
+            current.next.previous = node;
             current.next = node;
         }
     }
+    public void remove(T element) throws Exception {
+        Node<T> nodeRemove = findNode(element);
+        if(current == null)
+            throw new Exception("Não é possível remover o elemento da lista, pois a lista está vazia");
+
+        if (current.next == current) {
+            current.next = null;
+            current.previous = null;
+            current = null;
+        } else {
+            Node<T> nodeBack = nodeRemove.previous;
+            Node<T> nodeAdvanced = nodeRemove.next;
+            nodeBack.next = nodeAdvanced;
+            nodeAdvanced.previous = nodeBack;
+            current = nodeRemove.next;
+        }
+    }
+
+    public void advanced() throws Exception {
+        if(current == null)
+            throw new Exception("Essa lista está vazia");
+        if(this.size() == 1)
+            throw new Exception("Essa lista só tem um unico elemento");
+
+        current = current.next;
+    }
+
+    public void back() throws Exception {
+        if(current == null)
+            throw new Exception("Essa lista está vazia");
+        if(this.size() == 1)
+            throw new Exception("Essa lista só tem um unico elemento");
+
+        current = current.previous;
+    }
+
     public boolean hasElement(T element){
         if(current != null) {
             Iterator<T> it = iterator();
             while (it.hasNext()) {
-//                System.out.println(next);
                 if (it.next() == element)
                     return true;
             }
@@ -55,6 +93,54 @@ public class Ring<T> implements Iterable<T> {
         return countElements;
     }
 
+    public T getCurrentElement() throws Exception {
+        if (current == null) {
+            throw new Exception("Não é possivel pegar o elemento atual, pois a lista está vazia");
+        }
+        return current.element;
+    }
+
+    public void alterCurrentElement(T element) throws Exception {
+        Node<T> nodeAlter = findNode(element);
+        if(current != nodeAlter){
+            current = nodeAlter;
+        } else {
+            throw new Exception("Esse elemento já é o elemento atual");
+        }
+    }
+
+    public Node<T> findNode(T data) throws Exception {
+        if (current == null) {
+            throw new Exception("Lista está vazia, elemento não encontrado");
+        }
+
+        Node<T> pointer = current;
+        do {
+            if (pointer.element.equals(data)) {
+                return pointer;
+            }
+            pointer = pointer.next;
+        } while (pointer != current);
+
+        throw new Exception("Elemento não encontrado");
+    }
+
+    public String printRing() throws Exception {
+        if (current == null) {
+            throw new Exception("Não é possivel imprimir, pois a lista está vazia");
+        }
+
+        StringBuilder elements = new StringBuilder();
+        Iterator<T> it = iterator();
+        while (it.hasNext()) {
+            T element = it.next();
+            if (element != null) {
+                elements.append(element).append(" <-> ");
+            }
+        }
+        return elements.append(current.element).toString();
+    }
+
     @Override
     public Iterator<T> iterator() {
         return new RingIterator();
@@ -66,7 +152,7 @@ public class Ring<T> implements Iterable<T> {
         private boolean firstIteration = true;
         @Override
         public boolean hasNext() {
-            return firstIteration || pointer != start;
+            return pointer != null && (firstIteration || pointer != start);
         }
 
         @Override
