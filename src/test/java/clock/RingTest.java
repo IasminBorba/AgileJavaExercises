@@ -49,19 +49,29 @@ public class RingTest extends TestCase {
         strRing = "Name2 <-> Name2";
         assertEquals(strRing, ring.printRing());
 
-        try {ring.remove(name2);
-        } catch (Exception e){System.out.println(e.getMessage());}
+        try {
+            ring.remove(name2);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
         assertFalse(ring.hasElement(name2));
         assertEquals(0, ring.size());
 
-        try {assertEquals(null, ring.getCurrentElement());
-        } catch (Exception e){System.out.println(e.getMessage());}
+        try {
+            assertEquals(null, ring.getCurrentElement());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
-        try {assertEquals(null, ring.printRing());
-        } catch (Exception e){System.out.println(e.getMessage());}
+        try {
+            assertEquals(null, ring.printRing());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
     }
+
     public void testAdvancingOrBacking() throws Exception {
         Ring<String> ring = new Ring<>();
         assertEquals(0, ring.size());
@@ -79,18 +89,27 @@ public class RingTest extends TestCase {
         assertEquals(2, ring.size());
 
 
-        try {assertEquals(name1, ring.getCurrentElement());
-        } catch (Exception e){System.out.println(e.getMessage());}
+        try {
+            assertEquals(name1, ring.getCurrentElement());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         assertEquals("Maria <-> José <-> Maria", ring.printRing());
 
         ring.advanced();
-        try {assertEquals(name2, ring.getCurrentElement());
-        } catch (Exception e){System.out.println(e.getMessage());}
+        try {
+            assertEquals(name2, ring.getCurrentElement());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         assertEquals("José <-> Maria <-> José", ring.printRing());
 
         ring.back();
-        try {assertEquals(name1, ring.getCurrentElement());
-        } catch (Exception e){System.out.println(e.getMessage());}
+        try {
+            assertEquals(name1, ring.getCurrentElement());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         assertEquals("Maria <-> José <-> Maria", ring.printRing());
     }
 
@@ -100,19 +119,26 @@ public class RingTest extends TestCase {
 
         Integer number1 = 10;
         ring.add(number1);
-        try {ring.add(number1);
-        } catch (Exception e){System.out.println(e.getMessage());}
+        try {
+            ring.add(number1);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
         assertTrue(ring.hasElement(number1));
         assertEquals(1, ring.size());
         assertEquals("10 <-> 10", ring.printRing());
     }
+
     public void testRemoveException() {
         Ring<Object> ring = new Ring<>();
 
         Integer number1 = 10;
-        try {ring.remove(number1);
-        } catch (Exception e){System.out.println(e.getMessage());}
+        try {
+            ring.remove(number1);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         assertEquals(0, ring.size());
     }
 
@@ -120,17 +146,29 @@ public class RingTest extends TestCase {
         Ring<Character> ring = new Ring<>();
         assertEquals(0, ring.size());
 
-        try {ring.advanced();
-        } catch (Exception e){System.out.println(e.getMessage());}
-        try {ring.back();
-        } catch (Exception e){System.out.println(e.getMessage());}
+        try {
+            ring.advanced();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            ring.back();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
         Character a = 'A';
         ring.add(a);
-        try {ring.advanced();
-        } catch (Exception e){System.out.println(e.getMessage());}
-        try {ring.back();
-        } catch (Exception e){System.out.println(e.getMessage());}
+        try {
+            ring.advanced();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            ring.back();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
         assertEquals("A <-> A", ring.printRing());
     }
@@ -139,14 +177,23 @@ public class RingTest extends TestCase {
         Ring<String> ring = new Ring<>();
         assertEquals(0, ring.size());
 
-        try {ring.getCurrentElement();
-        } catch (Exception e){System.out.println(e.getMessage());}
-        try {ring.printRing();
-        } catch (Exception e){System.out.println(e.getMessage());}
+        try {
+            ring.getCurrentElement();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            ring.printRing();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
         String sport1 = "Soccer";
-        try {ring.alterCurrentElement(sport1);
-        } catch (Exception e){System.out.println(e.getMessage());}
+        try {
+            ring.alterCurrentElement(sport1);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         ring.add(sport1);
 
         String sport2 = "Basketball";
@@ -179,14 +226,23 @@ public class RingTest extends TestCase {
         assertEquals("Soccer <-> Skateboarding <-> Surfing <-> Gymnastics <-> Cycling <-> " +
                 "Swimming <-> Volleyball <-> Tennis <-> Baseball <-> Basketball <-> Soccer", ring.printRing());
 
-        try {ring.advanced();
-        } catch (Exception e){System.out.println(e.getMessage());}
-        try {ring.back();
-        } catch (Exception e){System.out.println(e.getMessage());}
+        try {
+            ring.advanced();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            ring.back();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
 
-        try {ring.alterCurrentElement(sport7);
-        } catch (Exception e){System.out.println(e.getMessage());}
+        try {
+            ring.alterCurrentElement(sport7);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         assertEquals(sport7, ring.getCurrentElement());
 
         ring.remove(sport7);
@@ -199,5 +255,19 @@ public class RingTest extends TestCase {
         assertEquals(sport1, ring.getCurrentElement());
         assertEquals("Soccer <-> Skateboarding <-> Surfing <-> Gymnastics <-> " +
                 "Swimming <-> Volleyball <-> Tennis <-> Baseball <-> Soccer", ring.printRing());
+    }
+
+    public void testAssert() throws Exception {
+        Ring<String> ring = new Ring<>();
+        assertEquals(0, ring.size());
+
+        String Xnull = null;
+        try {
+            ring.add(Xnull);
+        } catch (AssertionError Assert) {
+            System.out.println(Assert.getMessage());
+        }
+
+        assertEquals(0, ring.size());
     }
 }

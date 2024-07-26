@@ -16,14 +16,15 @@ public class Ring<T> implements Iterable<T> {
     }
 
     public void add(T element) throws Exception {
+        assert element != null : "Element not added, because element is null";
         Node<T> node = new Node<>(element);
 
-        if(current == null) {
+        if (current == null) {
             node.next = node;
             node.previous = node;
             current = node;
-        } else if(hasElement(element)){
-            throw new Exception("Este elemento já existe na lista");
+        } else if (hasElement(element)) {
+            throw new Exception("This element already exists");
         } else {
             node.next = current.next;
             node.previous = current;
@@ -31,10 +32,11 @@ public class Ring<T> implements Iterable<T> {
             current.next = node;
         }
     }
+
     public void remove(T element) throws Exception {
         Node<T> nodeRemove = findNode(element);
-        if(current == null)
-            throw new Exception("Não é possível remover o elemento da lista, pois a lista está vazia");
+        if (current == null)
+            throw new Exception("Cannot remove element from list as list is empty");
 
         if (current.next == current) {
             current.next = null;
@@ -50,25 +52,25 @@ public class Ring<T> implements Iterable<T> {
     }
 
     public void advanced() throws Exception {
-        if(current == null)
-            throw new Exception("Essa lista está vazia");
-        if(this.size() == 1)
-            throw new Exception("Essa lista só tem um unico elemento");
+        if (current == null)
+            throw new Exception("This list is empty");
+        if (this.size() == 1)
+            throw new Exception("This list only has a single element");
 
         current = current.next;
     }
 
     public void back() throws Exception {
-        if(current == null)
-            throw new Exception("Essa lista está vazia");
-        if(this.size() == 1)
-            throw new Exception("Essa lista só tem um unico elemento");
+        if (current == null)
+            throw new Exception("This list is empty");
+        if (this.size() == 1)
+            throw new Exception("This list only has a single element");
 
         current = current.previous;
     }
 
-    public boolean hasElement(T element){
-        if(current != null) {
+    public boolean hasElement(T element) {
+        if (current != null) {
             Iterator<T> it = iterator();
             while (it.hasNext()) {
                 if (it.next() == element)
@@ -95,23 +97,23 @@ public class Ring<T> implements Iterable<T> {
 
     public T getCurrentElement() throws Exception {
         if (current == null) {
-            throw new Exception("Não é possivel pegar o elemento atual, pois a lista está vazia");
+            throw new Exception("Cannot get the current element because the list is empty");
         }
         return current.element;
     }
 
     public void alterCurrentElement(T element) throws Exception {
         Node<T> nodeAlter = findNode(element);
-        if(current != nodeAlter){
+        if (current != nodeAlter) {
             current = nodeAlter;
         } else {
-            throw new Exception("Esse elemento já é o elemento atual");
+            throw new Exception("This element is already the current element");
         }
     }
 
     public Node<T> findNode(T data) throws Exception {
         if (current == null) {
-            throw new Exception("Lista está vazia, elemento não encontrado");
+            throw new Exception("List is empty, element not found");
         }
 
         Node<T> pointer = current;
@@ -122,12 +124,12 @@ public class Ring<T> implements Iterable<T> {
             pointer = pointer.next;
         } while (pointer != current);
 
-        throw new Exception("Elemento não encontrado");
+        throw new Exception("Element not found");
     }
 
     public String printRing() throws Exception {
         if (current == null) {
-            throw new Exception("Não é possivel imprimir, pois a lista está vazia");
+            throw new Exception("Cannot print because the list is empty");
         }
 
         StringBuilder elements = new StringBuilder();
@@ -150,6 +152,7 @@ public class Ring<T> implements Iterable<T> {
         private final Node<T> start = current;
         private Node<T> pointer = current;
         private boolean firstIteration = true;
+
         @Override
         public boolean hasNext() {
             return pointer != null && (firstIteration || pointer != start);
