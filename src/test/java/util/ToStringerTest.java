@@ -2,18 +2,32 @@ package util;
 
 import junit.framework.TestCase;
 
-import chess.*;
+import java.util.ArrayList;
 
 public class ToStringerTest extends TestCase {
-    public void testCreate() {
-        Board board = new Board();
-        board.initialize();
+    public void testCreate() throws IllegalAccessException {
+        DefaultDumpFieldTest dumpFieldTest = new DefaultDumpFieldTest();
+        ToStringer tStr = new ToStringer(dumpFieldTest);
 
-        String boardStr = "Board fields annotation @Dump:\n" +
-                            "\tboard\n" +
-                            "\tpiecesOnTheBoard\n" +
-                            "\tfilename";
+        String boardStr = "DefaultDumpFieldTest fields annotation @Dump:\n" +
+                            "\ttestArrayList\n" +
+                            "\ttestBoolean\n" +
+                            "\ttestString\n" +
+                            "\ttestDoubleNotDump\n" +
+                            "\ttestFloatNotDump\n" +
+                            "\ttestStringNotDump\n" +
+                            "\ttestIntegerNotDump";
 
-        assertEquals(boardStr, ToStringer.toString(board));
+        assertEquals(boardStr, tStr.toString(dumpFieldTest));
     }
+}
+
+class DefaultDumpFieldTest {
+    @Dump(order = 3) public String testString;
+    public String testStringNotDump;
+    public Integer testIntegerNotDump;
+    @Dump(order = 1) public ArrayList<String> testArrayList;
+    @Dump private float testFloatNotDump;
+    @Dump(order = 2) private Boolean testBoolean;
+    @Dump public double testDoubleNotDump;
 }

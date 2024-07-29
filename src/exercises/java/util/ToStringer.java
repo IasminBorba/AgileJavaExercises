@@ -1,15 +1,46 @@
 package util;
 
 import java.lang.reflect.*;
+import java.util.*;
 
 public class ToStringer {
-    public static <T> String toString(T object) {
-        StringBuilder builder = new StringBuilder(object.getClass().getSimpleName() + " fields annotation @Dump:\n");
+    private final Object obj;
+    Map<Integer, Field> dumpFields = new HashMap<>();
+    Set<Field> notDumpFields = new HashSet<>();
 
-        for (Field field : object.getClass().getFields()) {
-            if (field.isAnnotationPresent(Dump.class))
-                builder.append("\t").append(field.getName()).append("\n");
-        }
+    public <T> ToStringer(T object) {
+        this.obj = object;
+    }
+
+    protected <T> String toString(T object) throws IllegalAccessException {
+        StringBuilder builder = new StringBuilder(obj.getClass().getSimpleName() + " fields annotation @Dump:\n");
+        for (Field field : getFields())
+            builder.append("\t").append(field.getName()).append("\n");
+
         return builder.deleteCharAt(builder.length() - 1).toString();
+    }
+
+    private ArrayList<Field> getFields() {
+        for (Field field : obj.getClass().getDeclaredFields()) {
+            field.setAccessible(true);
+            if (field.isAnnotationPresent(Dump.class)) {
+                Dump dump = field.getAnnotation(Dump.class);
+                dumpFields.put(checkOrder(dump.order()), field);
+            } else
+                notDumpFields.add(field);
+        }
+
+        dumpFields = new TreeMap<>(dumpFields);
+        ArrayList<Field> listFields = new ArrayList<>(dumpFields.values());
+        listFields.addAll(notDumpFields);
+        return listFields;
+    }
+
+    private int checkOrder(int order) {
+        for (int orderExists : dumpFields.keySet()) {
+            if (orderExists == order)
+                return checkOrder(order - 1);
+        }
+        return order;
     }
 }
