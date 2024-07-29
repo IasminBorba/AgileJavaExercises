@@ -13,12 +13,26 @@ public class ToStringer {
     }
 
     protected <T> String toString(T object) throws IllegalAccessException {
-        StringBuilder builder = new StringBuilder(obj.getClass().getSimpleName() + " fields annotation @Dump:\n");
-        for (Field field : getFields())
-            builder.append("\t").append(field.getName()).append("\n");
+        StringBuilder builder = new StringBuilder(object.getClass().getSimpleName()).append(" fields annotation @Dump:\n");
+        for (Field field : getFields()) {
+            builder.append("\t").append(field.getName()).append(": ");
 
-        return builder.deleteCharAt(builder.length() - 1).toString();
+            Dump dump = field.getAnnotation(Dump.class);
+            Object value = field.get(object);
+            if (dump != null && dump.quote())
+                builder.append("\"").append(value).append("\"");
+            else
+                builder.append(value);
+
+            builder.append("\n");
+        }
+
+        if (!builder.isEmpty() && builder.charAt(builder.length() - 1) == '\n')
+            builder.deleteCharAt(builder.length() - 1);
+
+        return builder.toString();
     }
+
 
     private ArrayList<Field> getFields() {
         for (Field field : obj.getClass().getDeclaredFields()) {
