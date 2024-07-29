@@ -9,6 +9,11 @@ public class ToStringerTest extends TestCase {
         Board board = new Board();
         board.initialize();
 
-        System.out.println(ToStringer.toString(board));
+        String boardStr = "Board fields annotation @Dump:\n" +
+                            "\tboard\n" +
+                            "\tpiecesOnTheBoard\n" +
+                            "\tfilename";
+
+        assertEquals(boardStr, ToStringer.toString(board));
     }
 }
