@@ -7,4 +7,5 @@ import java.lang.annotation.*;
 public @interface Dump {
     int order() default Integer.MAX_VALUE;
     boolean quote() default false;
+    String outputMethod() default "toString";
 }

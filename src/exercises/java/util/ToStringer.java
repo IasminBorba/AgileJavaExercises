@@ -12,13 +12,24 @@ public class ToStringer {
         this.obj = object;
     }
 
-    protected <T> String toString(T object) throws IllegalAccessException {
+    protected <T> String toString(T object) throws Exception {
         StringBuilder builder = new StringBuilder(object.getClass().getSimpleName()).append(" fields annotation @Dump:\n");
         for (Field field : getFields()) {
+            field.setAccessible(true);
             builder.append("\t").append(field.getName()).append(": ");
 
             Dump dump = field.getAnnotation(Dump.class);
             Object value = field.get(object);
+
+            if(dump != null && value != null && dump.outputMethod() != null) {
+                try {
+                    Method method = value.getClass().getMethod(dump.outputMethod());
+                    value = method.invoke(value);
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
+            }
+
             if (dump != null && dump.quote())
                 builder.append("\"").append(value).append("\"");
             else
