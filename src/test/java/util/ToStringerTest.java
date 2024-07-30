@@ -72,30 +72,54 @@ public class ToStringerTest extends TestCase {
 
         String defaultDumpStr = tStr.toString(dumpExceptionTest);
     }
+
+    public void testOutputMethods() throws Exception {
+        DefaultDumpOutputMethodsListTest dumpTest = new DefaultDumpOutputMethodsListTest(new DefaultDumpOutputMethodsListTest.Person());
+        ToStringer tStr = new ToStringer(dumpTest);
+
+        String defaultDumpStr = "DefaultDumpOutputMethodsListTest fields annotation @Dump:\n" +
+                "\tperson: My name is Iasmin Borba\n" +
+                "\tI'm 22 years old\n" +
+                "\tMy fone: (99) 99999-9999";
+
+        assertEquals(defaultDumpStr, tStr.toString(dumpTest));
+    }
 }
 
 class DefaultDumpFieldTest {
-    @Dump(order = 3) public String testString;
+    @Dump(order = 3)
+    public String testString;
     public String testStringNotDump;
     public Integer testIntegerNotDump;
-    @Dump(order = 1) public ArrayList<String> testArrayList;
-    @Dump private float testFloatDump;
-    @Dump(order = 2) private Boolean testBoolean;
-    @Dump public double testDoubleDump;
+    @Dump(order = 1)
+    public ArrayList<String> testArrayList;
+    @Dump
+    private float testFloatDump;
+    @Dump(order = 2)
+    private Boolean testBoolean;
+    @Dump
+    public double testDoubleDump;
 }
 
 class DefaultDumpQuoteTest {
-    @Dump(order = 3) public String testString;
+    @Dump(order = 3)
+    public String testString;
     public String testStringNotDump;
-    @Dump(quote = true) private Integer testIntegerDumpQuote;
-    @Dump(order = 1) public ArrayList<String> testArrayList;
-    @Dump(quote = true) private float testPrivateFloatQuote;
-    @Dump private Boolean testPrivateBoolean;
-    @Dump(quote = true) public double testDoubleDumpQuote;
+    @Dump(quote = true)
+    private Integer testIntegerDumpQuote;
+    @Dump(order = 1)
+    public ArrayList<String> testArrayList;
+    @Dump(quote = true)
+    private float testPrivateFloatQuote;
+    @Dump
+    private Boolean testPrivateBoolean;
+    @Dump(quote = true)
+    public double testDoubleDumpQuote;
 }
 
 class DefaultDumpToStringTest {
-    @Dump(outputMethod = "customOutPut") public FullName fullNameCustom;
+    @Dump(outputMethods = "customOutPut")
+    public FullName fullNameCustom;
     public FullName fullName;
 
     public DefaultDumpToStringTest(FullName fullName) {
@@ -115,15 +139,43 @@ class FullName {
     public String toString() {
         return firstName + " " + lastName;
     }
-
 }
 
 class DefaultDumpExceptionTest {
-    @Dump(outputMethod = "customNotExists") public FullName fullNameException;
+    @Dump(outputMethods = "customNotExists")
+    public FullName fullNameException;
     public FullName fullName;
 
     public DefaultDumpExceptionTest(FullName fullName) {
         this.fullNameException = fullName;
         this.fullName = fullName;
+    }
+}
+
+class DefaultDumpOutputMethodsListTest {
+    @Dump(outputMethods = {"toStringName", "toStringAge", "toStringFone"})
+    public Person person;
+
+    public DefaultDumpOutputMethodsListTest(Person person) {
+        this.person = person;
+    }
+
+    static class Person {
+        public String firstName = "Iasmin";
+        public String lastName = "Borba";
+        public int Age = 22;
+        public String Fone = "(99) 99999-9999";
+
+        public String toStringName() {
+            return "My name is " + firstName + " " + lastName;
+        }
+
+        public String toStringAge() {
+            return "I'm " + Age + " years old";
+        }
+
+        public String toStringFone() {
+            return "My fone: " + Fone;
+        }
     }
 }

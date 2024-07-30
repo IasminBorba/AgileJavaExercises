@@ -21,26 +21,51 @@ public class ToStringer {
             Dump dump = field.getAnnotation(Dump.class);
             Object value = field.get(object);
 
-            if(dump != null && value != null && dump.outputMethod() != null) {
-                try {
-                    Method method = value.getClass().getMethod(dump.outputMethod());
-                    value = method.invoke(value);
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                }
-            }
+            value = processFieldValue(value, dump);
 
             if (dump != null && dump.quote())
                 builder.append("\"").append(value).append("\"");
-            else
+             else
                 builder.append(value);
 
             builder.append("\n");
         }
 
-        if (!builder.isEmpty() && builder.charAt(builder.length() - 1) == '\n')
-            builder.deleteCharAt(builder.length() - 1);
+        return removeTrailingNewline(builder);
+    }
 
+    private Object processFieldValue(Object value, Dump dump) {
+        if (dump != null && value != null && dump.outputMethods() != null) {
+            StringBuilder builderMethods = new StringBuilder();
+            try {
+                for (String method : dump.outputMethods())
+                    builderMethods.append("\t").append(invokeMethod(value, method)).append("\n");
+
+                if (!builderMethods.isEmpty()) {
+                    builderMethods.deleteCharAt(0).deleteCharAt(builderMethods.length() - 1);
+                    value = builderMethods.toString();
+                }
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            }
+        }
+        return value;
+    }
+
+    private Object invokeMethod(Object value, String methodName) throws NoSuchMethodException {
+        try {
+            Method method = value.getClass().getMethod(methodName);
+            return method.invoke(value);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private String removeTrailingNewline(StringBuilder builder) {
+        if (!builder.isEmpty() && builder.charAt(builder.length() - 1) == '\n') {
+            builder.deleteCharAt(builder.length() - 1);
+        }
         return builder.toString();
     }
 
@@ -54,7 +79,10 @@ public class ToStringer {
             } else
                 notDumpFields.add(field);
         }
+        return sortList();
+    }
 
+    private ArrayList<Field> sortList() {
         dumpFields = new TreeMap<>(dumpFields);
         ArrayList<Field> listFields = new ArrayList<>(dumpFields.values());
         listFields.addAll(notDumpFields);

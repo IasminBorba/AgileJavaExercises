@@ -6,6 +6,8 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Dump {
     int order() default Integer.MAX_VALUE;
+
     boolean quote() default false;
-    String outputMethod() default "toString";
+
+    String[] outputMethods() default {"toString"};
 }
