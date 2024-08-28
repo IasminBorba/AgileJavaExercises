@@ -1,6 +1,7 @@
 package util;
 
 import junit.framework.TestCase;
+
 import java.io.*;
 import java.util.Objects;
 
@@ -8,14 +9,14 @@ import static util.Dir.ensureExists;
 
 public class DirTest extends TestCase {
     String str = "Mais aventuras em classes utilitárias: " +
-    "Crie uma classe Dir que encapsule um objeto File que, " +
-    "por sua vez, representa um diretório real do sistema de arquivos. " +
-    "Projete a classe de forma que ela seja funcional apenas quando mapeada para um diretório existente. " +
-    "Forneça um método chamado ensureExists para criar o diretório se ele não existir. " +
-    "O construtor deve lançar uma exceção se o nome do diretório for o mesmo que o de um arquivo " +
+            "Crie uma classe Dir que encapsule um objeto File que, " +
+            "por sua vez, representa um diretório real do sistema de arquivos. " +
+            "Projete a classe de forma que ela seja funcional apenas quando mapeada para um diretório existente. " +
+            "Forneça um método chamado ensureExists para criar o diretório se ele não existir. " +
+            "O construtor deve lançar uma exceção se o nome do diretório for o mesmo que o de um arquivo " +
 
             "Finalmente, forneça um método que retorne uma lista de objetos MyFile " +
-    "no diretório e lance uma exceção se o diretório ainda não tiver sido criado.";
+            "no diretório e lance uma exceção se o diretório ainda não tiver sido criado.";
 
     public void testCreate() throws Exception {
         String dirName = "testDir";
@@ -23,7 +24,7 @@ public class DirTest extends TestCase {
 
         try {
             dir = new Dir(dirName);
-        } catch (IOException e){
+        } catch (IOException e) {
             if (Objects.equals(e.getMessage(), "Directory not already exists"))
                 dir = ensureExists(dirName);
             else
@@ -39,13 +40,11 @@ public class DirTest extends TestCase {
 
         try {
             dir = new Dir(dirName);
-        } catch (IOException e){
-            if (Objects.equals(e.getMessage(), "Directory not already exists")) {
+        } catch (IOException e) {
+            if (Objects.equals(e.getMessage(), "Directory not already exists"))
                 dir = ensureExists(dirName);
-            }
-            else {
+            else
                 System.out.println(e.getMessage());
-            }
         }
 
         assertEquals("testDir", dir.dirName);
@@ -117,12 +116,12 @@ public class DirTest extends TestCase {
         }
     }
 
-    public void testInstantiateObject() throws IOException{
+    public void testInstantiateObject() throws IOException {
         Dir dir = new Dir("testDir");
-        try{
+        try {
             Dir.Attributes attributes = new Dir.Attributes(true, false);      // Dar erro na compilação caso Attributes não fosse estatica
             Dir.Attributes attributesTrue = dir.getAttributes();             // Funciona
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

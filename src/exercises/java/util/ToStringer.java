@@ -25,7 +25,7 @@ public class ToStringer {
 
             if (dump != null && dump.quote())
                 builder.append("\"").append(value).append("\"");
-             else
+            else
                 builder.append(value);
 
             builder.append("\n");
@@ -63,9 +63,9 @@ public class ToStringer {
     }
 
     private String removeTrailingNewline(StringBuilder builder) {
-        if (!builder.isEmpty() && builder.charAt(builder.length() - 1) == '\n') {
+        if (!builder.isEmpty() && builder.charAt(builder.length() - 1) == '\n')
             builder.deleteCharAt(builder.length() - 1);
-        }
+
         return builder.toString();
     }
 
@@ -90,10 +90,10 @@ public class ToStringer {
     }
 
     private int checkOrder(int order) {
-        for (int orderExists : dumpFields.keySet()) {
+        for (int orderExists : dumpFields.keySet())
             if (orderExists == order)
                 return checkOrder(order - 1);
-        }
+
         return order;
     }
 }

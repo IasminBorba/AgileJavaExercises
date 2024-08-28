@@ -2,7 +2,7 @@ package pieces;
 
 import static pieces.Queen.*;
 
-public class QueenTest extends PieceTest{
+public class QueenTest extends PieceTest {
     public void testCreate() {
         Piece queenBlack = createPiece(Color.BLACK, Class);
         assertEquals(Queen.Class, queenBlack.getType());

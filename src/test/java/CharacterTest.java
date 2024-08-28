@@ -1,7 +1,7 @@
 import junit.framework.TestCase;
 
 public class CharacterTest extends TestCase {
-    public void testWhitespace(){
+    public void testWhitespace() {
         assertTrue(Character.isWhitespace('\n'));
         assertTrue(Character.isWhitespace('\r'));
         assertTrue(Character.isWhitespace('\t'));

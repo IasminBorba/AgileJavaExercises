@@ -1,11 +1,12 @@
 package util;
 
 import junit.framework.TestCase;
+
 import java.io.*;
 import java.util.ArrayList;
 
 public class TestFileText extends TestCase {
-    public void testFile() throws Exception{
+    public void testFile() throws Exception {
         final String filename = "testFileText.txt";
 
         try {
@@ -21,9 +22,9 @@ public class TestFileText extends TestCase {
         }
     }
 
-    public void delete(String filename){
+    public void delete(String filename) {
         File file = new File(filename);
-        if(file.exists())
+        if (file.exists())
             file.delete();
     }
 
@@ -55,17 +56,17 @@ public class TestFileText extends TestCase {
         assertEquals(expectedQuests.size(), actualQuests.size());
     }
 
-    public ArrayList<String> quests(String text){
+    public ArrayList<String> quests(String text) {
         ArrayList<String> listQuests = new ArrayList<>();
 
-        for(String str: text.split("\n"))
-            if(str != null && !str.equals("Exercises"))
+        for (String str : text.split("\n"))
+            if (str != null && !str.equals("Exercises"))
                 listQuests.add(str);
 
         return listQuests;
     }
 
-    public String text(){
+    public String text() {
         return "Exercises\n" +
                 "1. Create a test to write the text of this exercise to the file system. The test should read the " +
                 "file back in and make assertions about the content. Ensure that you can run the test " +

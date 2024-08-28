@@ -4,8 +4,11 @@ import java.util.*;
 import java.util.logging.*;
 
 public class CustomHandler extends Handler {
-    public void flush() {}
-    public void close() {}
+    public void flush() {
+    }
+
+    public void close() {
+    }
 
     private final Map<Level, Integer> messagesLogged = new HashMap<>();
 

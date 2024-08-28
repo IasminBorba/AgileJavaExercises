@@ -7,22 +7,26 @@ import static util.ObjectDumper.dumper;
 public class ProxyMyFile implements ProxyString {
     private final MyFile object;
 
-    public ProxyMyFile(String filename){
+    public ProxyMyFile(String filename) {
         this.object = new MyFile(filename);
     }
 
-    public String read() throws IOException{
+    public String read() throws IOException {
         return object.read();
     }
-    public void write(String text) throws IOException{
+
+    public void write(String text) throws IOException {
         object.write(text);
     }
-    public void delete(){
+
+    public void delete() {
         object.delete();
     }
-    public void overwrite(String textOverWrite) throws IOException{
+
+    public void overwrite(String textOverWrite) throws IOException {
         object.overwrite(textOverWrite);
     }
+
     @Override
     public String toString() {
         try {

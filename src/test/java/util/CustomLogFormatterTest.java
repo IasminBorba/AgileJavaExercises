@@ -7,7 +7,7 @@ import java.util.logging.*;
 
 public class CustomLogFormatterTest extends TestCase {
 
-    public void testCreate(){
+    public void testCreate() {
         Logger logger = Logger.getLogger(CustomLogFormatter.class.getName());
 
         CustomHandler countingHandler = new CustomHandler();
@@ -27,8 +27,7 @@ public class CustomLogFormatterTest extends TestCase {
         logger.log(Level.INFO, "info message");
 
         System.out.println("Log Summary:");
-        for (Map.Entry<Level, Integer> entry : countingHandler.getLevelCountMap().entrySet()) {
+        for (Map.Entry<Level, Integer> entry : countingHandler.getLevelCountMap().entrySet())
             System.out.println(entry.getKey() + ": " + entry.getValue());
-        }
     }
 }

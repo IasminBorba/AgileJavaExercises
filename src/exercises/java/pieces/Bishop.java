@@ -18,25 +18,21 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public ArrayList<String> getPossibleMoves(String position){
+    public ArrayList<String> getPossibleMoves(String position) {
         ArrayList<String> moves = new ArrayList<>();
 
-        for (int auxColumn = column-1, auxRankUp = rank+1, auxRankDown = rank-1; auxColumn >= 0; auxColumn--, auxRankDown--, auxRankUp++) {
-            if(auxRankUp < 8){
+        for (int auxColumn = column - 1, auxRankUp = rank + 1, auxRankDown = rank - 1; auxColumn >= 0; auxColumn--, auxRankDown--, auxRankUp++) {
+            if (auxRankUp < 8)
                 moves.add(board.transformPositionString(auxColumn, auxRankUp));
-            }
-            if(auxRankUp >= 0){
+            if (auxRankUp >= 0)
                 moves.add(board.transformPositionString(auxColumn, auxRankDown));
-            }
         }
 
-        for (int auxColumn = column+1, auxRankUp = rank+1, auxRankDown = rank-1; auxColumn < 8; auxColumn++, auxRankDown--, auxRankUp++) {
-            if(auxRankUp < 8){
+        for (int auxColumn = column + 1, auxRankUp = rank + 1, auxRankDown = rank - 1; auxColumn < 8; auxColumn++, auxRankDown--, auxRankUp++) {
+            if (auxRankUp < 8)
                 moves.add(board.transformPositionString(auxColumn, auxRankUp));
-            }
-            if(auxRankUp >= 0){
+            if (auxRankUp >= 0)
                 moves.add(board.transformPositionString(auxColumn, auxRankDown));
-            }
         }
 
         moves.removeIf(move -> move.contains("error"));

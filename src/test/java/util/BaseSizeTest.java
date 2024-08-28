@@ -1,15 +1,16 @@
 package util;
 
 import junit.framework.TestCase;
+
 import java.io.*;
 
 public class BaseSizeTest extends TestCase {
-    public void testBaseSize() throws IOException{
+    public void testBaseSize() throws IOException {
         File file = new File("testTypes.txt");
         BaseSize baseSize = new BaseSize();
 
         char aChar = 'a';
-        byte [] bytes = baseSize.baseTest(file, aChar);
+        byte[] bytes = baseSize.baseTest(file, aChar);
         assertEquals(2, bytes.length);
         assertValue(aChar, bytes);
 
@@ -41,11 +42,11 @@ public class BaseSizeTest extends TestCase {
         file.delete();
     }
 
-    public <T> void assertValue(T expectedValue, byte[] bytes) throws IOException{
+    public <T> void assertValue(T expectedValue, byte[] bytes) throws IOException {
         ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
         DataInputStream dis = new DataInputStream(bis);
 
-        switch (expectedValue.getClass().getSimpleName()){
+        switch (expectedValue.getClass().getSimpleName()) {
             case "Character" -> assertEquals(expectedValue, dis.readChar());
             case "Integer" -> assertEquals(expectedValue, dis.readInt());
             case "Double" -> assertEquals(expectedValue, dis.readDouble());

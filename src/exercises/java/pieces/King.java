@@ -8,7 +8,8 @@ public class King extends Piece {
     public static Type Class = Type.KING;
     private Board board;
 
-    public King(){}
+    public King() {
+    }
 
     protected King(Color color, Board board) {
         super(color, Class);
@@ -23,11 +24,12 @@ public class King extends Piece {
     public ArrayList<String> getPossibleMoves(String position) {
         ArrayList<String> moves = new ArrayList<>();
 
-        moves.add(board.transformPositionString(column,rank-1));
-        moves.add(board.transformPositionString(column,rank+1));
-        for(int aux = -1; aux < 2; aux++){
-            moves.add(board.transformPositionString(column+1,rank+aux));
-            moves.add(board.transformPositionString(column-1,rank+aux));
+        moves.add(board.transformPositionString(column, rank - 1));
+        moves.add(board.transformPositionString(column, rank + 1));
+
+        for (int aux = -1; aux < 2; aux++) {
+            moves.add(board.transformPositionString(column + 1, rank + aux));
+            moves.add(board.transformPositionString(column - 1, rank + aux));
         }
 
         moves.removeIf(move -> move.contains("error"));

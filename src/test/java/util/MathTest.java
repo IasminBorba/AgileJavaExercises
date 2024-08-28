@@ -1,21 +1,23 @@
 package util;
 
 import junit.framework.TestCase;
+
 import java.math.*;
 import java.util.*;
+
 import static java.lang.Math.*;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertNotEquals;
 
 public class MathTest extends TestCase {
-    public void testBigDecimal(){
+    public void testBigDecimal() {
         BigDecimal testBigDecimal = new BigDecimal("5.00");
 
         testBigDecimal.add(new BigDecimal("1.00"));
         assertEquals(new BigDecimal("5.00"), testBigDecimal);
     }
 
-    public void testBigDecimal2(){
+    public void testBigDecimal2() {
         BigDecimal testBigDecimal = new BigDecimal("10.00");
         BigDecimal testBigDecimal2 = new BigDecimal("1");
         assertNotEquals(testBigDecimal2, testBigDecimal);
@@ -27,9 +29,9 @@ public class MathTest extends TestCase {
         assertEquals(testBigDecimal2, bigDecimalNotPrime);
     }
 
-    public void testFloat(){
+    public void testFloat() {
         float number1 = 0.9f;
-        float number2 = 0.005f*2.0f;
+        float number2 = 0.005f * 2.0f;
         assertNotEquals(number1, number2);
 
         float precisionFloat = 0.9f;
@@ -38,18 +40,18 @@ public class MathTest extends TestCase {
         assertEquals(number1, number2, precisionDouble);
 
         double number12 = 0.9;
-        double number22 = 0.005*2.0;
+        double number22 = 0.005 * 2.0;
         assertEquals(number1, number2, precisionFloat);
         assertEquals(number1, number2, precisionDouble);
     }
 
-    public static class CompilerError{
-//        float x = 0.01;  ERROR
+    public static class CompilerError {
+        //        float x = 0.01;  ERROR
         float x = 0.01f;
-        float y = (float)0.01;
+        float y = (float) 0.01;
     }
 
-    public void testSpikeDecimalValue(){
+    public void testSpikeDecimalValue() {
         String strValue = "0xDEAD";
 
         int valueDecimal = Integer.decode("0xDEAD");
@@ -63,10 +65,10 @@ public class MathTest extends TestCase {
         assertEquals("157255", valueOctal);
     }
 
-    public void testNaNInfinity(){
+    public void testNaNInfinity() {
         //Usamdp float, mas tudo se aplica pra o tipo Double;
 
-        assertEquals(Float.NaN, (0.0f/0));
+        assertEquals(Float.NaN, (0.0f / 0));
         assertEquals(Float.NaN, (float) sqrt(-1));
         assertEquals(Float.NaN, (10.0f % 0.0f));
         assertEquals(Float.NaN, Float.NaN * 1f);
@@ -80,13 +82,13 @@ public class MathTest extends TestCase {
 
 
         assertEquals(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY - Float.NEGATIVE_INFINITY);
-        assertEquals(Float.POSITIVE_INFINITY, (1.0f/0));
+        assertEquals(Float.POSITIVE_INFINITY, (1.0f / 0));
 
         assertEquals(Float.NEGATIVE_INFINITY, Float.NEGATIVE_INFINITY - Float.POSITIVE_INFINITY);
         assertEquals(Float.NEGATIVE_INFINITY, Float.NEGATIVE_INFINITY + Float.NEGATIVE_INFINITY);
         assertEquals(Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY * Float.NEGATIVE_INFINITY);
         assertEquals(Float.NEGATIVE_INFINITY, Float.NEGATIVE_INFINITY * Float.POSITIVE_INFINITY);
-        assertEquals(Float.NEGATIVE_INFINITY, (-1.0f/0));
+        assertEquals(Float.NEGATIVE_INFINITY, (-1.0f / 0));
 
 
         assertEquals(Float.NaN, Float.POSITIVE_INFINITY + Float.NEGATIVE_INFINITY);
@@ -99,9 +101,9 @@ public class MathTest extends TestCase {
         assertEquals(Float.NaN, Float.NEGATIVE_INFINITY * 0);
     }
 
-    public void testIntegerDivision(){
-        Set<Integer> listNumber = new HashSet<>(asList(7,15,20,249,75,3,10));
-        List<Integer> number3 = new ArrayList<>(asList(3,249, 75,15));
+    public void testIntegerDivision() {
+        Set<Integer> listNumber = new HashSet<>(asList(7, 15, 20, 249, 75, 3, 10));
+        List<Integer> number3 = new ArrayList<>(asList(3, 249, 75, 15));
 
         List<Integer> result1 = Math.divisibleBy3(listNumber);
         assertEquals(number3, result1);
@@ -110,8 +112,8 @@ public class MathTest extends TestCase {
         assertEquals(number3, result2);
     }
 
-    public void testRounding(){
-        int number11 = (int)1.9;
+    public void testRounding() {
+        int number11 = (int) 1.9;
         System.out.println(number11);
 
         double number12 = rint(1.9);
@@ -135,7 +137,7 @@ public class MathTest extends TestCase {
 
         x = 5;
         y = 10;
-        int numberB = ++ x * 5 * y++;
+        int numberB = ++x * 5 * y++;
         System.out.println("numberB = " + numberB + "\nx = " + x + "\ny = " + y);
 
         x = 5;
@@ -145,13 +147,15 @@ public class MathTest extends TestCase {
 
         x = 5;
         y = 10;
-        int numberD = ++ x + 5 * 7 + y++;
+        int numberD = ++x + 5 * 7 + y++;
         System.out.println("numberD = " + numberD + "\nx = " + x + "\ny = " + y);
 
 //        int numberE = ++ y++ % ++x++;
-        x = 5; y = 10;
+        x = 5;
+        y = 10;
 
-        x++; y++;
+        x++;
+        y++;
         // 11 ++ % 6++
         int numberE = y++ % x++;
         System.out.println("numberE = " + numberE + "\nx = " + x + "\ny = " + y);
@@ -165,7 +169,7 @@ public class MathTest extends TestCase {
 
         x = 5;
         y = 10;
-        int numberG = ++ x * ++y;
+        int numberG = ++x * ++y;
         System.out.println("numberG = " + numberG + "\nx = " + x + "\ny = " + y);
 
         x = 5;
@@ -195,7 +199,7 @@ public class MathTest extends TestCase {
     }
 
     public void testOperator() {
-        assertEquals(34,17<<1);
+        assertEquals(34, 17 << 1);
 
         // 1 == 0000_0000_0000_0000_0000_0000_0000_0001
         // ~1 == 1111_1111_1111_1111_1111_1111_1111_1110 == 4294967294 == -2
@@ -204,32 +208,32 @@ public class MathTest extends TestCase {
 
         //10 = 0000_0000_0000_0000_0000_0000_0000_1010
         //5 = 0000_0000_0000_0000_0000_0000_0000_0101
-        assertEquals(5,10>>1);
+        assertEquals(5, 10 >> 1);
 
 
         //1111_1111_1111_1111_1111_1111_1111_0110 = -10
         //1111_1111_1111_1111_1111_1111_1111_1011 = -5
-        assertEquals(-5,-10>>1);
+        assertEquals(-5, -10 >> 1);
 
 
         //0000_0000_0000_0000_0000_0000_0000_1010 = 10
         //0000_0000_0000_0000_0000_0000_0000_0101 = 5
-        assertEquals(5,10>>>1);
+        assertEquals(5, 10 >>> 1);
 
         //1111_1111_1111_1111_1111_1111_1111_0110 = -10
         // 0111_1111_1111_1111_1111_1111_1111_1011 = 2147483643
-        assertEquals(2147483643,-10>>>1);
+        assertEquals(2147483643, -10 >>> 1);
     }
 
-    public void testRandom(){
-        int number = Math.random(50,1);
+    public void testRandom() {
+        int number = Math.random(50, 1);
         assertTrue(number > 0 && number <= 50);
 
-        ArrayList<Integer> list = new ArrayList<>(asList(7,15,20,249,75,3,10));
+        ArrayList<Integer> list = new ArrayList<>(asList(7, 15, 20, 249, 75, 3, 10));
         int listSize = list.size();
-        for(int x = 0; x < 100; x++){
-            int index = Math.random(listSize,1);
-            list.set(index, Math.random(100,1));
+        for (int x = 0; x < 100; x++) {
+            int index = Math.random(listSize, 1);
+            list.set(index, Math.random(100, 1));
         }
 
         assertTrue(list.size() == listSize);
@@ -241,7 +245,7 @@ public class MathTest extends TestCase {
         System.out.println(random.nextDouble());
     }
 
-    public void testXor(){
+    public void testXor() {
         int number1 = 5;
         int number2 = 7;
 
@@ -253,9 +257,9 @@ public class MathTest extends TestCase {
         assertEquals(7, number1);
     }
 
-    public void testBitCount(){
+    public void testBitCount() {
         // char(16), byte(8), short(16), int(32), long(64)
-        assertEquals(16, Math.bitCount((long) Character.MAX_VALUE)-1);
+        assertEquals(16, Math.bitCount((long) Character.MAX_VALUE) - 1);
         assertEquals(8, Math.bitCount((long) Byte.MAX_VALUE));
         assertEquals(16, Math.bitCount((long) Short.MAX_VALUE));
         assertEquals(32, Math.bitCount((long) Integer.MAX_VALUE));

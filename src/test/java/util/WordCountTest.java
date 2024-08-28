@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 
 public class WordCountTest extends TestCase {
 
-    public void testCreate(){
+    public void testCreate() {
         String text = "Create a String literal using the first two sentences of this exercise. " +
                 "You will create WordCount class to parse through the text and count the number of instances of each word.";
 

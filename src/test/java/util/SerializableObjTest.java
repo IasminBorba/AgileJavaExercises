@@ -1,11 +1,13 @@
 package util;
 
 import junit.framework.TestCase;
+
 import java.io.*;
+
 import static util.SerializableObj.serializableObjCopy;
 
 public class SerializableObjTest extends TestCase {
-    public void testCreate() throws IOException, ClassNotFoundException{
+    public void testCreate() throws IOException, ClassNotFoundException {
         SerializableObj obj1 = new SerializableObj("name", 10.5, 123);
         File file = new File("SerializableObjTest.txt");
 

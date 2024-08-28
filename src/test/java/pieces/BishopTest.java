@@ -3,7 +3,7 @@ package pieces;
 import static pieces.Bishop.*;
 import static pieces.Queen.Class;
 
-public class BishopTest extends PieceTest{
+public class BishopTest extends PieceTest {
     public void testCreate() {
         Piece bishopBlack = createPiece(Color.BLACK, Class);
         assertEquals(Bishop.Class, bishopBlack.getType());

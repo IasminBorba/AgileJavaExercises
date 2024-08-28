@@ -3,7 +3,7 @@ package pieces;
 import static pieces.Queen.Class;
 import static pieces.Rook.*;
 
-public class RookTest extends PieceTest{
+public class RookTest extends PieceTest {
     public void testCreate() {
         Piece rookBlack = createPiece(Color.BLACK, Class);
         assertEquals(Rook.Class, rookBlack.getType());

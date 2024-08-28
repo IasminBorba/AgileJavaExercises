@@ -4,6 +4,7 @@ import junit.framework.TestCase;
 
 public class AlarmClockTest extends TestCase {
     private AlarmClock clock;
+
     public void testAlarmHour() throws InterruptedException {
         clock = new AlarmClock();
 
@@ -12,7 +13,7 @@ public class AlarmClockTest extends TestCase {
         clock.waitForCompletion();
 
         String textAlarms =
-                        "Mon Jul 22 08:59:00 BRT 2024\n" +
+                "Mon Jul 22 08:59:00 BRT 2024\n" +
                         "Mon Jul 22 09:00:00 BRT 2024\n" +
                         "ALARM: Wake up!\n";
         assertEquals(textAlarms, clock.printAlarms());
@@ -26,7 +27,7 @@ public class AlarmClockTest extends TestCase {
         clock.waitForCompletion();
 
         String textAlarms =
-                        "Mon Jul 22 09:01:00 BRT 2024\n" +
+                "Mon Jul 22 09:01:00 BRT 2024\n" +
                         "Mon Jul 22 09:02:00 BRT 2024\n" +
                         "ALARM: Wake up!\n";
         assertEquals(textAlarms, clock.printAlarms());
@@ -50,7 +51,7 @@ public class AlarmClockTest extends TestCase {
         clock.waitForCompletion();
 
         String textAlarms =
-                        "Mon Jul 22 09:03:00 BRT 2024\n" +
+                "Mon Jul 22 09:03:00 BRT 2024\n" +
                         "ALARM: Wake up!\n" +
                         "Mon Jul 22 09:04:00 BRT 2024\n" +
                         "ALARM: Now!!\n" +
@@ -80,7 +81,7 @@ public class AlarmClockTest extends TestCase {
         clock.waitForCompletion();
 
         String textAlarms =
-                        "Mon Jul 22 09:12:00 BRT 2024\n" +
+                "Mon Jul 22 09:12:00 BRT 2024\n" +
                         "ALARM: Wake up!\n" +
                         "Mon Jul 22 09:13:00 BRT 2024\n" +
                         "ALARM: CANCELED!\n" +

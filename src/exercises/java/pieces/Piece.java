@@ -6,25 +6,27 @@ import java.util.Objects;
 
 abstract public class Piece implements Comparable<Piece>, Serializable {
     public enum Color {WHITE, BLACK}
+
     public enum Type {
-        PAWN(1,'P'),
-        KNIGHT(2.5,'N'),
-        ROOK(5,'R'),
-        BISHOP(3,'B'),
-        QUEEN(9,'Q'),
-        KING(0,'K');
+        PAWN(1, 'P'),
+        KNIGHT(2.5, 'N'),
+        ROOK(5, 'R'),
+        BISHOP(3, 'B'),
+        QUEEN(9, 'Q'),
+        KING(0, 'K');
         private final double points;
         private final char representation;
 
-        Type(double points, char representation){
+        Type(double points, char representation) {
             this.points = points;
             this.representation = representation;
         }
 
-        char getRepresentation(){
+        char getRepresentation() {
             return representation;
         }
     }
+
     private Color color;
     private Type type;
     private double points;
@@ -37,18 +39,19 @@ abstract public class Piece implements Comparable<Piece>, Serializable {
         this.type = type;
         this.points = type.points;
 
-        if (color == Color.WHITE) {
+        if (color == Color.WHITE)
             this.representation = Character.toLowerCase(type.representation);
-        } else {
+        else
             this.representation = type.representation;
-        }
     }
-    public Piece() {}
+
+    public Piece() {
+    }
 
     @Override
     public int compareTo(Piece that) {
         int compare = this.getType().compareTo(that.getType());
-        if(compare != 0)
+        if (compare != 0)
             return compare;
         return this.getColor().compareTo(that.getColor());
     }
@@ -83,12 +86,12 @@ abstract public class Piece implements Comparable<Piece>, Serializable {
         return representation;
     }
 
-    public void setPosition(int column, int rank){
+    public void setPosition(int column, int rank) {
         this.column = column;
         this.rank = rank;
     }
 
-    public ArrayList<Integer> getPiecePosition(){
+    public ArrayList<Integer> getPiecePosition() {
         ArrayList<Integer> piecePosition = new ArrayList<>();
         piecePosition.add(this.column);
         piecePosition.add(this.rank);

@@ -3,16 +3,18 @@ package chess;
 import pieces.*;
 import util.StringUtil;
 import junit.framework.TestCase;
+
 import java.io.*;
 import java.util.*;
 
-public class BoardTest extends  TestCase{
+public class BoardTest extends TestCase {
     public Board board;
+
     public void setUp() {
         board = new Board();
     }
 
-    public void testCreate(){
+    public void testCreate() {
         board.initialize();
         assertEquals(32, board.pieceCount());
         assertEquals(16, board.getPiecesWhite());
@@ -34,16 +36,16 @@ public class BoardTest extends  TestCase{
         String eighthRank = board.getRank(1);
         assertEquals("rnbqkbnr", eighthRank);
 
-        char pieceA8 = board.getPieceRepresentation('a',8);
+        char pieceA8 = board.getPieceRepresentation('a', 8);
         assertEquals('R', pieceA8);
 
-        char pieceE1 = board.getPieceRepresentation('e',1);
+        char pieceE1 = board.getPieceRepresentation('e', 1);
         assertEquals('k', pieceE1);
 
         assertEquals(startingBoard(), board.print());
     }
 
-    public void testCreateBoard(){
+    public void testCreateBoard() {
         board.createBoard();
 
         assertEquals(0, board.pieceCount());
@@ -74,9 +76,9 @@ public class BoardTest extends  TestCase{
 
         assertEquals(
                 blankRank + blankRank +
-                        StringUtil.appendNewLine(".K......" )+
-                        StringUtil.appendNewLine(".R......" ) +
-                        StringUtil.appendNewLine("..k....." ) +
+                        StringUtil.appendNewLine(".K......") +
+                        StringUtil.appendNewLine(".R......") +
+                        StringUtil.appendNewLine("..k.....") +
                         blankRank + blankRank + blankRank,
                 board.print()
         );
@@ -114,18 +116,18 @@ public class BoardTest extends  TestCase{
 
         try {
             board.writePiecesInFile();
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
         try {
             board.readFileBoard();
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void testFileBoardObj() throws IOException, ClassNotFoundException{
+    public void testFileBoardObj() throws IOException, ClassNotFoundException {
         board.initialize();
         String filename = "testBoardObj.txt";
         File fileBoard = new File(filename);
@@ -157,13 +159,13 @@ public class BoardTest extends  TestCase{
 
         try {
             board.readFileBoardObj();
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
 
         try {
             board.writeFileBoardObj();
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
@@ -201,8 +203,8 @@ public class BoardTest extends  TestCase{
 
         String blankRank = StringUtil.appendNewLine("........");
         assertEquals(blankRank + blankRank + blankRank + blankRank + blankRank + blankRank +
-                StringUtil.appendNewLine("BBKNNQRR") +
-                StringUtil.appendNewLine("bbknnqrr"),
+                        StringUtil.appendNewLine("BBKNNQRR") +
+                        StringUtil.appendNewLine("bbknnqrr"),
                 board.getSortedPositions()
         );
 
@@ -219,7 +221,7 @@ public class BoardTest extends  TestCase{
         );
     }
 
-    public String startingBoard(){
+    public String startingBoard() {
         String blankRank = StringUtil.appendNewLine("........");
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(StringUtil.appendNewLine("RNBQKBNR"));

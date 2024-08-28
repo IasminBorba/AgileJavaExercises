@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class NameTest extends TestCase {
-    public void testCreate(){
+    public void testCreate() {
         Name nameA = new Name("abc");
         Name nameB = new Name("abc");
         Name nameC = new Name("abc");

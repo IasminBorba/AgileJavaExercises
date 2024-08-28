@@ -11,10 +11,10 @@ public class Dir {
 
     public Dir(String filename) throws IOException {
         File fileExist = new File(System.getProperty("user.dir") + File.separator + filename);
-        if(!fileExist.isDirectory())
+        if (!fileExist.isDirectory())
             throw new IOException("Directory not already exists");
         else {
-            if(fileExist.isFile())
+            if (fileExist.isFile())
                 throw new IOException("The directory name is the same as a file name");
             else {
                 this.directory = fileExist;
@@ -26,38 +26,37 @@ public class Dir {
 
     public static Dir ensureExists(String filename) throws IOException {
         File DirNotExist = new File(System.getProperty("user.dir") + File.separator + filename);
-        try{
+        try {
             DirNotExist.mkdir();
         } finally {
             return new Dir(filename);
         }
     }
 
-    public MyFile addMyFile(String filename){
+    public MyFile addMyFile(String filename) {
         File fileAux = new File(directory, filename);
         MyFile myFile = new MyFile(new File(directory, filename).getPath());
         myFiles.add(myFile);
         return myFile;
     }
 
-    public int getMyFiles() throws Exception{
-        if(!this.directory.isDirectory())
+    public int getMyFiles() throws Exception {
+        if (!this.directory.isDirectory())
             throw new IOException("Directory not already exists");
-        else {
+        else
             return myFiles.size();
-        }
     }
 
-    public Attributes getAttributes(){
+    public Attributes getAttributes() {
         return new Attributes(directory.canWrite(), directory.isHidden());
     }
 
-    public static class Attributes implements Serializable{
+    public static class Attributes implements Serializable {
         boolean isReadOnly;
 
         boolean isHidden;
 
-        Attributes(boolean isReadOnly, boolean isHidden){
+        Attributes(boolean isReadOnly, boolean isHidden) {
             this.isReadOnly = isReadOnly;
             this.isHidden = isHidden;
         }

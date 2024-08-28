@@ -3,21 +3,21 @@ package util;
 public class Name {
     public String name;
 
-    Name(String name){
+    Name(String name) {
         this.name = name;
     }
+
     @Override
-    public boolean equals(Object object){
-        if(object == null){
+    public boolean equals(Object object) {
+        if (object == null)
             return false;
-        }
-        if(this == object){
+        if (this == object)
             return true;
-        }
-        if(this.getClass() != object.getClass()){
+        if (this.getClass() != object.getClass())
             return false;
-        }
-        Name that = (Name)object;
+
+        Name that = (Name) object;
+
         return this.name.equals(that.name);
     }
 }

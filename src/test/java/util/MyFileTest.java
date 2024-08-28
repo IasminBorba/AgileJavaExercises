@@ -1,7 +1,9 @@
 package util;
 
 import junit.framework.TestCase;
+
 import java.io.*;
+
 import static org.junit.Assert.assertNotEquals;
 
 public class MyFileTest extends TestCase {
@@ -31,21 +33,21 @@ public class MyFileTest extends TestCase {
         assertEquals("test", fileExclude.read());
 
         fileExclude.delete();
-        try{
+        try {
             fileExclude.read();
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void testOverWrite() throws IOException{
+    public void testOverWrite() throws IOException {
         MyFile fileExist = new MyFile("testExist.txt");
         fileExist.write("test1");
         assertEquals("test1", fileExist.read());
 
         try {
             fileExist.write("test2");
-        } catch (IOException e){
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
 

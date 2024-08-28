@@ -1,6 +1,7 @@
 package util;
 
 import java.lang.reflect.*;
+
 public class CloneObject {
     public static Object shallowClone(Object object) throws Exception {
         Class<?> classObj = object.getClass();
@@ -14,9 +15,8 @@ public class CloneObject {
     }
 
     private static void copyFields(Object obj, Object clone, Class<?> klass) throws IllegalAccessException {
-        if (klass.getSuperclass() != null) {
+        if (klass.getSuperclass() != null)
             copyFields(obj, clone, klass.getSuperclass());
-        }
 
         for (Field field : klass.getDeclaredFields()) {
             field.setAccessible(true);

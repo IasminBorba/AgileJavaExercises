@@ -4,10 +4,10 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class BaseSize implements Serializable {
-    public static byte[] bytesSeq(File file) throws IOException{
+    public static byte[] bytesSeq(File file) throws IOException {
         DataInputStream input = null;
         byte[] bytes;
-        try{
+        try {
             input = new DataInputStream(new FileInputStream(file.getPath()));
             bytes = input.readAllBytes();
         } finally {
@@ -16,13 +16,13 @@ public class BaseSize implements Serializable {
         return bytes;
     }
 
-    public <T> byte[] baseTest(File file, T type) throws IOException{
+    public <T> byte[] baseTest(File file, T type) throws IOException {
         DataOutputStream output = null;
         ArrayList<byte[]> types = new ArrayList<>();
         byte[] bytes;
         try {
             output = new DataOutputStream(new FileOutputStream(file.getPath()));
-            switch (type.getClass().getSimpleName()){
+            switch (type.getClass().getSimpleName()) {
                 case "Character" -> output.writeChar((char) type);
                 case "Integer" -> output.writeInt((int) type);
                 case "Double" -> output.writeDouble((double) type);

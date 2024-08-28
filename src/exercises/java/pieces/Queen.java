@@ -18,33 +18,28 @@ public class Queen extends Piece {
     }
 
     @Override
-    public ArrayList<String> getPossibleMoves(String position){
+    public ArrayList<String> getPossibleMoves(String position) {
         ArrayList<String> moves = new ArrayList<>();
 
-        for (int aux = 0; aux < 8; aux++){
-            if(this != board.getPiece(aux, rank)){
+        for (int aux = 0; aux < 8; aux++) {
+            if (this != board.getPiece(aux, rank))
                 moves.add(board.transformPositionString(aux, rank));
-            } if(this != board.getPiece(column, aux)){
+            if (this != board.getPiece(column, aux))
                 moves.add(board.transformPositionString(column, aux));
-            }
         }
 
-        for (int auxColumn = column-1, auxRankUp = rank+1, auxRankDown = rank-1; auxColumn >= 0; auxColumn--, auxRankDown--, auxRankUp++) {
-            if(auxRankUp < 8){
+        for (int auxColumn = column - 1, auxRankUp = rank + 1, auxRankDown = rank - 1; auxColumn >= 0; auxColumn--, auxRankDown--, auxRankUp++) {
+            if (auxRankUp < 8)
                 moves.add(board.transformPositionString(auxColumn, auxRankUp));
-            }
-            if(auxRankUp >= 0){
+            if (auxRankUp >= 0)
                 moves.add(board.transformPositionString(auxColumn, auxRankDown));
-            }
         }
 
-        for (int auxColumn = column+1, auxRankUp = rank+1, auxRankDown = rank-1; auxColumn < 8; auxColumn++, auxRankDown--, auxRankUp++) {
-            if(auxRankUp < 8){
+        for (int auxColumn = column + 1, auxRankUp = rank + 1, auxRankDown = rank - 1; auxColumn < 8; auxColumn++, auxRankDown--, auxRankUp++) {
+            if (auxRankUp < 8)
                 moves.add(board.transformPositionString(auxColumn, auxRankUp));
-            }
-            if(auxRankUp >= 0){
+            if (auxRankUp >= 0)
                 moves.add(board.transformPositionString(auxColumn, auxRankDown));
-            }
         }
 
         moves.removeIf(move -> move.contains("error"));

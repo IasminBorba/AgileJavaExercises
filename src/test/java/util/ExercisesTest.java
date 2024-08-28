@@ -1,11 +1,13 @@
 package util;
 
 import junit.framework.TestCase;
+
 import java.util.logging.*;
 import java.util.logging.Level;
 
 public class ExercisesTest extends TestCase {
     Exercises test = new Exercises();
+
     public void testBlowsUp1() {
         Exercises test = new Exercises();
         test.blowsUp();
@@ -13,40 +15,40 @@ public class ExercisesTest extends TestCase {
 
     public void testBlowsUp2() {
         Exercises test = new Exercises();
-        try{
+        try {
             test.blowsUp();
             fail("expected exception");
-        } catch (RuntimeException e){
+        } catch (RuntimeException e) {
             assertEquals("Somebody should catch this!", e.getMessage());
         }
     }
 
     public void testBlowsUp3() {
         Exercises test = new Exercises();
-        try{
+        try {
             test.blowsUp();
             fail("expected exception");
-        } catch (RuntimeException e){
+        } catch (RuntimeException e) {
             assertEquals("Somebody should", e.getMessage());
         }
     }
 
     public void testRethrows4() {
         Exercises test = new Exercises();
-        try{
+        try {
             test.rethrows();
             fail("expected exception");
-        } catch (RuntimeException e){
+        } catch (RuntimeException e) {
             assertEquals("Somebody should catch this!", e.getCause().getMessage());
         }
     }
 
-    public void testRethrows5() throws SimpleException{
+    public void testRethrows5() throws SimpleException {
         Exercises test = new Exercises();
-        try{
+        try {
             test.blowsUp();
             fail("expected exception");
-        } catch (SimpleException e){
+        } catch (SimpleException e) {
             assertEquals("Somebody should catch this!", e.getMessage());
         }
     }
@@ -56,25 +58,24 @@ public class ExercisesTest extends TestCase {
             test.blowsUp();
             test.rethrows();
             fail("no exception");
-        }
-        catch (SimpleException yours) {
+        } catch (SimpleException yours) {
             fail("caught wrong exception");
-        }
-        catch (RuntimeException success) {
+        } catch (RuntimeException success) {
         }
     }
+
     public void testExceptionOrder2() {
         try {
             test.rethrows();
             test.blowsUp();
             fail("no exception");
-        }
-        catch (SimpleException success) {
-        }catch (RuntimeException failure) {
+        } catch (SimpleException success) {
+        } catch (RuntimeException failure) {
             fail("caught wrong exception");
         }
     }
-//    public void testExceptionOrder3() {
+
+    //    public void testExceptionOrder3() {
 //        try {
 //            test.blowsUp();
 //            test.rethrows();
@@ -107,11 +108,9 @@ public class ExercisesTest extends TestCase {
             test.blowsUp();
             test.rethrows();
             fail("no exception");
-        }
-        catch (SimpleException yours) {
+        } catch (SimpleException yours) {
             fail("caught wrong exception");
-        }
-        catch (RuntimeException success) {
+        } catch (RuntimeException success) {
         }
     }
 
@@ -120,47 +119,45 @@ public class ExercisesTest extends TestCase {
             test.rethrows();
             test.blowsUp();
             fail("no exception");
-        }
-        catch (SimpleException yours) {
+        } catch (SimpleException yours) {
             fail("caught wrong exception");
-        }
-        catch (RuntimeException success) {
+        } catch (RuntimeException success) {
         }
     }
+
     public void testExceptionOrder7() {
         try {
             test.rethrows();
             test.blowsUp();
             fail("no exception");
-        }
-        catch (SimpleException success) {
-        }
-        catch (RuntimeException fail) {
+        } catch (SimpleException success) {
+        } catch (RuntimeException fail) {
             fail("caught wrong exception");
         }
     }
+
     public void testErrorException1() {
         try {
             throw new RuntimeException("fail");
-        }
-        catch (Exception success) {
+        } catch (Exception success) {
         }
     }
+
     public void testErrorException2() {
         try {
             new Dyer();
-        }
-        catch (Exception success) {
+        } catch (Exception success) {
         }
     }
+
     public void testErrorException3() {
         try {
             new Dyer();
-        }
-        catch (Error success) {
+        } catch (Error success) {
         }
     }
-//    public void testErrorException4() {
+
+    //    public void testErrorException4() {
 //        try {
 //            new Dyer();
 //        }
@@ -180,25 +177,23 @@ public class ExercisesTest extends TestCase {
     public void testErrorException6() {
         try {
             new Dyer();
-        }
-        catch (Error fail) {
+        } catch (Error fail) {
             fail("caught exception in wrong place");
-        }
-        catch (Throwable success) {
+        } catch (Throwable success) {
         }
     }
+
     public void testErrorException7() {
         try {
             new Dyer();
-        }
-        catch (Error fail) {
+        } catch (Error fail) {
             fail("caught exception in wrong place");
-        }
-        catch (Throwable success) {
-        }finally {
+        } catch (Throwable success) {
+        } finally {
             return;
         }
     }
+
     static class Dyer {
         Dyer() {
             throw new RuntimeException("oops.");
@@ -209,7 +204,8 @@ public class ExercisesTest extends TestCase {
         try {
             doSomething();
             fail("no exception");
-        } catch (Exception success) {}
+        } catch (Exception success) {
+        }
     }
 
     public void testDoSomething2() {
@@ -238,9 +234,8 @@ public class ExercisesTest extends TestCase {
         StringBuilder reversedStackTrace = new StringBuilder();
 
         reversedStackTrace.append(e).append("\n");
-        for (int i = stackTrace.length - 1; i >= 0; i--) {
+        for (int i = stackTrace.length - 1; i >= 0; i--)
             reversedStackTrace.append("\tat ").append(stackTrace[i]).append("\n");
-        }
 
         logger.log(Level.SEVERE, reversedStackTrace.toString());
     }
@@ -257,6 +252,4 @@ public class ExercisesTest extends TestCase {
         Logger logger = Logger.getLogger(getClass().getName());
         logger.info(message);
     }
-
-
 }

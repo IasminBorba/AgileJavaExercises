@@ -3,6 +3,7 @@ package chess;
 import pieces.*;
 import junit.framework.TestCase;
 import util.StringUtil;
+
 import java.util.ArrayList;
 
 public class GameTest extends TestCase {
@@ -22,7 +23,7 @@ public class GameTest extends TestCase {
 
 
         board.addPiece(King.create(Piece.Color.BLACK, board), 'b', 8);
-        board.addPiece(Rook.create(Piece.Color.BLACK,board), 'c', 8);
+        board.addPiece(Rook.create(Piece.Color.BLACK, board), 'c', 8);
 
         board.addPiece(Pawn.create(Piece.Color.BLACK, board), 'a', 7);
         board.addPiece(Pawn.create(Piece.Color.BLACK, board), 'c', 7);
