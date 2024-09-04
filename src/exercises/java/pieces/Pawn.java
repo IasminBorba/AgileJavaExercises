@@ -19,15 +19,7 @@ public class Pawn extends Piece {
 
     @Override
     public ArrayList<String> getPossibleMoves(String position) {
-        ArrayList<String> moves = new ArrayList<>();
-
-        if (rank < 7)
-            if (this.isWhite())
-                moves.add(board.transformPositionString(column, rank + 1));
-            else
-                moves.add(board.transformPositionString(column, rank - 1));
-
-        moves.removeIf(move -> move.contains("error"));
-        return moves;
+        Moves movesFactory = new MovesFactoryImpl(this, board);
+        return movesFactory.possibleMoves();
     }
 }

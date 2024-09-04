@@ -19,16 +19,7 @@ public class Rook extends Piece {
 
     @Override
     public ArrayList<String> getPossibleMoves(String position) {
-        ArrayList<String> moves = new ArrayList<>();
-
-        for (int aux = 0; aux < 8; aux++) {
-            if (this != board.getPiece(aux, rank))
-                moves.add(board.transformPositionString(aux, rank));
-            if (this != board.getPiece(column, aux))
-                moves.add(board.transformPositionString(column, aux));
-        }
-
-        moves.removeIf(move -> move.contains("error"));
-        return moves;
+        Moves movesFactory = new MovesFactoryImpl(this, board);
+        return movesFactory.possibleMoves();
     }
 }
