@@ -15,6 +15,6 @@ public class PawnTest extends PieceTest {
     }
 
     protected Piece createPiece(Color color, Type type) {
-        return Pawn.create(color, null);
+        return Pawn.create(color);
     }
 }

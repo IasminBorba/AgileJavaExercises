@@ -61,16 +61,16 @@ public class BoardTest extends TestCase {
                 board.print()
         );
 
-        Piece blackKing = King.create(Piece.Color.BLACK, board);
+        Piece blackKing = King.create(Piece.Color.BLACK);
         board.addPiece(blackKing, 'b', 6);
         assertEquals('K', board.getPieceRepresentation('b', 6));
 
 
-        Piece blackRook = Rook.create(Piece.Color.BLACK, board);
+        Piece blackRook = Rook.create(Piece.Color.BLACK);
         board.addPiece(blackRook, 'b', 5);
         assertEquals('R', board.getPieceRepresentation('b', 5));
 
-        Piece whiteKing = King.create(Piece.Color.WHITE, board);
+        Piece whiteKing = King.create(Piece.Color.WHITE);
         board.addPiece(whiteKing, 'c', 4);
         assertEquals('k', board.getPieceRepresentation('c', 4));
 
@@ -95,7 +95,7 @@ public class BoardTest extends TestCase {
         assertEquals(startingBoard(), board.readFileBoard());
         assertEquals(board.print(), board.readFileBoard());
 
-        board.addPiece(King.create(Piece.Color.BLACK, board), 'd', 6);
+        board.addPiece(King.create(Piece.Color.BLACK), 'd', 6);
         board.writePiecesInFile();
 
         String blankRank = StringUtil.appendNewLine("........");
@@ -139,7 +139,7 @@ public class BoardTest extends TestCase {
 
         assertEquals(startingBoard(), board.readFileBoardObj().print());
 
-        board.addPiece(King.create(Piece.Color.BLACK, board), 'd', 6);
+        board.addPiece(King.create(Piece.Color.BLACK), 'd', 6);
         board.writeFileBoardObj();
 
         String blankRank = StringUtil.appendNewLine("........");
@@ -179,21 +179,21 @@ public class BoardTest extends TestCase {
                 } else {
                     rank = 2;
                 }
-                Piece rook = Rook.create(color, this);
+                Piece rook = Rook.create(color);
                 addPiece(rook, 6, rank);
-                Piece knight = Knight.create(color, this);
+                Piece knight = Knight.create(color);
                 addPiece(knight, 7, rank);
-                Piece bishop = Bishop.create(color, this);
+                Piece bishop = Bishop.create(color);
                 addPiece(bishop, 4, rank);
-                Piece queen = Queen.create(color, this);
+                Piece queen = Queen.create(color);
                 addPiece(queen, 2, rank);
-                Piece king = King.create(color, this);
+                Piece king = King.create(color);
                 addPiece(king, 3, rank);
-                Piece bishop2 = Bishop.create(color, this);
+                Piece bishop2 = Bishop.create(color);
                 addPiece(bishop2, 0, rank);
-                Piece knight2 = Knight.create(color, this);
+                Piece knight2 = Knight.create(color);
                 addPiece(knight2, 1, rank);
-                Piece rook2 = Rook.create(color, this);
+                Piece rook2 = Rook.create(color);
                 addPiece(rook2, 5, rank);
             }
         };

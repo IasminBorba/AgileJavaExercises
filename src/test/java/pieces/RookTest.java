@@ -15,6 +15,6 @@ public class RookTest extends PieceTest {
     }
 
     protected Piece createPiece(Color color, Type type) {
-        return Rook.create(color, null);
+        return Rook.create(color);
     }
 }

@@ -14,7 +14,7 @@ public class KingTest extends PieceTest {
     }
 
     protected Piece createPiece(Color color, Type type) {
-        return King.create(color, null);
+        return King.create(color);
     }
 }
 

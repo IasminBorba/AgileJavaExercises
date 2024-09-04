@@ -15,6 +15,6 @@ public class KnightTest extends PieceTest {
     }
 
     protected Piece createPiece(Color color, Type type) {
-        return Knight.create(color, null);
+        return Knight.create(color);
     }
 }

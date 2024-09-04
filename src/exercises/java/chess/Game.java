@@ -12,53 +12,6 @@ public class Game {
         this.board = board;
     }
 
-    public void calculateStrength() {
-        double auxWhiteStrength = 0;
-        double auxBlackStrength = 0;
-
-        for (int x = 0; x < 8; x++)
-            for (int z = 0; z < 8; z++) {
-                Piece auxPiece = board.getPiece(z, x);
-                if (auxPiece != null)
-                    if (auxPiece.isWhite())
-                        auxWhiteStrength += auxPiece.getPoints();
-                    else
-                        auxBlackStrength += auxPiece.getPoints();
-            }
-
-        strengthWhite = auxWhiteStrength;
-        strengthBlack = auxBlackStrength;
-    }
-
-    public void alterPawnForceSameColumn() {
-        Piece[][] boardArray = board.getBoard();
-
-        for (int column = 0; column < 8; column++) {
-            boolean sameColumnPawn = false;
-            for (int row = 0; row < 8; row++) {
-                Piece piece = boardArray[column][row];
-                if (piece != null)
-                    if (piece.getType() == Piece.Type.PAWN)
-                        for (int checkRow = 0; checkRow < 8; checkRow++)
-                            if (boardArray[column][checkRow] != null)
-                                if (checkRow != row && boardArray[column][checkRow].getType() == Piece.Type.PAWN && boardArray[column][checkRow].getRepresentation() == piece.getRepresentation()) {
-                                    sameColumnPawn = true;
-                                    Piece auxPiece = boardArray[column][checkRow];
-                                    if (auxPiece.getPoints() == 1)
-                                        auxPiece.setPoints(0.5);
-                                }
-            }
-
-            if (sameColumnPawn)
-                for (int row = 0; row < 8; row++) {
-                    Piece piece = boardArray[column][row];
-                    if (piece != null)
-                        if (piece.getPoints() == 1)
-                            piece.setPoints(0.5);
-                }
-        }
-    }
-
     double getStrengthBlackPiece() {
         alterPawnForceSameColumn();
         calculateStrength();
@@ -69,5 +22,53 @@ public class Game {
         alterPawnForceSameColumn();
         calculateStrength();
         return strengthWhite;
+    }
+
+    public void alterPawnForceSameColumn() {
+        Piece[][] boardArray = board.getBoard();
+
+        for (int column = 0; column < 8; column++)
+            if (hasDuplicatePawnsInColumn(boardArray, column))
+                adjustPawnStrengthInColumn(boardArray, column);
+    }
+
+    private boolean hasDuplicatePawnsInColumn(Piece[][] boardArray, int column) {
+        for (int row = 0; row < 8; row++) {
+            Piece piece = boardArray[column][row];
+            if (piece != null && piece.getType() == Piece.Type.PAWN) {
+                for (int checkRow = row + 1; checkRow < 8; checkRow++) {
+                    Piece otherPiece = boardArray[column][checkRow];
+                    if (otherPiece != null && otherPiece.getType() == Piece.Type.PAWN && otherPiece.getRepresentation() == piece.getRepresentation())
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private void adjustPawnStrengthInColumn(Piece[][] boardArray, int column) {
+        for (int row = 0; row < 8; row++) {
+            Piece piece = boardArray[column][row];
+            if (piece != null && piece.getType() == Piece.Type.PAWN && piece.getPoints() == 1)
+                piece.setPoints(0.5);
+        }
+    }
+
+
+    public void calculateStrength() {
+        strengthWhite = calculateStrengthForColor(true);
+        strengthBlack = calculateStrengthForColor(false);
+    }
+
+    private double calculateStrengthForColor(boolean isWhite) {
+        double strength = 0;
+        for (int x = 0; x < 8; x++) {
+            for (int z = 0; z < 8; z++) {
+                Piece currentPiece = board.getPiece(z, x);
+                if (currentPiece != null && currentPiece.isWhite() == isWhite)
+                    strength += currentPiece.getPoints();
+            }
+        }
+        return strength;
     }
 }

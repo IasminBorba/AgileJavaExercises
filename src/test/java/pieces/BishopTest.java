@@ -15,6 +15,6 @@ public class BishopTest extends PieceTest {
     }
 
     protected Piece createPiece(Color color, Type type) {
-        return Bishop.create(color, null);
+        return Bishop.create(color);
     }
 }
