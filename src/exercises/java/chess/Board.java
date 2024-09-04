@@ -1,22 +1,17 @@
 package chess;
 
 import pieces.*;
-import util.Dump;
 import util.StringUtil;
 
 import java.io.*;
 import java.util.*;
 
 public class Board implements Serializable {
-    @Dump
     public Piece[][] board;
     public int piecesWhite;
     public int piecesBlack;
-    @Dump
     protected ArrayList<Piece> pieces = new ArrayList<>();
-    @Dump
     public StringBuilder piecesOnTheBoard = new StringBuilder();
-    @Dump
     public String filename;
     public File file;
 

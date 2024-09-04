@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class Bishop extends Piece {
     public static Type Class = Type.BISHOP;
     private final Board board;
+    ArrayList<String> moves = new ArrayList<>();
 
     protected Bishop(Color color, Board board) {
         super(color, Class);
@@ -19,23 +20,41 @@ public class Bishop extends Piece {
 
     @Override
     public ArrayList<String> getPossibleMoves(String position) {
-        ArrayList<String> moves = new ArrayList<>();
-
-        for (int auxColumn = column - 1, auxRankUp = rank + 1, auxRankDown = rank - 1; auxColumn >= 0; auxColumn--, auxRankDown--, auxRankUp++) {
-            if (auxRankUp < 8)
-                moves.add(board.transformPositionString(auxColumn, auxRankUp));
-            if (auxRankUp >= 0)
-                moves.add(board.transformPositionString(auxColumn, auxRankDown));
-        }
-
-        for (int auxColumn = column + 1, auxRankUp = rank + 1, auxRankDown = rank - 1; auxColumn < 8; auxColumn++, auxRankDown--, auxRankUp++) {
-            if (auxRankUp < 8)
-                moves.add(board.transformPositionString(auxColumn, auxRankUp));
-            if (auxRankUp >= 0)
-                moves.add(board.transformPositionString(auxColumn, auxRankDown));
-        }
-
-        moves.removeIf(move -> move.contains("error"));
-        return moves;
+        Moves movesFactory = new MovesFactoryImpl(this, board);
+        return movesFactory.possibleMoves();
     }
+
+//    @Override
+//    public ArrayList<String> getPossibleMoves(String position) {
+//        updatePossibleMoves();
+//        return moves;
+//    }
+//
+//    private void updatePossibleMoves() {
+//        movesRightDiagonals();
+//        movesLeftDiagonals();
+//        moves.removeIf(move -> move.contains("error"));
+//    }
+//
+//    private void movesRightDiagonals() {
+//        movesDiagonals(1);
+//    }
+//
+//    private void movesLeftDiagonals() {
+//        movesDiagonals(-1);
+//    }
+//
+//    private void movesDiagonals(int columnDirection) {
+//        for (int columnOffset = columnDirection, rankUp = rank + 1, rankDown = rank - 1; isValidColumn(column + columnOffset); columnOffset += columnDirection, rankUp++, rankDown--)
+//            addMoves(rankUp, rankDown, columnOffset);
+//    }
+//
+//    private boolean isValidColumn(int col) {
+//        return col >= 0 && col <= 8;
+//    }
+//
+//    private void addMoves(int rankUp, int rankDown, int columnOffset) {
+//        moves.add(board.transformPositionString(column + columnOffset, rankUp));
+//        moves.add(board.transformPositionString(column + columnOffset, rankDown));
+//    }
 }
