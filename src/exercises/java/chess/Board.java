@@ -12,28 +12,33 @@ public class Board implements Serializable {
     public int piecesBlack;
     protected ArrayList<Piece> pieces = new ArrayList<>();
     public StringBuilder piecesOnTheBoard = new StringBuilder();
-    public String filename;
-    public File file;
 
     public Board() {
+        createBoard();
     }
 
     public void initialize() {
-        createBoard();
-        addPiecesOfRank(Piece.Color.WHITE);
-        addPiecesPawnOfRank(Piece.Color.WHITE);
-        addPiecesPawnOfRank(Piece.Color.BLACK);
-        addPiecesOfRank(Piece.Color.BLACK);
+        addStartingPieces(Piece.Color.WHITE);
+        addStartingPieces(Piece.Color.BLACK);
     }
 
     public void createBoard() {
         board = new Piece[8][8];
-        addPiecesBlank();
+        fillBoardEmptyPieces();
     }
 
-    public void addPiecesOfRank(Piece.Color color) {
-        int rank = (color == Piece.Color.WHITE) ? 0 : 7;
+    public void fillBoardEmptyPieces() {
+        for (int x = 0; x < 8; x++) {
+            for (int z = 0; z < 8; z++) {
+                piecesOnTheBoard.append('.');
+                board[z][x] = null;
+            }
+            piecesOnTheBoard.append(StringUtil.NEWLINE);
+        }
+    }
 
+    public void addStartingPieces(Piece.Color color) {
+        int rank = (color == Piece.Color.WHITE) ? 0 : 7;
         Piece[] pieces = {
                 Rook.create(color),
                 Knight.create(color),
@@ -45,27 +50,81 @@ public class Board implements Serializable {
                 Rook.create(color)
         };
 
-        for (int column = 0; column < pieces.length; column++)
-            addPiece(pieces[column], column, rank);
+        for (int column = 0; column < pieces.length; column++) {
+            Position position = new Position(rank, column);
+            addPieceToTheBoard(pieces[column], position);
+            addPawnPiece(position);
+        }
     }
 
-    public void addPiecesPawnOfRank(Piece.Color color) {
-        for (int z = 0; z < 8; z++)
-            if (Objects.equals(color, Piece.Color.WHITE))
-                addPiece(Pawn.create(color), z, 1);
-            else
-                addPiece(Pawn.create(color), z, 6);
+    public void addPawnPiece(Position position) {
+        if (position.getRank() == 0) {
+            position.setRank(1);
+            addPieceToTheBoard(Pawn.create(Piece.Color.WHITE), position);
+        } else {
+            position.setRank(6);
+            addPieceToTheBoard(Pawn.create(Piece.Color.BLACK), position);
+        }
     }
 
-    public void put(String str, Piece piece) {
-        ArrayList<Integer> position = transformPosition(str);
-        addPiece(piece, position.getFirst(), position.getLast());
+    public void addPiece(String coordinate, Piece piece) {
+        Position position = transformCoordenate(coordinate);
+        addPieceToTheBoard(piece, position);
     }
 
-    public ArrayList<Integer> transformPosition(String coordenate) {
-        ArrayList<Integer> position = new ArrayList<>();
+    public void addPieceToTheBoard(Piece piece, Position position) {
+        piece.setPosition(position.getColumn(), position.getRank());
 
-        position.add( switch (String.valueOf(coordenate.charAt(0))) {
+        updatePiece(piece);
+        updateBoard();
+    }
+
+    private void updatePiece(Piece piece) {
+        if (verifyEmptyFirstPiece())
+            pieces.set(0, piece);
+        else
+            pieces.add(piece);
+
+        updateQuantityOfPieces();
+    }
+
+    private boolean verifyEmptyFirstPiece() {
+        return (!pieces.isEmpty() && pieces.getFirst() == null);
+    }
+
+    public void movePiece(String coordenate, Piece piece) {
+        Position position = transformCoordenate(coordenate);
+        piece.setPosition(position.getColumn(), position.getRank());
+        updateBoard();
+    }
+
+    private void updateBoard() {
+        cleanBoard();
+        int i=0;
+        for (Piece piece : getPieces()) {
+            board[piece.column][piece.rank] = piece;
+            updatePrint();
+        }
+    }
+
+    private void cleanBoard() {
+        board = new Piece[8][8];
+    }
+
+    public void updatePrint() {
+        for (int rank = 0; rank < 8; rank++) {
+            for (int column = 0; column < 8; column++) {
+                if(board[column][rank] != null) {
+                    int linha = 7 - rank;
+                    int positionPiece = (linha*9) + column;
+                    piecesOnTheBoard.setCharAt(positionPiece, getPiece(column, rank).getRepresentation());
+                }
+            }
+        }
+    }
+
+    public Position transformCoordenate(String coordenate) {
+        int column = (switch (String.valueOf(coordenate.charAt(0))) {
             case "a" -> 0;
             case "b" -> 1;
             case "c" -> 2;
@@ -78,40 +137,10 @@ public class Board implements Serializable {
         });
 
         String rank = String.valueOf(coordenate.charAt(1));
-        position.add((Integer.parseInt(rank))-1);
-
-        return position;
+        return new Position((Integer.parseInt(rank)) - 1, column);
     }
 
-    public void addPiece(Piece piece, int file, int rank) {
-        if (!pieces.isEmpty() && pieces.getFirst() == null)
-            pieces.set(0, piece);
-        else
-            pieces.add(piece);
-
-        board[file][rank] = piece;
-        alterPrint(piece, file, rank + 1);
-        alterPosition(piece, file, rank);
-        updatePieces();
-    }
-
-    public void movePiece(String position, Piece piece) {
-        ArrayList<Integer> positions = transformPosition(position);
-
-        removePiece(piece);
-        addPiece(piece, positions.getFirst(), positions.getLast());
-    }
-
-    public void addPiecesBlank() {
-        for (int x = 0; x < 8; x++) {
-            for (int z = 0; z < 8; z++) {
-                piecesOnTheBoard.append('.');
-                board[z][x] = null;
-            }
-            piecesOnTheBoard.append(StringUtil.NEWLINE);
-        }
-    }
-
+    //vem de fora
     public boolean addPiece(Piece piece, char files, int rank) {
         int aux = rank - 1;
         int file = transformPosition(files);
@@ -120,9 +149,8 @@ public class Board implements Serializable {
 
         pieces.add(piece);
         board[file][aux] = piece;
-        alterPrint(piece, file, rank);
         alterPosition(piece, file, rank);
-        updatePieces();
+        updateQuantityOfPieces();
         return true;
     }
 
@@ -130,35 +158,36 @@ public class Board implements Serializable {
         piece.setPosition(column, rank);
     }
 
-    public void removePiece(Piece piece) {
+    public void removePieceFromTheBoard(Piece piece) {
         ArrayList<Piece> auxArray = new ArrayList<>();
         for (Piece p : pieces)
-            if (pieces.size() == 1)
-                auxArray.add(null);
-            else
-                if (piece != p)
-                    auxArray.add(p);
+            if (piece != p)
+                auxArray.add(p);
 
         pieces = auxArray;
 
         for (int x = 0; x < 8; x++)
             for (int z = 0; z < 8; z++)
-                if (piece == board[z][x]) {
+                if (piece == board[z][x])
                     board[z][x] = null;
-                    alterPrint(null, z, x + 1);
-                }
 
-        updatePieces();
+        updateQuantityOfPieces();
     }
 
-    public void alterPrint(Piece piece, int files, int rank) {
-        int lines = 8 - rank;
-        int positionPiece = (lines * 8) + files + lines;
+    public void updateQuantityOfPieces() {
+        int countingWhitePieces = 0;
+        int countingBlackPieces = 0;
+        for (int x = 0; x < 8; x++)
+            for (int z = 0; z < 8; z++) {
+                Piece piece = board[z][x];
+                if (piece != null && piece.isWhite())
+                    countingWhitePieces++;
+                if (piece != null && piece.isBlack())
+                    countingBlackPieces++;
+            }
 
-        if (piece == null)
-            piecesOnTheBoard.setCharAt(positionPiece, '.');
-        else
-            piecesOnTheBoard.setCharAt(positionPiece, piece.getRepresentation());
+        piecesWhite = countingWhitePieces;
+        piecesBlack = countingBlackPieces;
     }
 
     public static int transformPosition(char file) {
@@ -176,7 +205,34 @@ public class Board implements Serializable {
     }
 
     public String print() {
+        updatePrint();
         return piecesOnTheBoard.toString();
+    }
+
+    public Piece[][] getBoard() {
+        return board;
+    }
+
+    public Piece getPiece(int file, int rank) {
+        return board[file][rank];
+    }
+
+    char getPieceRepresentation(char files, int rank) {
+        int file = transformPosition(files);
+        Piece piece = board[file][rank - 1];
+        if (piece == null)
+            return '.';
+        return piece.getRepresentation();
+    }
+
+    int getPiecesWhite() {
+        updateQuantityOfPieces();
+        return piecesWhite;
+    }
+
+    int getPiecesBlack() {
+        updateQuantityOfPieces();
+        return piecesBlack;
     }
 
     int pieceCount() {
@@ -195,71 +251,16 @@ public class Board implements Serializable {
         return rankPiece.toString();
     }
 
-    int getPiecesWhite() {
-        int aux = 0;
-        for (int x = 0; x < 8; x++)
-            for (int z = 0; z < 8; z++) {
-                Piece auxPIece = board[z][x];
-                if (auxPIece != null && auxPIece.isWhite())
-                    aux++;
-            }
-        return piecesWhite = aux;
+    public ArrayList<Piece> getPieces() {
+        return pieces;
     }
 
-    int getPiecesBlack() {
-        int aux = 0;
-        for (int x = 0; x < 8; x++)
-            for (int z = 0; z < 8; z++) {
-                Piece auxPIece = board[z][x];
-                if (auxPIece != null && auxPIece.isBlack())
-                    aux++;
-            }
-        return piecesBlack = aux;
-    }
-
-    char getPieceRepresentation(char files, int rank) {
-        int file = transformPosition(files);
-        Piece piece = board[file][rank - 1];
-        if (piece == null)
-            return '.';
-        return piece.getRepresentation();
-    }
-
-    public Piece getPiece(int file, int rank) {
-        return board[file][rank];
-    }
-
-    public Piece[][] getBoard() {
-        return board;
-    }
-
-    public ArrayList<String> getPieces() {
+    public ArrayList<String> getPiecesRepresentation() {
         ArrayList<String> representationPieces = new ArrayList<>();
         for (Piece piece : pieces)
             representationPieces.add(piece.getType().toString());
 
         return representationPieces;
-    }
-
-    public void writePiecesInFile() throws IOException {
-        if (Objects.equals(filename, "deleted"))
-            throw new IOException("File not exists: " + filename);
-
-        try (Writer writer = new BufferedWriter(new FileWriter(filename))) {
-            writer.write(piecesOnTheBoard.toString());
-        }
-    }
-
-    public String readFileBoard() throws IOException {
-        StringBuilder builder = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-            String line;
-
-            while ((line = reader.readLine()) != null)
-                builder.append(String.format(line + "%n"));
-
-        }
-        return builder.toString();
     }
 
     @Override
@@ -273,67 +274,5 @@ public class Board implements Serializable {
 
         Board that = (Board) object;
         return this.print().equals(that.print());
-    }
-
-    public void writeFileBoardObj() throws IOException {
-        if (Objects.equals(filename, "deleted"))
-            throw new IOException("File not exists: " + filename);
-
-        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(file))) {
-            output.writeObject(this);
-        }
-    }
-
-    public Board readFileBoardObj() throws IOException, ClassNotFoundException {
-        Board boardObj;
-
-        try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(filename))) {
-            boardObj = (Board) input.readObject();
-        }
-        return boardObj;
-    }
-
-    public void deleteFile() throws IOException {
-        if (!file.exists())
-            throw new IOException("File not exists: " + filename);
-
-        file.delete();
-        filename = "deleted";
-    }
-
-    public void insertFile(File fileInsert) {
-        this.file = fileInsert;
-        this.filename = file.getPath();
-    }
-
-    public String getSortedPositions() {
-        ArrayList<Character> positions = new ArrayList<>();
-        String ranks = print().replaceAll("\\n", "");
-
-        for (char aChar : ranks.toCharArray())
-            positions.add(aChar);
-
-        positions.sort(new Comparator<Character>() {
-            @Override
-            public int compare(Character char1, Character char2) {
-                return Character.compare(char1, char2);
-            }
-        });
-
-        StringBuilder sortedString = new StringBuilder();
-        int aux = 0;
-        for (char ch : positions) {
-            sortedString.append(ch);
-            aux++;
-
-            if ((aux % 8) == 0)
-                sortedString.append("\n");
-        }
-        return sortedString.toString();
-    }
-
-    public void updatePieces() {
-        getPiecesBlack();
-        getPiecesWhite();
     }
 }

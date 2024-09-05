@@ -31,8 +31,8 @@ abstract public class Piece implements Comparable<Piece>, Serializable {
     private Type type;
     private double points;
     private char representation;
-    protected int column;
-    protected int rank;
+    public int column;
+    public int rank;
 
     protected Piece(Color color, Type type) {
         this.color = color;
