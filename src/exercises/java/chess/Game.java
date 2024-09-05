@@ -33,10 +33,10 @@ public class Game {
     }
 
     private boolean hasDuplicatePawnsInColumn(Piece[][] boardArray, int column) {
-        for (int row = 0; row < 8; row++) {
-            Piece piece = boardArray[column][row];
+        for (int rank = 0; rank < 8; rank++) {
+            Piece piece = boardArray[column][rank];
             if (piece != null && piece.getType() == Piece.Type.PAWN) {
-                for (int checkRow = row + 1; checkRow < 8; checkRow++) {
+                for (int checkRow = rank + 1; checkRow < 8; checkRow++) {
                     Piece otherPiece = boardArray[column][checkRow];
                     if (otherPiece != null && otherPiece.getType() == Piece.Type.PAWN && otherPiece.getRepresentation() == piece.getRepresentation())
                         return true;
@@ -47,8 +47,8 @@ public class Game {
     }
 
     private void adjustPawnStrengthInColumn(Piece[][] boardArray, int column) {
-        for (int row = 0; row < 8; row++) {
-            Piece piece = boardArray[column][row];
+        for (int rank = 0; rank < 8; rank++) {
+            Piece piece = boardArray[column][rank];
             if (piece != null && piece.getType() == Piece.Type.PAWN && piece.getPoints() == 1)
                 piece.setPoints(0.5);
         }
@@ -62,9 +62,9 @@ public class Game {
 
     private double calculateStrengthForColor(boolean isWhite) {
         double strength = 0;
-        for (int x = 0; x < 8; x++) {
-            for (int z = 0; z < 8; z++) {
-                Piece currentPiece = board.getPiece(z, x);
+        for (int rank = 0; rank < 8; rank++) {
+            for (int column = 0; column < 8; column++) {
+                Piece currentPiece = board.getPiece(column, rank);
                 if (currentPiece != null && currentPiece.isWhite() == isWhite)
                     strength += currentPiece.getPoints();
             }

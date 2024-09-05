@@ -141,15 +141,15 @@ public class Board implements Serializable {
     }
 
     //vem de fora
-    public boolean addPiece(Piece piece, char files, int rank) {
+    public boolean addPiece(Piece piece, char columnChar, int rank) {
         int aux = rank - 1;
-        int file = transformPosition(files);
-        if (file == 9)
+        int column = transformColumnChar(columnChar);
+        if (column == 9)
             return false;
 
         pieces.add(piece);
-        board[file][aux] = piece;
-        alterPosition(piece, file, rank);
+        board[column][aux] = piece;
+        alterPosition(piece, column, rank);
         updateQuantityOfPieces();
         return true;
     }
@@ -190,8 +190,8 @@ public class Board implements Serializable {
         piecesBlack = countingBlackPieces;
     }
 
-    public static int transformPosition(char file) {
-        return switch (file) {
+    public static int transformColumnChar(char column) {
+        return switch (column) {
             case 'a' -> 0;
             case 'b' -> 1;
             case 'c' -> 2;
@@ -213,13 +213,13 @@ public class Board implements Serializable {
         return board;
     }
 
-    public Piece getPiece(int file, int rank) {
-        return board[file][rank];
+    public Piece getPiece(int column, int rank) {
+        return board[column][rank];
     }
 
-    char getPieceRepresentation(char files, int rank) {
-        int file = transformPosition(files);
-        Piece piece = board[file][rank - 1];
+    char getPieceRepresentation(char columnChar, int rank) {
+        int column = transformColumnChar(columnChar);
+        Piece piece = board[column][rank - 1];
         if (piece == null)
             return '.';
         return piece.getRepresentation();
@@ -241,8 +241,8 @@ public class Board implements Serializable {
 
     String getRank(int rank) {
         StringBuilder rankPiece = new StringBuilder();
-        for (int x = 0; x < 8; x++) {
-            Piece auxPIece = board[x][rank - 1];
+        for (int column = 0; column < 8; column++) {
+            Piece auxPIece = board[column][rank - 1];
             if (auxPIece == null)
                 rankPiece.append('.');
             else
