@@ -140,7 +140,6 @@ public class Board implements Serializable {
         return new Position((Integer.parseInt(rank)) - 1, column);
     }
 
-    //vem de fora
     public boolean addPiece(Piece piece, char columnChar, int rank) {
         int aux = rank - 1;
         int column = transformColumnChar(columnChar);
