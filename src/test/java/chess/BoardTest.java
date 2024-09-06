@@ -57,16 +57,16 @@ public class BoardTest extends TestCase {
         );
 
         Piece blackKing = King.create(Piece.Color.BLACK);
-        board.addPiece("b6", blackKing);
+        board.addPiece(blackKing, "b6");
         assertEquals('K', board.getPieceRepresentation('b', 6));
 
 
         Piece blackRook = Rook.create(Piece.Color.BLACK);
-        board.addPiece(blackRook, 'b', 5);
+        board.addPiece(blackRook, "b5");
         assertEquals('R', board.getPieceRepresentation('b', 5));
 
         Piece whiteKing = King.create(Piece.Color.WHITE);
-        board.addPiece(whiteKing, 'c', 4);
+        board.addPiece(whiteKing, "c4");
         assertEquals('k', board.getPieceRepresentation('c', 4));
 
         assertEquals(
@@ -94,7 +94,7 @@ public class BoardTest extends TestCase {
         );
 
         Piece blackKing = King.create(Piece.Color.BLACK);
-        board.addPiece("b6", blackKing);
+        board.addPiece(blackKing, "b6");
         assertEquals('K', board.getPieceRepresentation('b', 6));
         assertEquals(".K......", board.getRank(6));
         assertEquals(1, board.pieceCount());

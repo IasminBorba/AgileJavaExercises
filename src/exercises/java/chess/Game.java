@@ -1,7 +1,9 @@
 package chess;
 
-import pieces.Piece;
+import pieces.*;
+import pieces.Piece.*;
 
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Game {
     private final Board board;
@@ -35,10 +37,10 @@ public class Game {
     private boolean hasDuplicatePawnsInColumn(Piece[][] boardArray, int column) {
         for (int rank = 0; rank < 8; rank++) {
             Piece piece = boardArray[column][rank];
-            if (piece != null && piece.getType() == Piece.Type.PAWN) {
+            if (piece != null && piece.getType() == Type.PAWN) {
                 for (int checkRow = rank + 1; checkRow < 8; checkRow++) {
                     Piece otherPiece = boardArray[column][checkRow];
-                    if (otherPiece != null && otherPiece.getType() == Piece.Type.PAWN && otherPiece.getRepresentation() == piece.getRepresentation())
+                    if (otherPiece != null && otherPiece.getType() == Type.PAWN && otherPiece.getRepresentation() == piece.getRepresentation())
                         return true;
                 }
             }
@@ -49,26 +51,24 @@ public class Game {
     private void adjustPawnStrengthInColumn(Piece[][] boardArray, int column) {
         for (int rank = 0; rank < 8; rank++) {
             Piece piece = boardArray[column][rank];
-            if (piece != null && piece.getType() == Piece.Type.PAWN && piece.getPoints() == 1)
+            if (piece != null && piece.getType() == Type.PAWN && piece.getPoints() == 1)
                 piece.setPoints(0.5);
         }
     }
 
-
     public void calculateStrength() {
-        strengthWhite = calculateStrengthForColor(true);
-        strengthBlack = calculateStrengthForColor(false);
+        strengthWhite = calculateStrengthForColor(Color.WHITE);
+        strengthBlack = calculateStrengthForColor(Color.BLACK);
     }
 
-    private double calculateStrengthForColor(boolean isWhite) {
-        double strength = 0;
-        for (int rank = 0; rank < 8; rank++) {
-            for (int column = 0; column < 8; column++) {
-                Piece currentPiece = board.getPiece(column, rank);
-                if (currentPiece != null && currentPiece.isWhite() == isWhite)
-                    strength += currentPiece.getPoints();
+    private double calculateStrengthForColor(Color color) {
+        AtomicReference<Double> strength = new AtomicReference<>((double) 0);
+        board.iterateBoard((rank, column) -> {
+            Piece currentPiece = board.getPiece(column, rank);
+            if (currentPiece != null && currentPiece.getColor() == color) {
+                strength.updateAndGet(v -> v + currentPiece.getPoints());
             }
-        }
-        return strength;
+        });
+        return strength.get();
     }
 }

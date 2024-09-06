@@ -18,29 +18,27 @@ public class GameTest extends TestCase {
     }
 
     public void testCalculateStrength() {
-        assertFalse(board.addPiece(King.create(Piece.Color.BLACK), 'i', 8));
+        board.addPiece(King.create(Piece.Color.BLACK), "b8");
+        board.addPiece(Rook.create(Piece.Color.BLACK), "c8");
 
-        board.addPiece(King.create(Piece.Color.BLACK), 'b', 8);
-        board.addPiece(Rook.create(Piece.Color.BLACK), 'c', 8);
+        board.addPiece(Pawn.create(Piece.Color.BLACK), "a7");
+        board.addPiece(Pawn.create(Piece.Color.BLACK), "c7");
+        board.addPiece(Bishop.create(Piece.Color.BLACK), "d7");
 
-        board.addPiece(Pawn.create(Piece.Color.BLACK), 'a', 7);
-        board.addPiece(Pawn.create(Piece.Color.BLACK), 'c', 7);
-        board.addPiece(Bishop.create(Piece.Color.BLACK), 'd', 7);
+        board.addPiece(Pawn.create(Piece.Color.BLACK), "b6");
+        board.addPiece(Queen.create(Piece.Color.BLACK), "e6");
 
-        board.addPiece(Pawn.create(Piece.Color.BLACK), 'b', 6);
-        board.addPiece(Queen.create(Piece.Color.BLACK), 'e', 6);
+        board.addPiece(Knight.create(Piece.Color.WHITE), "f4");
+        board.addPiece(Queen.create(Piece.Color.WHITE), "g4");
 
-        board.addPiece(Knight.create(Piece.Color.WHITE), 'f', 4);
-        board.addPiece(Queen.create(Piece.Color.WHITE), 'g', 4);
+        board.addPiece(Pawn.create(Piece.Color.WHITE), "f3");
+        board.addPiece(Pawn.create(Piece.Color.WHITE), "h3");
 
-        board.addPiece(Pawn.create(Piece.Color.WHITE), 'f', 3);
-        board.addPiece(Pawn.create(Piece.Color.WHITE), 'h', 3);
+        board.addPiece(Pawn.create(Piece.Color.WHITE), "f2");
+        board.addPiece(Pawn.create(Piece.Color.WHITE), "g2");
 
-        board.addPiece(Pawn.create(Piece.Color.WHITE), 'f', 2);
-        board.addPiece(Pawn.create(Piece.Color.WHITE), 'g', 2);
-
-        board.addPiece(Rook.create(Piece.Color.WHITE), 'e', 1);
-        board.addPiece(King.create(Piece.Color.WHITE), 'f', 1);
+        board.addPiece(Rook.create(Piece.Color.WHITE), "e1");
+        board.addPiece(King.create(Piece.Color.WHITE), "f1");
 
 
         assertEquals(19.5, game.getStrengthWhitePiece(), 0.001);
@@ -65,7 +63,7 @@ public class GameTest extends TestCase {
         board.createBoard();
 
         King kingWhite = King.create(Piece.Color.WHITE);
-        board.addPiece("d4", kingWhite);
+        board.addPiece(kingWhite, "d4");
         ArrayList<String> possibleMoves = kingWhite.getPossibleMoves("d4");
         assertFalse(possibleMoves.contains("b2"));
         assertFalse(possibleMoves.contains("b4"));
@@ -79,7 +77,7 @@ public class GameTest extends TestCase {
         possibleMoves.clear();
 
         King kingBlack = King.create(Piece.Color.BLACK);
-        board.addPiece("h8", kingBlack);
+        board.addPiece(kingBlack, "h8");
         possibleMoves = kingBlack.getPossibleMoves("h8");
         assertFalse(possibleMoves.contains("i8"));
         assertEquals(2, board.pieceCount());
@@ -106,7 +104,7 @@ public class GameTest extends TestCase {
         board.createBoard();
 
         Queen queenWhite = Queen.create(Piece.Color.WHITE);
-        board.addPiece("d5", queenWhite);
+        board.addPiece(queenWhite, "d5");
         ArrayList<String> possibleMoves = queenWhite.getPossibleMoves("d5");
         assertFalse(possibleMoves.contains("a9"));
         assertFalse(possibleMoves.contains("b2"));
@@ -126,7 +124,7 @@ public class GameTest extends TestCase {
         possibleMoves.clear();
 
         Queen queenBlack = Queen.create(Piece.Color.BLACK);
-        board.addPiece("g5", queenBlack);
+        board.addPiece(queenBlack, "g5");
         possibleMoves = queenBlack.getPossibleMoves("g5");
         assertFalse(possibleMoves.contains("f7"));
         assertEquals(2, board.pieceCount());
@@ -158,7 +156,7 @@ public class GameTest extends TestCase {
         board.createBoard();
 
         Pawn pawnWhite = Pawn.create(Piece.Color.WHITE);
-        board.addPiece("d5", pawnWhite);
+        board.addPiece(pawnWhite, "d5");
         ArrayList<String> possibleMoves = pawnWhite.getPossibleMoves("d5");
         assertFalse(possibleMoves.contains("d7"));
         assertFalse(possibleMoves.contains("c5"));
@@ -176,7 +174,7 @@ public class GameTest extends TestCase {
         possibleMoves.clear();
 
         Pawn pawnBlack = Pawn.create(Piece.Color.BLACK);
-        board.addPiece("c7", pawnBlack);
+        board.addPiece(pawnBlack, "c7");
         possibleMoves = pawnBlack.getPossibleMoves("c7");
         assertFalse(possibleMoves.contains("c5"));
         assertEquals(2, board.pieceCount());
@@ -206,7 +204,7 @@ public class GameTest extends TestCase {
         board.createBoard();
 
         Bishop bishopWhite = Bishop.create(Piece.Color.WHITE);
-        board.addPiece("g2", bishopWhite);
+        board.addPiece(bishopWhite, "g2");
         ArrayList<String> possibleMoves = bishopWhite.getPossibleMoves("d5");
         assertFalse(possibleMoves.contains("g3"));
         assertFalse(possibleMoves.contains("g1"));
@@ -221,7 +219,7 @@ public class GameTest extends TestCase {
         possibleMoves.clear();
 
         Bishop bishopBlack = Bishop.create(Piece.Color.BLACK);
-        board.addPiece("d5", bishopBlack);
+        board.addPiece(bishopBlack, "d5");
         possibleMoves = bishopBlack.getPossibleMoves("d5");
 
         assertFalse(possibleMoves.contains("c7"));
@@ -255,7 +253,7 @@ public class GameTest extends TestCase {
         board.createBoard();
 
         Rook rookWhite = Rook.create(Piece.Color.WHITE);
-        board.addPiece("a8", rookWhite);
+        board.addPiece(rookWhite, "a8");
         ArrayList<String> possibleMoves = rookWhite.getPossibleMoves("a8");
         assertFalse(possibleMoves.contains("a9"));
         assertFalse(possibleMoves.contains("b7"));
@@ -267,7 +265,7 @@ public class GameTest extends TestCase {
         possibleMoves.clear();
 
         Rook rookBlack = Rook.create(Piece.Color.BLACK);
-        board.addPiece("f5", rookBlack);
+        board.addPiece(rookBlack, "f5");
         possibleMoves = rookBlack.getPossibleMoves("f5");
         assertFalse(possibleMoves.contains("f9"));
         assertEquals(2, board.pieceCount());
@@ -295,7 +293,7 @@ public class GameTest extends TestCase {
         board.createBoard();
 
         Knight knightWhite = Knight.create(Piece.Color.WHITE);
-        board.addPiece("d5", knightWhite);
+        board.addPiece(knightWhite, "d5");
         ArrayList<String> possibleMoves = knightWhite.getPossibleMoves("d5");
         assertFalse(possibleMoves.contains("d9"));
         assertFalse(possibleMoves.contains("d4"));
@@ -328,7 +326,7 @@ public class GameTest extends TestCase {
         possibleMoves.clear();
 
         Knight knightBlack = Knight.create(Piece.Color.BLACK);
-        board.addPiece("e3", knightBlack);
+        board.addPiece(knightBlack, "e3");
         possibleMoves = knightBlack.getPossibleMoves("e3");
 
         assertFalse(possibleMoves.contains("g5"));
