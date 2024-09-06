@@ -5,6 +5,8 @@ import util.StringUtil;
 
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import chess.PositionAction.*;
 
 public class Board implements Serializable {
     public Piece[][] board;
@@ -28,13 +30,13 @@ public class Board implements Serializable {
     }
 
     public void fillBoardEmptyPieces() {
-        for (int x = 0; x < 8; x++) {
-            for (int z = 0; z < 8; z++) {
+        iterateBoard(
+            (rank, column) -> {
                 piecesOnTheBoard.append('.');
-                board[z][x] = null;
-            }
-            piecesOnTheBoard.append(StringUtil.NEWLINE);
-        }
+                board[column][rank] = null;
+            },
+            rank -> piecesOnTheBoard.append(StringUtil.NEWLINE)
+        );
     }
 
     public void addStartingPieces(Piece.Color color) {
@@ -95,12 +97,13 @@ public class Board implements Serializable {
     public void movePiece(String coordenate, Piece piece) {
         Position position = transformCoordenate(coordenate);
         piece.setPosition(position.getColumn(), position.getRank());
+
         updateBoard();
     }
 
     private void updateBoard() {
         cleanBoard();
-        int i=0;
+
         for (Piece piece : getPieces()) {
             board[piece.column][piece.rank] = piece;
             updatePrint();
@@ -112,15 +115,29 @@ public class Board implements Serializable {
     }
 
     public void updatePrint() {
-        for (int rank = 0; rank < 8; rank++) {
-            for (int column = 0; column < 8; column++) {
-                if(board[column][rank] != null) {
-                    int linha = 7 - rank;
-                    int positionPiece = (linha*9) + column;
-                    piecesOnTheBoard.setCharAt(positionPiece, getPiece(column, rank).getRepresentation());
-                }
-            }
+        iterateBoard (
+            (rank, column) -> modifyStringBuilderPosition(column, rank)
+        );
+    }
+
+    private void modifyStringBuilderPosition(int column, int rank) {
+        if(!pieceOnTheBoardIsEmpty(column, rank)) {
+            char pieceRepresentation = getPiece(column, rank).getRepresentation();
+            int position = calculateStringBuilderPosition(column, rank);
+
+            piecesOnTheBoard.setCharAt(position, pieceRepresentation);
         }
+    }
+
+    private boolean pieceOnTheBoardIsEmpty(int column, int rank) {
+        return board[column][rank] == null;
+    }
+
+    private int calculateStringBuilderPosition(int column, int rank) {
+        int invertedRank = 7 - rank;
+        int rowOffsetInStringBuilder = (invertedRank * 9);
+
+        return rowOffsetInStringBuilder + column;
     }
 
     public Position transformCoordenate(String coordenate) {
@@ -141,15 +158,16 @@ public class Board implements Serializable {
     }
 
     public boolean addPiece(Piece piece, char columnChar, int rank) {
-        int aux = rank - 1;
         int column = transformColumnChar(columnChar);
         if (column == 9)
             return false;
 
         pieces.add(piece);
-        board[column][aux] = piece;
+        board[column][rank - 1] = piece;
+
         alterPosition(piece, column, rank);
         updateQuantityOfPieces();
+
         return true;
     }
 
@@ -165,28 +183,28 @@ public class Board implements Serializable {
 
         pieces = auxArray;
 
-        for (int x = 0; x < 8; x++)
-            for (int z = 0; z < 8; z++)
-                if (piece == board[z][x])
-                    board[z][x] = null;
+        iterateBoard ((rank, column) -> {
+            if (piece == board[column][rank])
+                board[column][rank] = null;
+        });
 
         updateQuantityOfPieces();
     }
 
     public void updateQuantityOfPieces() {
-        int countingWhitePieces = 0;
-        int countingBlackPieces = 0;
-        for (int x = 0; x < 8; x++)
-            for (int z = 0; z < 8; z++) {
-                Piece piece = board[z][x];
-                if (piece != null && piece.isWhite())
-                    countingWhitePieces++;
-                if (piece != null && piece.isBlack())
-                    countingBlackPieces++;
-            }
+        AtomicInteger countingWhitePieces = new AtomicInteger();
+        AtomicInteger countingBlackPieces = new AtomicInteger();
 
-        piecesWhite = countingWhitePieces;
-        piecesBlack = countingBlackPieces;
+        iterateBoard((rank, column) -> {
+            Piece piece = board[column][rank];
+            if (piece != null && piece.isWhite())
+                countingWhitePieces.getAndIncrement();
+            if (piece != null && piece.isBlack())
+                countingBlackPieces.getAndIncrement();
+        });
+
+        piecesWhite = countingWhitePieces.get();
+        piecesBlack = countingBlackPieces.get();
     }
 
     public static int transformColumnChar(char column) {
@@ -221,6 +239,7 @@ public class Board implements Serializable {
         Piece piece = board[column][rank - 1];
         if (piece == null)
             return '.';
+
         return piece.getRepresentation();
     }
 
@@ -247,6 +266,7 @@ public class Board implements Serializable {
             else
                 rankPiece.append(auxPIece.getRepresentation());
         }
+
         return rankPiece.toString();
     }
 
@@ -260,6 +280,19 @@ public class Board implements Serializable {
             representationPieces.add(piece.getType().toString());
 
         return representationPieces;
+    }
+
+    public void iterateBoard(CellAction cellAction) {
+        iterateBoard(cellAction, rank -> {});
+    }
+
+    public void iterateBoard(CellAction cellAction, EndOfRowAction endOfRowAction) {
+        for (int rank = 0; rank < 8; rank++) {
+            for (int column = 0; column < 8; column++)
+                cellAction.apply(rank, column);
+
+            endOfRowAction.apply(rank);
+        }
     }
 
     @Override
