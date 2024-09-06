@@ -1,5 +1,7 @@
 package pieces;
 
+import util.TransformCoordenate;
+
 import java.util.*;
 
 public class MovesFactoryImpl implements Moves {
@@ -105,8 +107,8 @@ public class MovesFactoryImpl implements Moves {
 
     public String transformPositionCoordinate(int column, int rank) {
         StringBuilder coordinate = new StringBuilder();
-        coordinate.append(positionColumn(column));
-        coordinate.append(positionRank(rank));
+        coordinate.append(TransformCoordenate.indexToColumnLetter(column));
+        coordinate.append(TransformCoordenate.rankToLetter(rank));
 
         return coordinate.toString();
     }

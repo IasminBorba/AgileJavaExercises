@@ -8,6 +8,7 @@ import java.io.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import chess.PositionAction.*;
+import util.TransformCoordenate;
 
 public class Board implements Serializable {
     public Piece[][] board;
@@ -26,12 +27,12 @@ public class Board implements Serializable {
     }
 
     public void addPiece(Piece piece, String coordinate) {
-        Position position = transformCoordenate(coordinate);
+        Position position = TransformCoordenate.aplly(coordinate);
         addPieceToTheBoard(piece, position);
     }
 
     public void movePiece(String coordenate, Piece piece) {
-        Position position = transformCoordenate(coordenate);
+        Position position = TransformCoordenate.aplly(coordenate);
         piece.setPosition(position.getColumn(), position.getRank());
 
         updateBoard();
@@ -98,43 +99,12 @@ public class Board implements Serializable {
     }
 
     char getPieceRepresentation(char columnChar, int rank) {
-        int column = transformColumnChar(columnChar);
+        int column = TransformCoordenate.convertColumnToIndex(columnChar);
         Piece piece = board[column][rank - 1];
         if (piece == null)
             return '.';
 
         return piece.getRepresentation();
-    }
-
-    public Position transformCoordenate(String coordenate) {
-        int column = (switch (String.valueOf(coordenate.charAt(0))) {
-            case "a" -> 0;
-            case "b" -> 1;
-            case "c" -> 2;
-            case "d" -> 3;
-            case "e" -> 4;
-            case "f" -> 5;
-            case "g" -> 6;
-            case "h" -> 7;
-            default -> 9;
-        });
-
-        String rank = String.valueOf(coordenate.charAt(1));
-        return new Position((Integer.parseInt(rank)) - 1, column);
-    }
-
-    public static int transformColumnChar(char column) {
-        return switch (column) {
-            case 'a' -> 0;
-            case 'b' -> 1;
-            case 'c' -> 2;
-            case 'd' -> 3;
-            case 'e' -> 4;
-            case 'f' -> 5;
-            case 'g' -> 6;
-            case 'h' -> 7;
-            default -> 9;
-        };
     }
 
     public void iterateBoard(CellAction cellAction) {
