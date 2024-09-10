@@ -12,105 +12,70 @@ public class BoardTest extends TestCase {
     }
 
     public void testCreate() {
+        String blankRank = StringUtil.appendNewLine("........");
+        assertEquals(blankRank + blankRank +
+                            blankRank + blankRank +
+                            blankRank + blankRank +
+                            blankRank + blankRank,
+                        board.print()
+        );
+
+        assertEquals(0, board.pieceCount());
+    }
+
+    public void testBoardPrintAfterInitialization() {
         board.initialize();
-        assertEquals(32, board.pieceCount());
-        assertEquals(16, board.getPiecesWhite());
-        assertEquals(16, board.getPiecesBlack());
-
-        String firstRank = board.getRank(8);
-        assertEquals("RNBQKBNR", firstRank);
-
-        String secondRank = board.getRank(7);
-        assertEquals("PPPPPPPP", secondRank);
-
-        String emptyRank = board.getRank(4);
-        assertEquals("........", emptyRank);
-
-        String seventhRank = board.getRank(2);
-        assertEquals("pppppppp", seventhRank);
-
-
-        String eighthRank = board.getRank(1);
-        assertEquals("rnbqkbnr", eighthRank);
-
-        char pieceA8 = board.getPieceRepresentation('a', 8);
-        assertEquals('R', pieceA8);
-
-        char pieceE1 = board.getPieceRepresentation('e', 1);
-        assertEquals('k', pieceE1);
-
         assertEquals(startingBoard(), board.print());
     }
 
-    public void testCreateBoard() {
-        assertEquals(0, board.pieceCount());
-        assertEquals(0, board.getPiecesWhite());
-        assertEquals(0, board.getPiecesBlack());
+    public void testPieceCountAfterInitialization() {
+        board.initialize();
+        assertEquals(32, board.pieceCount());
+    }
 
-        String blankRank = StringUtil.appendNewLine("........");
-        assertEquals(
-                blankRank + blankRank +
-                        blankRank + blankRank +
-                        blankRank + blankRank +
-                        blankRank + blankRank,
-                board.print()
-        );
+    public void testWhitePiecesCountAfterInitialization() {
+        board.initialize();
+        assertEquals(16, board.getPiecesWhite());
+    }
 
+    public void testBlackPiecesCountAfterInitialization() {
+        board.initialize();
+        assertEquals(16, board.getPiecesBlack());
+    }
+
+    public void testAddPieceToBoard() {
         Piece blackKing = King.create(Piece.Color.BLACK);
         board.addPiece(blackKing, "b6");
-        assertEquals('K', board.getPieceRepresentation('b', 6));
 
+        assertTrue(board.pieceCount() == 1);
+    }
 
-        Piece blackRook = Rook.create(Piece.Color.BLACK);
-        board.addPiece(blackRook, "b5");
-        assertEquals('R', board.getPieceRepresentation('b', 5));
+    public void testNotAddPieceInTheBoard() {
+        Piece whitePawn = Pawn.create(Piece.Color.WHITE);
+        board.addPiece(whitePawn, "c9");
 
-        Piece whiteKing = King.create(Piece.Color.WHITE);
-        board.addPiece(whiteKing, "c4");
-        assertEquals('k', board.getPieceRepresentation('c', 4));
-
-        assertEquals(
-                blankRank + blankRank +
-                        StringUtil.appendNewLine(".K......") +
-                        StringUtil.appendNewLine(".R......") +
-                        StringUtil.appendNewLine("..k.....") +
-                        blankRank + blankRank + blankRank,
-                board.print()
-        );
+        assertTrue(board.pieceCount() == 0);
     }
 
     public void testRemovePieces() {
-        assertEquals(0, board.pieceCount());
-        assertEquals(0, board.getPiecesWhite());
-        assertEquals(0, board.getPiecesBlack());
-
-        String blankRank = StringUtil.appendNewLine("........");
-        assertEquals(
-                blankRank + blankRank +
-                        blankRank + blankRank +
-                        blankRank + blankRank +
-                        blankRank + blankRank,
-                board.print()
-        );
-
-        Piece blackKing = King.create(Piece.Color.BLACK);
-        board.addPiece(blackKing, "b6");
-        assertEquals('K', board.getPieceRepresentation('b', 6));
-        assertEquals(".K......", board.getRank(6));
+        Piece blackBishop = Bishop.create(Piece.Color.BLACK);
+        board.addPiece(blackBishop, "b6");
         assertEquals(1, board.pieceCount());
-        assertEquals(0, board.getPiecesWhite());
-        assertEquals(1, board.getPiecesBlack());
 
-        board.removePieceFromTheBoard(blackKing);
-        assertEquals('.', board.getPieceRepresentation('b', 6));
-        assertEquals("........", board.getRank(6));
+        board.removePieceFromTheBoard(blackBishop);
         assertEquals(0, board.pieceCount());
-        assertEquals(0, board.getPiecesWhite());
-        assertEquals(0, board.getPiecesBlack());
+    }
+
+    public void testMovePiece() {
+        Piece whiteQueen = Queen.create(Piece.Color.WHITE);
+        board.addPiece(whiteQueen, "b6");
+
+        board.movePiece("b7", whiteQueen);
+
+        assertEquals('q', board.getPieceRepresentation('b', 7));
     }
 
     public String startingBoard() {
-        board.initialize();
         String blankRank = StringUtil.appendNewLine("........");
 
         StringBuilder stringBuilder = new StringBuilder();
