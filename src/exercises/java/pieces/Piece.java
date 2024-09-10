@@ -1,8 +1,7 @@
 package pieces;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Objects;
+import java.util.*;
 
 abstract public class Piece implements Comparable<Piece>, Serializable {
     public enum Color {WHITE, BLACK}

@@ -112,26 +112,4 @@ public class MovesFactoryImpl implements Moves {
 
         return coordinate.toString();
     }
-
-    private String positionColumn(int column) {
-        return switch (column) {
-            case 0 -> "a";
-            case 1 -> "b";
-            case 2 -> "c";
-            case 3 -> "d";
-            case 4 -> "e";
-            case 5 -> "f";
-            case 6 -> "g";
-            case 7 -> "h";
-            default -> "error";
-        };
-    }
-
-    private String positionRank(int rank) {
-        rank++;
-        if (rank >= 0 && rank <= 8) {
-            return String.valueOf(rank);
-        } else
-            return "error";
-    }
 }

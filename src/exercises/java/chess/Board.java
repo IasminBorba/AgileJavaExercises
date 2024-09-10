@@ -3,12 +3,12 @@ package chess;
 import pieces.*;
 import pieces.Piece.*;
 import util.StringUtil;
+import chess.PositionAction.*;
+import util.TransformCoordenate;
 
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import chess.PositionAction.*;
-import util.TransformCoordenate;
 
 public class Board implements Serializable {
     public Piece[][] board;
