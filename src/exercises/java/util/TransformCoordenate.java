@@ -5,9 +5,9 @@ import chess.Position;
 public class TransformCoordenate {
     public static Position aplly(String coordenate) {
         int column = convertColumnToIndex(coordenate.charAt(0));
+        int rank = convertRankToIndex(coordenate.charAt(1));
 
-        String rank = String.valueOf(coordenate.charAt(1));
-        return new Position((Integer.parseInt(rank)) - 1, column);
+        return new Position(rank, column);
     }
 
     public static int convertColumnToIndex(char column) {
@@ -20,8 +20,32 @@ public class TransformCoordenate {
             case 'f' -> 5;
             case 'g' -> 6;
             case 'h' -> 7;
-            default -> 9;
+            default -> throw new InvalidColumnException(column);
         };
+    }
+
+    private static class InvalidColumnException extends IllegalArgumentException {
+        public InvalidColumnException(char column) {
+            super("Invalid column: " + column);
+        }
+    }
+
+    public static int convertRankToIndex(char rankChar) {
+        return validRank(rankChar - '1');
+    }
+
+    public static int validRank(int rank) {
+        if (rank < 0 || rank > 7)
+            throw new InvalidRankException(rank);
+
+        return rank;
+    }
+
+    private static class InvalidRankException extends IllegalArgumentException {
+        public InvalidRankException(int rank) {
+            super("Invalid rank: " + (rank + 1));
+        }
+
     }
 
     public static String indexToColumnLetter(int column) {
@@ -40,9 +64,9 @@ public class TransformCoordenate {
 
     public static String rankToLetter(int rank) {
         rank++;
-        if (rank >= 0 && rank <= 8) {
+        if (rank >= 0 && rank <= 8)
             return String.valueOf(rank);
-        } else
+        else
             return "error";
     }
 }

@@ -46,11 +46,7 @@ public class Board implements Serializable {
 
         pieces = auxArray;
 
-        iterateBoard ((rank, column) -> {
-            if (piece == board[column][rank])
-                board[column][rank] = null;
-        });
-
+        updateBoard();
         updateQuantityOfPieces();
     }
 

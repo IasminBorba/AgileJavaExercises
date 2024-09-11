@@ -52,7 +52,12 @@ public class BoardTest extends TestCase {
 
     public void testNotAddPieceInTheBoard() {
         Piece whitePawn = Pawn.create(Piece.Color.WHITE);
-        board.addPiece(whitePawn, "c9");
+
+        try {
+            board.addPiece(whitePawn, "c9");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
         assertTrue(board.pieceCount() == 0);
     }
