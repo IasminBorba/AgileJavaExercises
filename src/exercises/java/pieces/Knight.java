@@ -14,7 +14,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public ArrayList<String> getPossibleMoves(String position) {
+    public ArrayList<String> getPossibleMoves() {
         Moves movesFactory = new MovesFactoryImpl(this);
         return movesFactory.possibleMoves();
     }

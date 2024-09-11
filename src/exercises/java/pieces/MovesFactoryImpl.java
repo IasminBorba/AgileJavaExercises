@@ -100,16 +100,22 @@ public class MovesFactoryImpl implements Moves {
     }
 
     private void removeInvalidMoves() {
+        moves.removeIf(String::isEmpty);
         moves.removeIf(move -> move.contains(transformPositionCoordinate(piece.column, piece.rank)));
-        moves.removeIf(move -> move.contains("error"));
         moves = new ArrayList<>(new LinkedHashSet<>(moves));
     }
 
     public String transformPositionCoordinate(int column, int rank) {
-        StringBuilder coordinate = new StringBuilder();
-        coordinate.append(TransformCoordenate.indexToColumnLetter(column));
-        coordinate.append(TransformCoordenate.rankToLetter(rank));
+        String columnLetter = TransformCoordenate.indexToColumnLetter(column);
+        String rankLetter = TransformCoordenate.rankToLetter(rank);
 
-        return coordinate.toString();
+        return coordinateIsValid(columnLetter, rankLetter);
+    }
+
+    private String coordinateIsValid(String column, String rank) {
+        if (column.isEmpty() || rank.isEmpty())
+            return "";
+
+        return column + rank;
     }
 }

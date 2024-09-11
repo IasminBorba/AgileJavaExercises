@@ -34,7 +34,7 @@ public class Game {
                 adjustPawnStrengthInColumn(boardArray, column);
     }
 
-    private boolean hasDuplicatePawnsInColumn(Piece[][] boardArray, int column) {
+    public boolean hasDuplicatePawnsInColumn(Piece[][] boardArray, int column) {
         for (int rank = 0; rank < 8; rank++) {
             Piece piece = boardArray[column][rank];
             if (piece != null && piece.getType() == Type.PAWN) {

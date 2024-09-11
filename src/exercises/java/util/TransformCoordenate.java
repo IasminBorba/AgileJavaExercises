@@ -58,15 +58,15 @@ public class TransformCoordenate {
             case 5 -> "f";
             case 6 -> "g";
             case 7 -> "h";
-            default -> "error";
+            default -> "";
         };
     }
 
     public static String rankToLetter(int rank) {
         rank++;
-        if (rank >= 0 && rank <= 8)
+        if (rank >= 1 && rank <= 8)
             return String.valueOf(rank);
         else
-            return "error";
+            return "";
     }
 }

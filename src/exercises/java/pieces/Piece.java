@@ -55,7 +55,7 @@ abstract public class Piece implements Comparable<Piece>, Serializable {
         return this.getColor().compareTo(that.getColor());
     }
 
-    public abstract ArrayList<String> getPossibleMoves(String position);
+    public abstract ArrayList<String> getPossibleMoves();
 
     public boolean isBlack() {
         return Objects.equals(color.name().toLowerCase(), "black");

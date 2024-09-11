@@ -5,7 +5,6 @@ import junit.framework.TestCase;
 
 abstract public class PieceTest extends TestCase {
     private Piece piece;
-    private Piece noPiece;
 
     public void setUp() {
         piece = createPiece(Piece.Color.WHITE, Piece.Type.ROOK);
