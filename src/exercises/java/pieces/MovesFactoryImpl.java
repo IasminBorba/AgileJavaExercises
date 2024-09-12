@@ -5,10 +5,10 @@ import util.TransformCoordenate;
 import java.util.*;
 
 public class MovesFactoryImpl implements Moves {
-    public ArrayList<String> moves = new ArrayList<>();
-    public Piece piece;
-    public int pieceRank;
-    public int pieceColumn;
+    private ArrayList<String> moves = new ArrayList<>();
+    private final Piece piece;
+    private final int pieceRank;
+    private final int pieceColumn;
 
     public MovesFactoryImpl(Piece piece) {
         this.piece = piece;
@@ -59,11 +59,10 @@ public class MovesFactoryImpl implements Moves {
     }
 
     private void straightRankMovement() {
-        for (int initialColumn = 0; initialColumn < 8; initialColumn++)
-            moves.add(transformPositionCoordinate(initialColumn, pieceRank));
-
-        for (int initialRank = 0; initialRank < 8; initialRank++)
-            moves.add(transformPositionCoordinate(pieceColumn, initialRank));
+        for (int coordinate = 0; coordinate < 8; coordinate++) {
+            moves.add(transformPositionCoordinate(coordinate, pieceRank));
+            moves.add(transformPositionCoordinate(pieceColumn, coordinate));
+        }
     }
 
     private void knightMoves() {
