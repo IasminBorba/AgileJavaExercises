@@ -3,6 +3,9 @@ package chess;
 import pieces.*;
 import junit.framework.TestCase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BoardTest extends TestCase {
     public Board board;
 
@@ -42,5 +45,37 @@ public class BoardTest extends TestCase {
         board.movePiece("b7", whiteQueen);
 
         assertEquals('q', board.getPiece(1, 6).getRepresentation());
+    }
+
+    public void testGetRank() {
+        board.initialize();
+
+        List<Piece> rank = board.getRank(8);
+        assertEqualsRank(initialRankWhitePieces(), rank);
+    }
+
+    public void assertEqualsRank(List<Piece> expected, List<Piece> actual) {
+        for (int index = 0; index < expected.size(); index++) {
+            char expectedRepresentation = expected.get(index).getRepresentation();
+            char actualRepresentation = actual.get(index).getRepresentation();
+
+            assertEquals(expectedRepresentation, actualRepresentation);
+        }
+
+    }
+
+    public List<Piece> initialRankWhitePieces() {
+        List<Piece> rank = new ArrayList<>();
+
+        rank.add(Rook.create(Piece.Color.BLACK));
+        rank.add(Knight.create(Piece.Color.BLACK));
+        rank.add(Bishop.create(Piece.Color.BLACK));
+        rank.add(Queen.create(Piece.Color.BLACK));
+        rank.add(King.create(Piece.Color.BLACK));
+        rank.add(Bishop.create(Piece.Color.BLACK));
+        rank.add(Knight.create(Piece.Color.BLACK));
+        rank.add(Rook.create(Piece.Color.BLACK));
+
+        return rank;
     }
 }

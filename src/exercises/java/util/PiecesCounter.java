@@ -15,7 +15,7 @@ public class PiecesCounter {
 
     private void updateQuantityOfPieces() {
         for (Piece piece : board.getPieces())
-            if(piece.isWhite())
+            if (piece.isWhite())
                 piecesWhite++;
             else
                 piecesBlack++;

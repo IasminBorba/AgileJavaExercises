@@ -28,15 +28,13 @@ abstract public class Piece implements Comparable<Piece>, Serializable {
         }
     }
 
-    private Color color;
-    private Type type;
+    private final Color color;
+    private final Type type;
     private double points;
-    private char representation;
-    public Position position;
-//    public int column;
-//    public int rank;
+    private final char representation;
+    private Position position;
 
-    protected Piece(Color color, Type type) {
+    public Piece(Color color, Type type) {
         this.color = color;
         this.type = type;
         this.points = type.points;
@@ -45,35 +43,6 @@ abstract public class Piece implements Comparable<Piece>, Serializable {
             this.representation = Character.toLowerCase(type.representation);
         else
             this.representation = type.representation;
-    }
-
-    public Piece() {
-    }
-
-    @Override
-    public int compareTo(Piece that) {
-        int compare = this.getType().compareTo(that.getType());
-        if (compare != 0)
-            return compare;
-        return this.getColor().compareTo(that.getColor());
-    }
-
-    public abstract ArrayList<String> getPossibleMoves();
-
-    public boolean isBlack() {
-        return Objects.equals(color.name().toLowerCase(), "black");
-    }
-
-    public boolean isWhite() {
-        return Objects.equals(color.name().toLowerCase(), "white");
-    }
-
-    public void setPoints(double points) {
-        this.points = points;
-    }
-
-    public double getPoints() {
-        return points;
     }
 
     public Type getType() {
@@ -88,11 +57,37 @@ abstract public class Piece implements Comparable<Piece>, Serializable {
         return representation;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
+    public double getPoints() {
+        return points;
     }
 
     public Position getPosition() {
         return position;
+    }
+
+    public abstract ArrayList<String> getPossibleMoves();
+
+    public boolean isWhite() {
+        return Objects.equals(color.name().toLowerCase(), "white");
+    }
+
+    public boolean isBlack() {
+        return Objects.equals(color.name().toLowerCase(), "black");
+    }
+
+    public void setPoints(double points) {
+        this.points = points;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    @Override
+    public int compareTo(Piece that) {
+        int compare = this.getType().compareTo(that.getType());
+        if (compare != 0)
+            return compare;
+        return this.getColor().compareTo(that.getColor());
     }
 }

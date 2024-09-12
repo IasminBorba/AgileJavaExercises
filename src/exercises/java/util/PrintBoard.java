@@ -29,10 +29,10 @@ public class PrintBoard {
         Piece[][] boardMap = board.getBoard();
 
         board.iterateBoard((rank, column) -> {
-                Piece piece = boardMap[column][rank];
-                if (piece != null)
-                    modifyStringBuilderPosition(piece);
-            }
+                    Piece piece = boardMap[column][rank];
+                    if (piece != null)
+                        modifyStringBuilderPosition(piece);
+                }
         );
     }
 

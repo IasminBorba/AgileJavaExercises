@@ -1,4 +1,5 @@
 import chess.*;
+import util.*;
 import pieces.AllTestsPieces;
 
 public class AllTests {
@@ -7,6 +8,8 @@ public class AllTests {
         suite.addTestSuite(BoardTest.class);
         suite.addTestSuite(GameTest.class);
         suite.addTest(AllTestsPieces.suite());
+        suite.addTestSuite(PiecesCounterTest.class);
+        suite.addTestSuite(PrintBoardTest.class);
         return suite;
     }
 }

@@ -39,12 +39,12 @@ public class QueenTest extends PieceTest {
         possibleMoves = queenWhite.getPossibleMoves();
 
         assertTrue(possibleMoves.containsAll(
-            Arrays.asList(
-                "e6", "e4", "f7", "f3", "g8", "g2", "h1",
-                "c6", "c4", "b7", "b3", "a8", "a2",
-                "a5", "b5", "c5", "e5", "f5", "g5", "h5",
-                "d1", "d2", "d3", "d4", "d6", "d7", "d8"
-            )
+                Arrays.asList(
+                        "e6", "e4", "f7", "f3", "g8", "g2", "h1",
+                        "c6", "c4", "b7", "b3", "a8", "a2",
+                        "a5", "b5", "c5", "e5", "f5", "g5", "h5",
+                        "d1", "d2", "d3", "d4", "d6", "d7", "d8"
+                )
         ));
     }
 
@@ -59,11 +59,11 @@ public class QueenTest extends PieceTest {
         possibleMoves = queenBlack.getPossibleMoves();
 
         assertTrue(possibleMoves.containsAll(
-            Arrays.asList(
-                "a2", "a3", "a4", "a5", "a6", "a7", "a8",
-                "b1", "c1", "d1", "e1", "f1", "g1", "h1",
-                "b2", "c3", "d4", "e5", "f6", "g7", "h8"
-            )
+                Arrays.asList(
+                        "a2", "a3", "a4", "a5", "a6", "a7", "a8",
+                        "b1", "c1", "d1", "e1", "f1", "g1", "h1",
+                        "b2", "c3", "d4", "e5", "f6", "g7", "h8"
+                )
         ));
     }
 

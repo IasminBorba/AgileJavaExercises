@@ -3,6 +3,7 @@ package pieces;
 import chess.Board;
 
 import static pieces.King.*;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
