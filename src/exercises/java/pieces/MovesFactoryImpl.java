@@ -5,11 +5,15 @@ import util.TransformCoordenate;
 import java.util.*;
 
 public class MovesFactoryImpl implements Moves {
-    ArrayList<String> moves = new ArrayList<>();
-    Piece piece;
+    public ArrayList<String> moves = new ArrayList<>();
+    public Piece piece;
+    public int pieceRank;
+    public int pieceColumn;
 
     public MovesFactoryImpl(Piece piece) {
         this.piece = piece;
+        this.pieceRank = piece.getPosition().getRank();
+        this.pieceColumn = piece.getPosition().getColumn();
     }
 
     public ArrayList<String> possibleMoves() {
@@ -41,7 +45,7 @@ public class MovesFactoryImpl implements Moves {
     }
 
     private void movesDiagonals(int columnDirection) {
-        for (int columnOffset = columnDirection, rankUp = piece.rank + 1, rankDown = piece.rank - 1; isValidColumn(piece.column + columnOffset); columnOffset += columnDirection, rankUp++, rankDown--)
+        for (int columnOffset = columnDirection, rankUp = pieceRank + 1, rankDown = pieceRank - 1; isValidColumn(pieceColumn + columnOffset); columnOffset += columnDirection, rankUp++, rankDown--)
             addMoves(rankUp, rankDown, columnOffset);
     }
 
@@ -56,10 +60,10 @@ public class MovesFactoryImpl implements Moves {
 
     private void straightRankMovement() {
         for (int initialColumn = 0; initialColumn < 8; initialColumn++)
-            moves.add(transformPositionCoordinate(initialColumn, piece.rank));
+            moves.add(transformPositionCoordinate(initialColumn, pieceRank));
 
         for (int initialRank = 0; initialRank < 8; initialRank++)
-            moves.add(transformPositionCoordinate(piece.column, initialRank));
+            moves.add(transformPositionCoordinate(pieceColumn, initialRank));
     }
 
     private void knightMoves() {
@@ -67,7 +71,7 @@ public class MovesFactoryImpl implements Moves {
             if (movimentColumn == 0) continue;
 
             int movimentRank = applyRule(movimentColumn);
-            addMoves(piece.rank + movimentRank, piece.rank - movimentRank, movimentColumn);
+            addMoves(pieceRank + movimentRank, pieceRank - movimentRank, movimentColumn);
         }
         removeInvalidMoves();
     }
@@ -78,13 +82,13 @@ public class MovesFactoryImpl implements Moves {
     }
 
     private void addMoves(int rankUp, int rankDown, int columnOffset) {
-        moves.add(transformPositionCoordinate(piece.column + columnOffset, rankUp));
-        moves.add(transformPositionCoordinate(piece.column + columnOffset, rankDown));
+        moves.add(transformPositionCoordinate(pieceColumn + columnOffset, rankUp));
+        moves.add(transformPositionCoordinate(pieceColumn + columnOffset, rankDown));
     }
 
     private void kingMoves() {
-        for (int initialColumn = piece.column - 1; initialColumn <= piece.column + 1; initialColumn++)
-            for (int initialRank = piece.rank - 1; initialRank <= piece.rank + 1; initialRank++)
+        for (int initialColumn = pieceColumn - 1; initialColumn <= pieceColumn + 1; initialColumn++)
+            for (int initialRank = pieceRank - 1; initialRank <= pieceRank + 1; initialRank++)
                 moves.add(transformPositionCoordinate(initialColumn, initialRank));
 
         removeInvalidMoves();
@@ -92,16 +96,16 @@ public class MovesFactoryImpl implements Moves {
 
     private void pawnMoves() {
         if (piece.isWhite())
-            moves.add(transformPositionCoordinate(piece.column, piece.rank + 1));
+            moves.add(transformPositionCoordinate(pieceColumn, pieceRank + 1));
         else
-            moves.add(transformPositionCoordinate(piece.column, piece.rank - 1));
+            moves.add(transformPositionCoordinate(pieceColumn, pieceRank - 1));
 
         removeInvalidMoves();
     }
 
     private void removeInvalidMoves() {
         moves.removeIf(String::isEmpty);
-        moves.removeIf(move -> move.contains(transformPositionCoordinate(piece.column, piece.rank)));
+        moves.removeIf(move -> move.contains(transformPositionCoordinate(pieceColumn, pieceRank)));
         moves = new ArrayList<>(new LinkedHashSet<>(moves));
     }
 

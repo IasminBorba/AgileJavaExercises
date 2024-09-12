@@ -24,4 +24,8 @@ public class Position {
     public void setColumn(int column) {
         this.column = column;
     }
+
+    public String getPositionRepresentation() {
+        return String.format("(%d,%d)", column, rank);
+    }
 }

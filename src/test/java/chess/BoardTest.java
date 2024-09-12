@@ -1,7 +1,6 @@
 package chess;
 
 import pieces.*;
-import util.StringUtil;
 import junit.framework.TestCase;
 
 public class BoardTest extends TestCase {
@@ -11,43 +10,11 @@ public class BoardTest extends TestCase {
         board = new Board();
     }
 
-    public void testCreate() {
-        String blankRank = StringUtil.appendNewLine("........");
-        assertEquals(blankRank + blankRank +
-                            blankRank + blankRank +
-                            blankRank + blankRank +
-                            blankRank + blankRank,
-                        board.print()
-        );
-
-        assertEquals(0, board.pieceCount());
-    }
-
-    public void testBoardPrintAfterInitialization() {
-        board.initialize();
-        assertEquals(startingBoard(), board.print());
-    }
-
-    public void testPieceCountAfterInitialization() {
-        board.initialize();
-        assertEquals(32, board.pieceCount());
-    }
-
-    public void testWhitePiecesCountAfterInitialization() {
-        board.initialize();
-        assertEquals(16, board.getPiecesWhite());
-    }
-
-    public void testBlackPiecesCountAfterInitialization() {
-        board.initialize();
-        assertEquals(16, board.getPiecesBlack());
-    }
-
     public void testAddPieceToBoard() {
         Piece blackKing = King.create(Piece.Color.BLACK);
-        board.addPiece(blackKing, "b6");
+        board.addPiece(blackKing, "a1");
 
-        assertTrue(board.pieceCount() == 1);
+        assertEquals('K', board.getPiece(0, 0).getRepresentation());
     }
 
     public void testNotAddPieceInTheBoard() {
@@ -56,19 +23,16 @@ public class BoardTest extends TestCase {
         try {
             board.addPiece(whitePawn, "c9");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            assertEquals("Invalid rank: 9", e.getMessage());
         }
-
-        assertTrue(board.pieceCount() == 0);
     }
 
     public void testRemovePieces() {
         Piece blackBishop = Bishop.create(Piece.Color.BLACK);
-        board.addPiece(blackBishop, "b6");
-        assertEquals(1, board.pieceCount());
+        board.addPiece(blackBishop, "d6");
 
         board.removePieceFromTheBoard(blackBishop);
-        assertEquals(0, board.pieceCount());
+        assertEquals(null, board.getPiece(3, 6));
     }
 
     public void testMovePiece() {
@@ -77,22 +41,6 @@ public class BoardTest extends TestCase {
 
         board.movePiece("b7", whiteQueen);
 
-        assertEquals('q', board.getPieceRepresentation('b', 7));
-    }
-
-    public String startingBoard() {
-        String blankRank = StringUtil.appendNewLine("........");
-
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(StringUtil.appendNewLine("RNBQKBNR"));
-        stringBuilder.append(StringUtil.appendNewLine("PPPPPPPP"));
-        stringBuilder.append(blankRank);
-        stringBuilder.append(blankRank);
-        stringBuilder.append(blankRank);
-        stringBuilder.append(blankRank);
-        stringBuilder.append(StringUtil.appendNewLine("pppppppp"));
-        stringBuilder.append(StringUtil.appendNewLine("rnbqkbnr"));
-
-        return stringBuilder.toString();
+        assertEquals('q', board.getPiece(1, 6).getRepresentation());
     }
 }

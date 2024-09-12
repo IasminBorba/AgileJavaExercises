@@ -6,9 +6,9 @@ import pieces.Piece.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Game {
-    private final Board board;
     public double strengthWhite = 0;
     public double strengthBlack = 0;
+    private final Board board;
 
     public Game(Board board) {
         this.board = board;

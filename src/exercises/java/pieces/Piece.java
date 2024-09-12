@@ -1,5 +1,7 @@
 package pieces;
 
+import chess.Position;
+
 import java.io.Serializable;
 import java.util.*;
 
@@ -30,8 +32,9 @@ abstract public class Piece implements Comparable<Piece>, Serializable {
     private Type type;
     private double points;
     private char representation;
-    public int column;
-    public int rank;
+    public Position position;
+//    public int column;
+//    public int rank;
 
     protected Piece(Color color, Type type) {
         this.color = color;
@@ -85,16 +88,11 @@ abstract public class Piece implements Comparable<Piece>, Serializable {
         return representation;
     }
 
-    public void setPosition(int column, int rank) {
-        this.column = column;
-        this.rank = rank;
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
-    public ArrayList<Integer> getPiecePosition() {
-        ArrayList<Integer> piecePosition = new ArrayList<>();
-        piecePosition.add(this.column);
-        piecePosition.add(this.rank);
-
-        return piecePosition;
+    public Position getPosition() {
+        return position;
     }
 }
