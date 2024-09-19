@@ -1,5 +1,7 @@
 package chess;
 
+import util.TransformCoordenate;
+
 public class Position {
     private int rank;
     private int column;
@@ -26,6 +28,6 @@ public class Position {
     }
 
     public String getPositionRepresentation() {
-        return String.format("(%d,%d)", column, rank);
+        return String.format(TransformCoordenate.convertCoordinate(column, rank));
     }
 }

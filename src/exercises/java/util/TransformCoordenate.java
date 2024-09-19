@@ -10,6 +10,17 @@ public class TransformCoordenate {
         return new Position(rank, column);
     }
 
+    public static String convertCoordinate(int column, int rank) {
+        String colunmStr = indexToColumnLetter(column);
+        String rankStr = rankToLetter(rank);
+
+        return colunmStr+rankStr;
+    }
+
+    public static String teste(Position position) {
+        return convertCoordinate(position.getColumn(), position.getRank());
+    }
+
     public static int convertColumnToIndex(char column) {
         return switch (column) {
             case 'a' -> 0;
