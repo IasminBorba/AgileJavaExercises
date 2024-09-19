@@ -112,12 +112,12 @@ public class Board implements Serializable {
     }
 
     public void addPiece(Piece piece, String coordinate) {
-        Position position = TransformCoordenate.aplly(coordinate);
+        Position position = CoordinateTransformer.stringToPosition(coordinate);
         addPieceToTheBoard(piece, position);
     }
 
     public void movePieceToPosition(String coordenate, Piece piece) {
-        Position position = TransformCoordenate.aplly(coordenate);
+        Position position = CoordinateTransformer.stringToPosition(coordenate);
         piece.setPosition(position);
 
         updateBoard();
@@ -163,6 +163,6 @@ public class Board implements Serializable {
             return false;
 
         Board that = (Board) object;
-        return (new PrintBoard(this).print()).equals(new PrintBoard(that).print());
+        return (new BoardPrinter(this).visualize()).equals(new BoardPrinter(that).visualize());
     }
 }

@@ -3,13 +3,13 @@ package util;
 import chess.Board;
 import junit.framework.TestCase;
 
-public class PrintBoardTest extends TestCase {
-    public PrintBoard printBoard;
+public class BoardPrinterTest extends TestCase {
+    public BoardPrinter boardPrinter;
     public Board board;
 
     public void setUp() {
         board = new Board();
-        printBoard = new PrintBoard(board);
+        boardPrinter = new BoardPrinter(board);
     }
 
     public void testCreate() {
@@ -18,13 +18,13 @@ public class PrintBoardTest extends TestCase {
                         blankRank + blankRank +
                         blankRank + blankRank +
                         blankRank + blankRank,
-                printBoard.print()
+                boardPrinter.visualize()
         );
     }
 
-    public void testBoardPrintAfterInitialization() {
+    public void testBoardVisualizeAfterInitialization() {
         board.initialize();
-        assertEquals(startingBoard(), printBoard.print());
+        assertEquals(startingBoard(), boardPrinter.visualize());
     }
 
     public String startingBoard() {

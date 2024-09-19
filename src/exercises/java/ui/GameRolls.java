@@ -2,7 +2,7 @@ package ui;
 
 import chess.*;
 import pieces.Piece;
-import util.TransformCoordenate;
+import util.CoordinateTransformer;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -54,7 +54,7 @@ public class GameRolls {
                 if (coordinate == null)
                     return;
 
-                Position test = TransformCoordenate.aplly(coordinate);
+                Position test = CoordinateTransformer.stringToPosition(coordinate);
                 int test2 = coordinate.charAt(1) + '0';
 
                 Piece piece = board.getPiece(test.getFile(), test.getRow());
@@ -74,10 +74,10 @@ public class GameRolls {
         board.iterateBoard((rank, column) -> {
             Piece piece = teste[column][rank];
             if (piece != null && piece.getType() == Piece.Type.QUEEN) {
-                JButton button = panel.getButton(TransformCoordenate.teste(piece.getPosition()));
+                JButton button = panel.getButton(CoordinateTransformer.positionToString(piece.getPosition()));
                 button.setIcon(getImage(piece));
             } else if (piece != null) {
-                JButton button = panel.getButton(TransformCoordenate.teste(piece.getPosition()));
+                JButton button = panel.getButton(CoordinateTransformer.positionToString(piece.getPosition()));
                 button.setText(piece.getType().name());
             }
         });

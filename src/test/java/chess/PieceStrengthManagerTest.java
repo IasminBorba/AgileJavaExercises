@@ -2,7 +2,7 @@ package chess;
 
 import pieces.*;
 import junit.framework.TestCase;
-import util.TransformCoordenate;
+import util.CoordinateTransformer;
 import pieces.Piece.*;
 
 public class PieceStrengthManagerTest extends TestCase {
@@ -35,14 +35,14 @@ public class PieceStrengthManagerTest extends TestCase {
         board.addPiece(Pawn.createPiece(Color.WHITE), "b4");
         board.addPiece(Pawn.createPiece(Color.WHITE), "b5");
 
-        assertTrue(pieceStrengthManager.hasDuplicatePawnsInFile(board.getBoardCells(), TransformCoordenate.convertColumnToIndex('b')));
+        assertTrue(pieceStrengthManager.hasDuplicatePawnsInFile(board.getBoardCells(), CoordinateTransformer.convertFileToIndex('b')));
     }
 
     public void testHasNotDuplicatePawnsInColumn() {
         board.addPiece(Pawn.createPiece(Color.WHITE), "a7");
         board.addPiece(Pawn.createPiece(Color.BLACK), "a1");
 
-        assertFalse(pieceStrengthManager.hasDuplicatePawnsInFile(board.getBoardCells(), TransformCoordenate.convertColumnToIndex('a')));
+        assertFalse(pieceStrengthManager.hasDuplicatePawnsInFile(board.getBoardCells(), CoordinateTransformer.convertFileToIndex('a')));
     }
 
     public void testCalculateStrengthPatternPieces() {

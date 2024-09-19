@@ -1,6 +1,6 @@
 package ui;
 
-import util.TransformCoordenate;
+import util.CoordinateTransformer;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -51,7 +51,7 @@ public class GameUI extends JPanel {
             for (int column = 0; column < BOARD_SIZE; column++) {
                 JButton square = new JButton();
                 square.setPreferredSize(new Dimension(80, 80));
-                square.setName(TransformCoordenate.convertCoordinate(column, rank));
+                square.setName(CoordinateTransformer.positionToCoordinateString(column, rank));
                 square.setEnabled(true);
                 listButtons.add(square);
 

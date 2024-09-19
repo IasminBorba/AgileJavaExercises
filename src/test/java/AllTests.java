@@ -10,7 +10,7 @@ public class AllTests {
         suite.addTestSuite(PositionTest.class);
         suite.addTest(AllTestsPieces.suite());
         suite.addTestSuite(PiecesCounterTest.class);
-        suite.addTestSuite(PrintBoardTest.class);
+        suite.addTestSuite(BoardPrinterTest.class);
         return suite;
     }
 }

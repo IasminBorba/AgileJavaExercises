@@ -26,7 +26,7 @@ public class BoardTest extends TestCase {
         try {
             board.addPiece(whitePawn, "c9");
         } catch (Exception e) {
-            assertEquals("Invalid rank: 9", e.getMessage());
+            assertEquals("Invalid row: 9", e.getMessage());
         }
     }
 

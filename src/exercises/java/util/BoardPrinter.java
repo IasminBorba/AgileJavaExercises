@@ -4,44 +4,44 @@ import chess.Board;
 import chess.Position;
 import pieces.Piece;
 
-public class PrintBoard {
-    private final StringBuilder piecesOnTheBoard = new StringBuilder();
+public class BoardPrinter {
+    private final StringBuilder boardRepresentation = new StringBuilder();
     private final Board board;
 
-    public PrintBoard(Board board) {
+    public BoardPrinter(Board board) {
         this.board = board;
-        initialize();
+        setupEmptyBoard();
     }
 
-    private void initialize() {
+    private void setupEmptyBoard() {
         board.iterateBoard(
-                (rank, column) -> piecesOnTheBoard.append("."),
-                rank -> piecesOnTheBoard.append(System.lineSeparator())
+                (rank, column) -> boardRepresentation.append("."),
+                rank -> boardRepresentation.append(System.lineSeparator())
         );
     }
 
-    public String print() {
-        updatePrint();
-        return piecesOnTheBoard.toString();
+    public String visualize() {
+        updateBoardRepresentation();
+        return boardRepresentation.toString();
     }
 
-    private void updatePrint() {
+    private void updateBoardRepresentation() {
         Piece[][] boardMap = board.getBoardCells();
 
         board.iterateBoard((rank, column) -> {
                     Piece piece = boardMap[column][rank];
                     if (piece != null)
-                        modifyStringBuilderPosition(piece);
+                        placePieceOnBoardRepresentation(piece);
                 }
         );
     }
 
-    private void modifyStringBuilderPosition(Piece piece) {
+    private void placePieceOnBoardRepresentation(Piece piece) {
         char pieceRepresentation = piece.getRepresentation();
         Position positionOnTheBoard = piece.getPosition();
         int newPosition = calculateStringBuilderPosition(positionOnTheBoard);
 
-        piecesOnTheBoard.setCharAt(newPosition, pieceRepresentation);
+        boardRepresentation.setCharAt(newPosition, pieceRepresentation);
     }
 
     private int calculateStringBuilderPosition(Position position) {

@@ -5,8 +5,8 @@ import pieces.Piece;
 
 public class PiecesCounter {
     private final Board board;
-    private int piecesWhite;
-    private int piecesBlack;
+    private int totalWhite;
+    private int totalBlack;
 
     public PiecesCounter(Board board) {
         this.board = board;
@@ -16,9 +16,9 @@ public class PiecesCounter {
     private void updateQuantityOfPieces() {
         for (Piece piece : board.getPiecesOnBoard())
             if (piece.isWhite())
-                piecesWhite++;
+                totalWhite++;
             else
-                piecesBlack++;
+                totalBlack++;
     }
 
     public int counter() {
@@ -26,10 +26,10 @@ public class PiecesCounter {
     }
 
     public int whiteCount() {
-        return piecesWhite;
+        return totalWhite;
     }
 
     public int blackCount() {
-        return piecesBlack;
+        return totalBlack;
     }
 }

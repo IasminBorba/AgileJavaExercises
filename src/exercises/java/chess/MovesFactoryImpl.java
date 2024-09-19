@@ -1,7 +1,7 @@
 package chess;
 
 import pieces.Piece;
-import util.TransformCoordenate;
+import util.CoordinateTransformer;
 
 import java.util.*;
 
@@ -61,8 +61,8 @@ public class MovesFactoryImpl implements Moves {
 
     private void straightRowMovement() {
         for (int coordinate = 0; coordinate < 8; coordinate++) {
-            moves.add(TransformCoordenate.convertCoordinate(coordinate, pieceRow));
-            moves.add(TransformCoordenate.convertCoordinate(pieceFile, coordinate));
+            moves.add(CoordinateTransformer.positionToCoordinateString(coordinate, pieceRow));
+            moves.add(CoordinateTransformer.positionToCoordinateString(pieceFile, coordinate));
         }
     }
 
@@ -79,30 +79,30 @@ public class MovesFactoryImpl implements Moves {
     }
 
     private void addMovementsDifferentRows(int rowUp, int rowDown, int fileOffset) {
-        moves.add(TransformCoordenate.convertCoordinate(pieceFile + fileOffset, rowUp));
-        moves.add(TransformCoordenate.convertCoordinate(pieceFile + fileOffset, rowDown));
+        moves.add(CoordinateTransformer.positionToCoordinateString(pieceFile + fileOffset, rowUp));
+        moves.add(CoordinateTransformer.positionToCoordinateString(pieceFile + fileOffset, rowDown));
     }
 
     private void kingPossibleMoves() {
         for (int initialFile = pieceFile - 1; initialFile <= pieceFile + 1; initialFile++)
             for (int initialRow = pieceRow - 1; initialRow <= pieceRow + 1; initialRow++)
-                moves.add(TransformCoordenate.convertCoordinate(initialFile, initialRow));
+                moves.add(CoordinateTransformer.positionToCoordinateString(initialFile, initialRow));
 
         removeInvalidPossibleMoves();
     }
 
     private void pawnPossibleMoves() {
         if (piece.isWhite())
-            moves.add(TransformCoordenate.convertCoordinate(pieceFile, pieceRow + 1));
+            moves.add(CoordinateTransformer.positionToCoordinateString(pieceFile, pieceRow + 1));
         else
-            moves.add(TransformCoordenate.convertCoordinate(pieceFile, pieceRow - 1));
+            moves.add(CoordinateTransformer.positionToCoordinateString(pieceFile, pieceRow - 1));
 
         removeInvalidPossibleMoves();
     }
 
     private void removeInvalidPossibleMoves() {
         moves.removeIf(String::isEmpty);
-        moves.removeIf(move -> move.contains(TransformCoordenate.convertCoordinate(pieceFile, pieceRow)));
+        moves.removeIf(move -> move.contains(CoordinateTransformer.positionToCoordinateString(pieceFile, pieceRow)));
         moves = new ArrayList<>(new LinkedHashSet<>(moves));
     }
 }

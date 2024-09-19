@@ -1,6 +1,6 @@
 package chess;
 
-import util.TransformCoordenate;
+import util.CoordinateTransformer;
 
 public class Position {
     private int row;
@@ -28,6 +28,6 @@ public class Position {
     }
 
     public String toAlgebraicNotation() {
-        return String.format(TransformCoordenate.convertCoordinate(file, row));
+        return String.format(CoordinateTransformer.positionToCoordinateString(file, row));
     }
 }
