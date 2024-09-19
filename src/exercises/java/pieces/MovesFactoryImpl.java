@@ -46,7 +46,7 @@ public class MovesFactoryImpl implements Moves {
 
     private void movesDiagonals(int columnDirection) {
         for (int columnOffset = columnDirection, rankUp = pieceRank + 1, rankDown = pieceRank - 1; isValidColumn(pieceColumn + columnOffset); columnOffset += columnDirection, rankUp++, rankDown--)
-            addMoves(rankUp, rankDown, columnOffset);
+            addMovementsDifferentRanks(rankUp, rankDown, columnOffset);
     }
 
     private boolean isValidColumn(int col) {
@@ -69,18 +69,15 @@ public class MovesFactoryImpl implements Moves {
         for (int movimentColumn = -2; movimentColumn <= 2; movimentColumn++) {
             if (movimentColumn == 0) continue;
 
-            int movimentRank = applyRule(movimentColumn);
-            addMoves(pieceRank + movimentRank, pieceRank - movimentRank, movimentColumn);
+            int absoluteNumber = Math.abs(movimentColumn);
+            int movimentRank = 3 - absoluteNumber;
+
+            addMovementsDifferentRanks(pieceRank + movimentRank, pieceRank - movimentRank, movimentColumn);
         }
         removeInvalidMoves();
     }
 
-    private int applyRule(int movimentColumn) {
-        int absoluteNumber = Math.abs(movimentColumn);
-        return 3 - absoluteNumber;
-    }
-
-    private void addMoves(int rankUp, int rankDown, int columnOffset) {
+    private void addMovementsDifferentRanks(int rankUp, int rankDown, int columnOffset) {
         moves.add(transformPositionCoordinate(pieceColumn + columnOffset, rankUp));
         moves.add(transformPositionCoordinate(pieceColumn + columnOffset, rankDown));
     }
@@ -112,13 +109,13 @@ public class MovesFactoryImpl implements Moves {
         String columnLetter = TransformCoordenate.indexToColumnLetter(column);
         String rankLetter = TransformCoordenate.rankToLetter(rank);
 
-        return coordinateIsValid(columnLetter, rankLetter);
+        if(coordinateIsValid(columnLetter, rankLetter))
+            return columnLetter + rankLetter;
+
+        return "";
     }
 
-    private String coordinateIsValid(String column, String rank) {
-        if (column.isEmpty() || rank.isEmpty())
-            return "";
-
-        return column + rank;
+    private boolean coordinateIsValid(String column, String rank) {
+        return !column.isEmpty() && !rank.isEmpty();
     }
 }

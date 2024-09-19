@@ -14,19 +14,19 @@ public class Game {
         this.board = board;
     }
 
-    double getStrengthBlackPiece() {
+    public double getStrengthBlackPiece() {
         alterPawnForceSameColumn();
         calculateStrength();
         return strengthBlack;
     }
 
-    double getStrengthWhitePiece() {
+    public double getStrengthWhitePiece() {
         alterPawnForceSameColumn();
         calculateStrength();
         return strengthWhite;
     }
 
-    public void alterPawnForceSameColumn() {
+    protected void alterPawnForceSameColumn() {
         Piece[][] boardArray = board.getBoard();
 
         for (int column = 0; column < 8; column++)
@@ -34,7 +34,7 @@ public class Game {
                 adjustPawnStrengthInColumn(boardArray, column);
     }
 
-    public boolean hasDuplicatePawnsInColumn(Piece[][] boardArray, int column) {
+    protected boolean hasDuplicatePawnsInColumn(Piece[][] boardArray, int column) {
         for (int rank = 0; rank < 8; rank++) {
             Piece piece = boardArray[column][rank];
             if (piece != null && piece.getType() == Type.PAWN) {
@@ -48,7 +48,7 @@ public class Game {
         return false;
     }
 
-    private void adjustPawnStrengthInColumn(Piece[][] boardArray, int column) {
+    protected void adjustPawnStrengthInColumn(Piece[][] boardArray, int column) {
         for (int rank = 0; rank < 8; rank++) {
             Piece piece = boardArray[column][rank];
             if (piece != null && piece.getType() == Type.PAWN && piece.getPoints() == 1)
@@ -61,13 +61,12 @@ public class Game {
         strengthBlack = calculateStrengthForColor(Color.BLACK);
     }
 
-    private double calculateStrengthForColor(Color color) {
+    protected double calculateStrengthForColor(Color color) {
         AtomicReference<Double> strength = new AtomicReference<>((double) 0);
         board.iterateBoard((rank, column) -> {
             Piece currentPiece = board.getPiece(column, rank);
-            if (currentPiece != null && currentPiece.getColor() == color) {
+            if (currentPiece != null && currentPiece.getColor() == color)
                 strength.updateAndGet(v -> v + currentPiece.getPoints());
-            }
         });
         return strength.get();
     }

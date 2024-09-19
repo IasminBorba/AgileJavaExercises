@@ -1,6 +1,5 @@
 package ui;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class Util {
@@ -15,9 +14,5 @@ public class Util {
             }
         }
         return null;
-    }
-
-    static Component getComponent(JFrame frame, String name) {
-        return getComponent(frame.getContentPane(), name);
     }
 }

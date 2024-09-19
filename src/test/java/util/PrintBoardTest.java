@@ -13,7 +13,7 @@ public class PrintBoardTest extends TestCase {
     }
 
     public void testCreate() {
-        String blankRank = StringUtil.appendNewLine("........");
+        String blankRank = ("........" + System.lineSeparator());
         assertEquals(blankRank + blankRank +
                         blankRank + blankRank +
                         blankRank + blankRank +
@@ -28,17 +28,17 @@ public class PrintBoardTest extends TestCase {
     }
 
     public String startingBoard() {
-        String blankRank = StringUtil.appendNewLine("........");
+        String blankRank = ("........" + System.lineSeparator());
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(StringUtil.appendNewLine("RNBQKBNR"));
-        stringBuilder.append(StringUtil.appendNewLine("PPPPPPPP"));
+        stringBuilder.append("RNBQKBNR" + System.lineSeparator());
+        stringBuilder.append("PPPPPPPP" + System.lineSeparator());
         stringBuilder.append(blankRank);
         stringBuilder.append(blankRank);
         stringBuilder.append(blankRank);
         stringBuilder.append(blankRank);
-        stringBuilder.append(StringUtil.appendNewLine("pppppppp"));
-        stringBuilder.append(StringUtil.appendNewLine("rnbqkbnr"));
+        stringBuilder.append("pppppppp" + System.lineSeparator());
+        stringBuilder.append("rnbqkbnr" + System.lineSeparator());
 
         return stringBuilder.toString();
     }

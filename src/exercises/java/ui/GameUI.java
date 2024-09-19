@@ -7,15 +7,12 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class GameUI extends JPanel {
     static final String NAME = "GAME";
     static final String COURSES_LABEL_TEXT = "Chess";
     static JFrame frame = new JFrame();
 
-    private final Map<String, JComponent> fieldsMap = new HashMap<>();
     private static final int BOARD_SIZE = 8;
 
     ArrayList<JButton> listButtons = new ArrayList<>();
@@ -48,7 +45,7 @@ public class GameUI extends JPanel {
         add(createChessBoard(), BorderLayout.CENTER);
     }
 
-    JPanel createChessBoard() {
+    private JPanel createChessBoard() {
         JPanel boardPanel = new JPanel();
         boardPanel.setLayout(new GridLayout(BOARD_SIZE, BOARD_SIZE));
 
@@ -77,11 +74,11 @@ public class GameUI extends JPanel {
         return boardPanel;
     }
 
-    JButton getButton(String name) {
+    public JButton getButton(String name) {
         return (JButton) Util.getComponent(this, name);
     }
 
-    ArrayList<JButton> getAllBoardButtons() {
+    public ArrayList<JButton> getAllBoardButtons() {
         return listButtons;
     }
 }

@@ -42,14 +42,15 @@ public class TransformCoordenate {
     }
 
     public static int convertRankToIndex(char rankChar) {
-        return validRank(rankChar - '1');
-    }
-
-    public static int validRank(int rank) {
-        if (rank < 0 || rank > 7)
+        int rank = rankChar - '1';
+        if (!isValidRank(rank))
             throw new InvalidRankException(rank);
 
         return rank;
+    }
+
+    public static boolean isValidRank(int rank) {
+        return rank >= 0 && rank <= 7;
     }
 
     private static class InvalidRankException extends IllegalArgumentException {

@@ -16,7 +16,7 @@ public class PrintBoard {
     private void initialize() {
         board.iterateBoard(
                 (rank, column) -> piecesOnTheBoard.append("."),
-                rank -> piecesOnTheBoard.append(StringUtil.NEWLINE)
+                rank -> piecesOnTheBoard.append(System.lineSeparator())
         );
     }
 

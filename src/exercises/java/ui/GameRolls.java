@@ -33,10 +33,6 @@ public class GameRolls {
         frame.setVisible(true);
     }
 
-    void close() {
-        frame.dispose();
-    }
-
     private void initialize() {
         frame.setSize(WIDTH, HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,11 +43,11 @@ public class GameRolls {
         createListeners();
     }
 
-    void createListeners() {
+    private void createListeners() {
         createButtonListeners();
     }
 
-    void createButtonListeners() {
+    private void createButtonListeners() {
         addImageButton();
 
         ActionListener buttonListener = new ActionListener() {
@@ -77,7 +73,7 @@ public class GameRolls {
             button.addActionListener(buttonListener);
     }
 
-    void addImageButton() {
+    private void addImageButton() {
         Piece[][] teste = board.getBoard();
 
         board.iterateBoard((rank, column) -> {
