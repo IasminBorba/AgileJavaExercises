@@ -6,8 +6,8 @@ import pieces.Piece.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Game {
-    public double strengthWhite = 0;
-    public double strengthBlack = 0;
+    public double strengthWhite;
+    public double strengthBlack;
     private final Board board;
 
     public Game(Board board) {
@@ -27,7 +27,7 @@ public class Game {
     }
 
     protected void alterPawnForceSameColumn() {
-        Piece[][] boardArray = board.getBoard();
+        Piece[][] boardArray = board.getBoardCells();
 
         for (int column = 0; column < 8; column++)
             if (hasDuplicatePawnsInColumn(boardArray, column))
@@ -52,7 +52,7 @@ public class Game {
         for (int rank = 0; rank < 8; rank++) {
             Piece piece = boardArray[column][rank];
             if (piece != null && piece.getType() == Type.PAWN && piece.getPoints() == 1)
-                piece.setPoints(0.5);
+                piece.updatePoints(0.5);
         }
     }
 

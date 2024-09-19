@@ -1,24 +1,19 @@
 package ui;
 
-import chess.Board;
-import chess.Position;
+import chess.*;
 import pieces.Piece;
 import util.TransformCoordenate;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.*;
 import java.util.ArrayList;
 
 public class GameRolls {
-    static final int WIDTH = 800;
-    static final int HEIGHT = 800;
     private final GameUI panel = new GameUI();
-    static final String GAME_TITLE = "ChessGame";
-    private final JFrame frame = new JFrame(GAME_TITLE);
+    private final JFrame frame = new JFrame("ChessGame");
     private final Board board = new Board();
 
     public static void main(String[] args) {
@@ -34,7 +29,7 @@ public class GameRolls {
     }
 
     private void initialize() {
-        frame.setSize(WIDTH, HEIGHT);
+        frame.setSize(800, 800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(panel);
 
@@ -74,7 +69,7 @@ public class GameRolls {
     }
 
     private void addImageButton() {
-        Piece[][] teste = board.getBoard();
+        Piece[][] teste = board.getBoardCells();
 
         board.iterateBoard((rank, column) -> {
             Piece piece = teste[column][rank];

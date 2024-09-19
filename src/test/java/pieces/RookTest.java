@@ -46,9 +46,9 @@ public class RookTest extends PieceTest {
         Rook rookBlack = Rook.create(Color.BLACK);
         board.addPiece(rookBlack, "e1");
 
-        board.movePiece("e8", rookBlack);
-        board.movePiece("a8", rookBlack);
-        board.movePiece("a1", rookBlack);
+        board.movePieceToPosition("e8", rookBlack);
+        board.movePieceToPosition("a8", rookBlack);
+        board.movePieceToPosition("a1", rookBlack);
 
         possibleMoves = rookBlack.getPossibleMoves();
 

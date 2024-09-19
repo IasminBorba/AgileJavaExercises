@@ -60,8 +60,8 @@ public class MovesFactoryImpl implements Moves {
 
     private void straightRankMovement() {
         for (int coordinate = 0; coordinate < 8; coordinate++) {
-            moves.add(transformPositionCoordinate(coordinate, pieceRank));
-            moves.add(transformPositionCoordinate(pieceColumn, coordinate));
+            moves.add(TransformCoordenate.convertCoordinate(coordinate, pieceRank));
+            moves.add(TransformCoordenate.convertCoordinate(pieceColumn, coordinate));
         }
     }
 
@@ -78,44 +78,30 @@ public class MovesFactoryImpl implements Moves {
     }
 
     private void addMovementsDifferentRanks(int rankUp, int rankDown, int columnOffset) {
-        moves.add(transformPositionCoordinate(pieceColumn + columnOffset, rankUp));
-        moves.add(transformPositionCoordinate(pieceColumn + columnOffset, rankDown));
+        moves.add(TransformCoordenate.convertCoordinate(pieceColumn + columnOffset, rankUp));
+        moves.add(TransformCoordenate.convertCoordinate(pieceColumn + columnOffset, rankDown));
     }
 
     private void kingMoves() {
         for (int initialColumn = pieceColumn - 1; initialColumn <= pieceColumn + 1; initialColumn++)
             for (int initialRank = pieceRank - 1; initialRank <= pieceRank + 1; initialRank++)
-                moves.add(transformPositionCoordinate(initialColumn, initialRank));
+                moves.add(TransformCoordenate.convertCoordinate(initialColumn, initialRank));
 
         removeInvalidMoves();
     }
 
     private void pawnMoves() {
         if (piece.isWhite())
-            moves.add(transformPositionCoordinate(pieceColumn, pieceRank + 1));
+            moves.add(TransformCoordenate.convertCoordinate(pieceColumn, pieceRank + 1));
         else
-            moves.add(transformPositionCoordinate(pieceColumn, pieceRank - 1));
+            moves.add(TransformCoordenate.convertCoordinate(pieceColumn, pieceRank - 1));
 
         removeInvalidMoves();
     }
 
     private void removeInvalidMoves() {
         moves.removeIf(String::isEmpty);
-        moves.removeIf(move -> move.contains(transformPositionCoordinate(pieceColumn, pieceRank)));
+        moves.removeIf(move -> move.contains(TransformCoordenate.convertCoordinate(pieceColumn, pieceRank)));
         moves = new ArrayList<>(new LinkedHashSet<>(moves));
-    }
-
-    public String transformPositionCoordinate(int column, int rank) {
-        String columnLetter = TransformCoordenate.indexToColumnLetter(column);
-        String rankLetter = TransformCoordenate.rankToLetter(rank);
-
-        if(coordinateIsValid(columnLetter, rankLetter))
-            return columnLetter + rankLetter;
-
-        return "";
-    }
-
-    private boolean coordinateIsValid(String column, String rank) {
-        return !column.isEmpty() && !rank.isEmpty();
     }
 }

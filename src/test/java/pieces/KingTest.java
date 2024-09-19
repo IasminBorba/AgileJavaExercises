@@ -44,9 +44,9 @@ public class KingTest extends PieceTest {
     public void testLotsMovements() {
         King kingBlack = King.create(Color.BLACK);
         board.addPiece(kingBlack, "a1");
-        board.movePiece("b1", kingBlack);
-        board.movePiece("c2", kingBlack);
-        board.movePiece("e1", kingBlack);
+        board.movePieceToPosition("b1", kingBlack);
+        board.movePieceToPosition("c2", kingBlack);
+        board.movePieceToPosition("e1", kingBlack);
 
         possibleMoves = kingBlack.getPossibleMoves();
 

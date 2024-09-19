@@ -26,7 +26,7 @@ public class PrintBoard {
     }
 
     private void updatePrint() {
-        Piece[][] boardMap = board.getBoard();
+        Piece[][] boardMap = board.getBoardCells();
 
         board.iterateBoard((rank, column) -> {
                     Piece piece = boardMap[column][rank];

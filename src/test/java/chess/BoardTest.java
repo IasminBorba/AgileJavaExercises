@@ -42,7 +42,7 @@ public class BoardTest extends TestCase {
         Piece whiteQueen = Queen.create(Piece.Color.WHITE);
         board.addPiece(whiteQueen, "b6");
 
-        board.movePiece("b7", whiteQueen);
+        board.movePieceToPosition("b7", whiteQueen);
 
         assertEquals('q', board.getPiece(1, 6).getRepresentation());
     }
@@ -50,7 +50,7 @@ public class BoardTest extends TestCase {
     public void testGetRank() {
         board.initialize();
 
-        List<Piece> rank = board.getRank(8);
+        List<Piece> rank = board.getPiecesInRank(8);
         assertEqualsRank(initialRankWhitePieces(), rank);
     }
 

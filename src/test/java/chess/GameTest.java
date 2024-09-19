@@ -35,14 +35,14 @@ public class GameTest extends TestCase {
         board.addPiece(Pawn.create(Color.WHITE), "b4");
         board.addPiece(Pawn.create(Color.WHITE), "b5");
 
-        assertTrue(game.hasDuplicatePawnsInColumn(board.getBoard(), TransformCoordenate.convertColumnToIndex('b')));
+        assertTrue(game.hasDuplicatePawnsInColumn(board.getBoardCells(), TransformCoordenate.convertColumnToIndex('b')));
     }
 
     public void testHasNotDuplicatePawnsInColumn() {
         board.addPiece(Pawn.create(Color.WHITE), "a7");
         board.addPiece(Pawn.create(Color.BLACK), "a1");
 
-        assertFalse(game.hasDuplicatePawnsInColumn(board.getBoard(), TransformCoordenate.convertColumnToIndex('a')));
+        assertFalse(game.hasDuplicatePawnsInColumn(board.getBoardCells(), TransformCoordenate.convertColumnToIndex('a')));
     }
 
     public void testCalculateStrengthPatternPieces() {

@@ -3,18 +3,14 @@ package ui;
 import util.TransformCoordenate;
 
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
+import javax.swing.border.*;
 import java.awt.*;
 import java.util.ArrayList;
 
 public class GameUI extends JPanel {
-    static final String NAME = "GAME";
-    static final String COURSES_LABEL_TEXT = "Chess";
-    static JFrame frame = new JFrame();
-
     private static final int BOARD_SIZE = 8;
 
+    private static final JFrame frame = new JFrame();
     ArrayList<JButton> listButtons = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -29,7 +25,7 @@ public class GameUI extends JPanel {
     }
 
     public GameUI() {
-        setName(NAME);
+        setName("GAME");
         createLayout();
     }
 
@@ -39,7 +35,7 @@ public class GameUI extends JPanel {
         final int pad = 6;
         Border emptyBorder = BorderFactory.createEmptyBorder(pad, pad, pad, pad);
         Border bevelBorder = BorderFactory.createBevelBorder(BevelBorder.RAISED);
-        Border titleBorder = BorderFactory.createTitledBorder(bevelBorder, COURSES_LABEL_TEXT);
+        Border titleBorder = BorderFactory.createTitledBorder(bevelBorder, "Chess");
         setBorder(BorderFactory.createCompoundBorder(emptyBorder, titleBorder));
 
         add(createChessBoard(), BorderLayout.CENTER);

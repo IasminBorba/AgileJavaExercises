@@ -52,9 +52,9 @@ public class QueenTest extends PieceTest {
         Queen queenBlack = Queen.create(Color.BLACK);
         board.addPiece(queenBlack, "c7");
 
-        board.movePiece("h7", queenBlack);
-        board.movePiece("b1", queenBlack);
-        board.movePiece("a1", queenBlack);
+        board.movePieceToPosition("h7", queenBlack);
+        board.movePieceToPosition("b1", queenBlack);
+        board.movePieceToPosition("a1", queenBlack);
 
         possibleMoves = queenBlack.getPossibleMoves();
 

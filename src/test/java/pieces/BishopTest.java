@@ -46,9 +46,9 @@ public class BishopTest extends PieceTest {
         Bishop bishopBlack = Bishop.create(Color.BLACK);
         board.addPiece(bishopBlack, "d7");
 
-        board.movePiece("f5", bishopBlack);
-        board.movePiece("c2", bishopBlack);
-        board.movePiece("h7", bishopBlack);
+        board.movePieceToPosition("f5", bishopBlack);
+        board.movePieceToPosition("c2", bishopBlack);
+        board.movePieceToPosition("h7", bishopBlack);
 
         possibleMoves = bishopBlack.getPossibleMoves();
 

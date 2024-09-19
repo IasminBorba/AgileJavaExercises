@@ -75,7 +75,7 @@ abstract public class Piece implements Comparable<Piece>, Serializable {
         return Objects.equals(color.name().toLowerCase(), "black");
     }
 
-    public void setPoints(double points) {
+    public void updatePoints(double points) {
         this.points = points;
     }
 

@@ -2,28 +2,27 @@ package chess;
 
 import pieces.*;
 import pieces.Piece.*;
-import util.PrintBoard;
 import chess.PositionAction.*;
-import util.TransformCoordenate;
+import util.*;
 
 import java.io.*;
 import java.util.*;
 
 public class Board implements Serializable {
-    private Piece[][] board;
-    private ArrayList<Piece> pieces = new ArrayList<>();
+    private Piece[][] boardCells;
+    private ArrayList<Piece> piecesOnBoard = new ArrayList<>();
 
     public Board() {
         createBoard();
     }
 
     public void createBoard() {
-        board = new Piece[8][8];
-        fillBoardEmptyPieces();
+        boardCells = new Piece[8][8];
+        initializeBoardWithEmptyPieces();
     }
 
-    private void fillBoardEmptyPieces() {
-        iterateBoard((rank, column) -> board[column][rank] = null);
+    private void initializeBoardWithEmptyPieces() {
+        iterateBoard((rank, column) -> boardCells[column][rank] = null);
     }
 
     public void iterateBoard(CellAction cellAction) {
@@ -41,11 +40,11 @@ public class Board implements Serializable {
     }
 
     public void initialize() {
-        addStartingPieces(Color.WHITE);
-        addStartingPieces(Color.BLACK);
+        placeInitialPieces(Color.WHITE);
+        placeInitialPieces(Color.BLACK);
     }
 
-    private void addStartingPieces(Color color) {
+    private void placeInitialPieces(Color color) {
         int rank = (color == Color.WHITE) ? 0 : 7;
         Piece[] pieces = {
                 Rook.create(color),
@@ -76,40 +75,40 @@ public class Board implements Serializable {
 
     private void addPieceToTheBoard(Piece piece, Position position) {
         piece.setPosition(position);
-        updatePiece(piece);
+        addOrUpdatePiece(piece);
         updateBoard();
     }
 
-    private void updatePiece(Piece piece) {
-        if (verifyEmptyFirstPiece())
-            pieces.set(0, piece);
+    private void addOrUpdatePiece(Piece piece) {
+        if (isFirstPieceSlotEmpty())
+            piecesOnBoard.set(0, piece);
         else
-            pieces.add(piece);
+            piecesOnBoard.add(piece);
     }
 
-    private boolean verifyEmptyFirstPiece() {
-        return (!pieces.isEmpty() && pieces.getFirst() == null);
+    private boolean isFirstPieceSlotEmpty() {
+        return (!piecesOnBoard.isEmpty() && piecesOnBoard.getFirst() == null);
     }
 
     private void updateBoard() {
-        cleanBoard();
-        for (Piece piece : getPieces()) {
+        clearBoard();
+        for (Piece piece : getPiecesOnBoard()) {
             Position piecePosition = piece.getPosition();
-            if (pieceOnTheBoardIsEmpty(piecePosition))
-                board[piecePosition.getColumn()][piecePosition.getRank()] = piece;
+            if (isPositionEmpty(piecePosition))
+                boardCells[piecePosition.getColumn()][piecePosition.getRank()] = piece;
         }
     }
 
-    private void cleanBoard() {
-        board = new Piece[8][8];
+    private void clearBoard() {
+        boardCells = new Piece[8][8];
     }
 
-    private boolean pieceOnTheBoardIsEmpty(Position position) {
-        return board[position.getColumn()][position.getRank()] == null;
+    private boolean isPositionEmpty(Position position) {
+        return boardCells[position.getColumn()][position.getRank()] == null;
     }
 
     public Piece getPiece(int column, int rank) {
-        return board[column][rank];
+        return boardCells[column][rank];
     }
 
     public void addPiece(Piece piece, String coordinate) {
@@ -117,7 +116,7 @@ public class Board implements Serializable {
         addPieceToTheBoard(piece, position);
     }
 
-    public void movePiece(String coordenate, Piece piece) {
+    public void movePieceToPosition(String coordenate, Piece piece) {
         Position position = TransformCoordenate.aplly(coordenate);
         piece.setPosition(position);
 
@@ -125,28 +124,28 @@ public class Board implements Serializable {
     }
 
     public void removePieceFromTheBoard(Piece piece) {
-        ArrayList<Piece> auxArray = new ArrayList<>();
-        for (Piece p : pieces)
+        ArrayList<Piece> remainingPieces = new ArrayList<>();
+        for (Piece p : piecesOnBoard)
             if (piece != p)
-                auxArray.add(p);
+                remainingPieces.add(p);
 
-        pieces = auxArray;
+        piecesOnBoard = remainingPieces;
 
         updateBoard();
     }
 
-    public ArrayList<Piece> getPieces() {
-        return pieces;
+    public ArrayList<Piece> getPiecesOnBoard() {
+        return piecesOnBoard;
     }
 
-    public Piece[][] getBoard() {
-        return board;
+    public Piece[][] getBoardCells() {
+        return boardCells;
     }
 
-    public List<Piece> getRank(int rank) {
+    public List<Piece> getPiecesInRank(int rank) {
         List<Piece> rankPiece = new ArrayList<>();
         for (int column = 0; column < 8; column++) {
-            Piece auxPIece = board[column][rank - 1];
+            Piece auxPIece = boardCells[column][rank - 1];
             if (auxPIece != null)
                 rankPiece.add(auxPIece);
         }

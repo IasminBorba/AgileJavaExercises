@@ -46,9 +46,9 @@ public class KnightTest extends PieceTest {
         Knight knightBlack = Knight.create(Color.BLACK);
         board.addPiece(knightBlack, "f4");
 
-        board.movePiece("e2", knightBlack);
-        board.movePiece("c1", knightBlack);
-        board.movePiece("a2", knightBlack);
+        board.movePieceToPosition("e2", knightBlack);
+        board.movePieceToPosition("c1", knightBlack);
+        board.movePieceToPosition("a2", knightBlack);
 
         possibleMoves = knightBlack.getPossibleMoves();
 
