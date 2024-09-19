@@ -45,9 +45,9 @@ public class PrintBoard {
     }
 
     private int calculateStringBuilderPosition(Position position) {
-        int invertedRank = 7 - position.getRank();
+        int invertedRank = 7 - position.getRow();
         int rowOffsetInStringBuilder = (invertedRank * 9);
 
-        return rowOffsetInStringBuilder + position.getColumn();
+        return rowOffsetInStringBuilder + position.getFile();
     }
 }

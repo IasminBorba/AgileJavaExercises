@@ -57,7 +57,7 @@ public class GameRolls {
                 Position test = TransformCoordenate.aplly(coordinate);
                 int test2 = coordinate.charAt(1) + '0';
 
-                Piece piece = board.getPiece(test.getColumn(), test.getRank());
+                Piece piece = board.getPiece(test.getFile(), test.getRow());
 
                 if (piece != null)
                     setColorPossibleMovePiece(piece.getPossibleMoves());

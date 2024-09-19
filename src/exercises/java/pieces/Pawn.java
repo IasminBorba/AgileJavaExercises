@@ -1,5 +1,8 @@
 package pieces;
 
+import chess.Moves;
+import chess.MovesFactoryImpl;
+
 import java.util.ArrayList;
 
 public class Pawn extends Piece {

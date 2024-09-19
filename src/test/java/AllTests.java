@@ -6,7 +6,7 @@ public class AllTests {
     public static junit.framework.TestSuite suite() {
         junit.framework.TestSuite suite = new junit.framework.TestSuite();
         suite.addTestSuite(BoardTest.class);
-        suite.addTestSuite(GameTest.class);
+        suite.addTestSuite(PieceStrengthManagerTest.class);
         suite.addTestSuite(PositionTest.class);
         suite.addTest(AllTestsPieces.suite());
         suite.addTestSuite(PiecesCounterTest.class);

@@ -50,7 +50,7 @@ public class BoardTest extends TestCase {
     public void testGetRank() {
         board.initialize();
 
-        List<Piece> rank = board.getPiecesInRank(8);
+        List<Piece> rank = board.getPiecesInRow(8);
         assertEqualsRank(initialRankWhitePieces(), rank);
     }
 

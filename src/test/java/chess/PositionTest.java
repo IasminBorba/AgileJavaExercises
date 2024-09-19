@@ -4,15 +4,15 @@ import junit.framework.TestCase;
 
 public class PositionTest extends TestCase {
 
-    public void testSetColumn() {
+    public void testSetFile() {
         Position position = new Position(1,1);
-        position.setColumn(2);
+        position.setFile(2);
 
-        assertEquals(2, position.getColumn());
+        assertEquals(2, position.getFile());
     }
 
-    public void testGetPositionRepresentation() {
+    public void testToAlgebraicNotation() {
         Position position = new Position(1,1);
-        assertEquals("b2", position.getPositionRepresentation());
+        assertEquals("b2", position.toAlgebraicNotation());
     }
 }

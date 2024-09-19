@@ -18,7 +18,7 @@ public class TransformCoordenate {
     }
 
     public static String teste(Position position) {
-        return convertCoordinate(position.getColumn(), position.getRank());
+        return convertCoordinate(position.getFile(), position.getRow());
     }
 
     public static int convertColumnToIndex(char column) {

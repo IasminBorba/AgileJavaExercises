@@ -3,31 +3,31 @@ package chess;
 import util.TransformCoordenate;
 
 public class Position {
-    private int rank;
-    private int column;
+    private int row;
+    private int file;
 
-    public Position(int rank, int column) {
-        this.rank = rank;
-        this.column = column;
+    public Position(int row, int file) {
+        this.row = row;
+        this.file = file;
     }
 
-    public int getRank() {
-        return rank;
+    public int getRow() {
+        return row;
     }
 
-    public void setRank(int rank) {
-        this.rank = rank;
+    public void setRow(int row) {
+        this.row = row;
     }
 
-    public int getColumn() {
-        return column;
+    public int getFile() {
+        return file;
     }
 
-    public void setColumn(int column) {
-        this.column = column;
+    public void setFile(int file) {
+        this.file = file;
     }
 
-    public String getPositionRepresentation() {
-        return String.format(TransformCoordenate.convertCoordinate(column, rank));
+    public String toAlgebraicNotation() {
+        return String.format(TransformCoordenate.convertCoordinate(file, row));
     }
 }

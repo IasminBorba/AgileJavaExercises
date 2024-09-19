@@ -5,22 +5,22 @@ import junit.framework.TestCase;
 import util.TransformCoordenate;
 import pieces.Piece.*;
 
-public class GameTest extends TestCase {
+public class PieceStrengthManagerTest extends TestCase {
     private Board board;
-    private Game game;
+    private PieceStrengthManager pieceStrengthManager;
 
     @Override
     public void setUp() throws Exception {
         super.setUp();
         board = new Board();
-        game = new Game(board);
+        pieceStrengthManager = new PieceStrengthManager(board);
     }
 
     public void testCalculateStrengthWhitePieces() {
         board.addPiece(Pawn.create(Color.WHITE), "c5");
         board.addPiece(Queen.create(Color.WHITE), "d2");
 
-        assertEquals(10, game.getStrengthWhitePiece(), 0.001);
+        assertEquals(10, pieceStrengthManager.calculateWhitePieceStrength(), 0.001);
     }
 
     public void testCalculateStrengthBlackPieces() {
@@ -28,28 +28,28 @@ public class GameTest extends TestCase {
         board.addPiece(Rook.create(Color.BLACK), "b1");
         board.addPiece(Knight.create(Color.BLACK), "c1");
 
-        assertEquals(10.5, game.getStrengthBlackPiece(), 0.001);
+        assertEquals(10.5, pieceStrengthManager.calculateBlackPieceStrength(), 0.001);
     }
 
     public void testHasDuplicatePawnsInColumn() {
         board.addPiece(Pawn.create(Color.WHITE), "b4");
         board.addPiece(Pawn.create(Color.WHITE), "b5");
 
-        assertTrue(game.hasDuplicatePawnsInColumn(board.getBoardCells(), TransformCoordenate.convertColumnToIndex('b')));
+        assertTrue(pieceStrengthManager.hasDuplicatePawnsInFile(board.getBoardCells(), TransformCoordenate.convertColumnToIndex('b')));
     }
 
     public void testHasNotDuplicatePawnsInColumn() {
         board.addPiece(Pawn.create(Color.WHITE), "a7");
         board.addPiece(Pawn.create(Color.BLACK), "a1");
 
-        assertFalse(game.hasDuplicatePawnsInColumn(board.getBoardCells(), TransformCoordenate.convertColumnToIndex('a')));
+        assertFalse(pieceStrengthManager.hasDuplicatePawnsInFile(board.getBoardCells(), TransformCoordenate.convertColumnToIndex('a')));
     }
 
     public void testCalculateStrengthPatternPieces() {
         addPatternPieces();
 
-        assertEquals(19.5, game.getStrengthWhitePiece(), 0.001);
-        assertEquals(20, game.getStrengthBlackPiece(), 0.001);
+        assertEquals(19.5, pieceStrengthManager.calculateWhitePieceStrength(), 0.001);
+        assertEquals(20, pieceStrengthManager.calculateBlackPieceStrength(), 0.001);
     }
 
     public void addPatternPieces() {

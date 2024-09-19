@@ -22,20 +22,20 @@ public class Board implements Serializable {
     }
 
     private void initializeBoardWithEmptyPieces() {
-        iterateBoard((rank, column) -> boardCells[column][rank] = null);
+        iterateBoard((row, file) -> boardCells[file][row] = null);
     }
 
     public void iterateBoard(CellAction cellAction) {
-        iterateBoard(cellAction, rank -> {
+        iterateBoard(cellAction, row -> {
         });
     }
 
     public void iterateBoard(CellAction cellAction, EndOfRowAction endOfRowAction) {
-        for (int rank = 0; rank < 8; rank++) {
-            for (int column = 0; column < 8; column++)
-                cellAction.apply(rank, column);
+        for (int row = 0; row < 8; row++) {
+            for (int file = 0; file < 8; file++)
+                cellAction.apply(row, file);
 
-            endOfRowAction.apply(rank);
+            endOfRowAction.apply(row);
         }
     }
 
@@ -45,7 +45,7 @@ public class Board implements Serializable {
     }
 
     private void placeInitialPieces(Color color) {
-        int rank = (color == Color.WHITE) ? 0 : 7;
+        int row = (color == Color.WHITE) ? 0 : 7;
         Piece[] pieces = {
                 Rook.create(color),
                 Knight.create(color),
@@ -57,18 +57,18 @@ public class Board implements Serializable {
                 Rook.create(color)
         };
 
-        for (int column = 0; column < pieces.length; column++) {
-            addPieceToTheBoard(pieces[column], new Position(rank, column));
-            addPawnPiece(new Position(rank, column));
+        for (int file = 0; file < pieces.length; file++) {
+            addPieceToTheBoard(pieces[file], new Position(row, file));
+            addPawnPiece(new Position(row, file));
         }
     }
 
     private void addPawnPiece(Position position) {
-        if (position.getRank() == 0) {
-            position.setRank(1);
+        if (position.getRow() == 0) {
+            position.setRow(1);
             addPieceToTheBoard(Pawn.create(Color.WHITE), position);
         } else {
-            position.setRank(6);
+            position.setRow(6);
             addPieceToTheBoard(Pawn.create(Color.BLACK), position);
         }
     }
@@ -95,7 +95,7 @@ public class Board implements Serializable {
         for (Piece piece : getPiecesOnBoard()) {
             Position piecePosition = piece.getPosition();
             if (isPositionEmpty(piecePosition))
-                boardCells[piecePosition.getColumn()][piecePosition.getRank()] = piece;
+                boardCells[piecePosition.getFile()][piecePosition.getRow()] = piece;
         }
     }
 
@@ -104,11 +104,11 @@ public class Board implements Serializable {
     }
 
     private boolean isPositionEmpty(Position position) {
-        return boardCells[position.getColumn()][position.getRank()] == null;
+        return boardCells[position.getFile()][position.getRow()] == null;
     }
 
-    public Piece getPiece(int column, int rank) {
-        return boardCells[column][rank];
+    public Piece getPiece(int file, int row) {
+        return boardCells[file][row];
     }
 
     public void addPiece(Piece piece, String coordinate) {
@@ -142,15 +142,15 @@ public class Board implements Serializable {
         return boardCells;
     }
 
-    public List<Piece> getPiecesInRank(int rank) {
-        List<Piece> rankPiece = new ArrayList<>();
-        for (int column = 0; column < 8; column++) {
-            Piece auxPIece = boardCells[column][rank - 1];
+    public List<Piece> getPiecesInRow(int row) {
+        List<Piece> rowPiece = new ArrayList<>();
+        for (int file = 0; file < 8; file++) {
+            Piece auxPIece = boardCells[file][row - 1];
             if (auxPIece != null)
-                rankPiece.add(auxPIece);
+                rowPiece.add(auxPIece);
         }
 
-        return rankPiece;
+        return rowPiece;
     }
 
     @Override
