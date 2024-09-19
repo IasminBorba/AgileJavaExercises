@@ -47,14 +47,14 @@ public class Board implements Serializable {
     private void placeInitialPieces(Color color) {
         int row = (color == Color.WHITE) ? 0 : 7;
         Piece[] pieces = {
-                Rook.create(color),
-                Knight.create(color),
-                Bishop.create(color),
-                Queen.create(color),
-                King.create(color),
-                Bishop.create(color),
-                Knight.create(color),
-                Rook.create(color)
+                Rook.createPiece(color),
+                Knight.createPiece(color),
+                Bishop.createPiece(color),
+                Queen.createPiece(color),
+                King.createPiece(color),
+                Bishop.createPiece(color),
+                Knight.createPiece(color),
+                Rook.createPiece(color)
         };
 
         for (int file = 0; file < pieces.length; file++) {
@@ -66,10 +66,10 @@ public class Board implements Serializable {
     private void addPawnPiece(Position position) {
         if (position.getRow() == 0) {
             position.setRow(1);
-            addPieceToTheBoard(Pawn.create(Color.WHITE), position);
+            addPieceToTheBoard(Pawn.createPiece(Color.WHITE), position);
         } else {
             position.setRow(6);
-            addPieceToTheBoard(Pawn.create(Color.BLACK), position);
+            addPieceToTheBoard(Pawn.createPiece(Color.BLACK), position);
         }
     }
 

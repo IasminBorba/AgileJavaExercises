@@ -12,7 +12,7 @@ public class Knight extends Piece {
         super(color, Class);
     }
 
-    public static Knight create(Color color) {
+    public static Knight createPiece(Color color) {
         return new Knight(color);
     }
 

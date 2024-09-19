@@ -19,7 +19,7 @@ public class KnightTest extends PieceTest {
         possibleMoves = new ArrayList<>();
     }
 
-    public void testCreate() {
+    public void testCreatePiece() {
         Piece knightBlack = createPiece(Color.BLACK, Class);
         assertEquals(Knight.Class, knightBlack.getType());
         assertEquals('N', knightBlack.getRepresentation());
@@ -30,11 +30,11 @@ public class KnightTest extends PieceTest {
     }
 
     protected Piece createPiece(Color color, Type type) {
-        return Knight.create(color);
+        return Knight.createPiece(color);
     }
 
     public void testMove() {
-        Knight knightWhite = Knight.create(Piece.Color.WHITE);
+        Knight knightWhite = Knight.createPiece(Piece.Color.WHITE);
         board.addPiece(knightWhite, "d5");
 
         possibleMoves = knightWhite.getPossibleMoves();
@@ -43,7 +43,7 @@ public class KnightTest extends PieceTest {
     }
 
     public void testLotsMovements() {
-        Knight knightBlack = Knight.create(Color.BLACK);
+        Knight knightBlack = Knight.createPiece(Color.BLACK);
         board.addPiece(knightBlack, "f4");
 
         board.movePieceToPosition("e2", knightBlack);
@@ -56,7 +56,7 @@ public class KnightTest extends PieceTest {
     }
 
     public void testNotMove() {
-        Knight knightBlack = Knight.create(Color.BLACK);
+        Knight knightBlack = Knight.createPiece(Color.BLACK);
         board.addPiece(knightBlack, "h1");
 
         possibleMoves = knightBlack.getPossibleMoves();

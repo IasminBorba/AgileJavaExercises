@@ -12,7 +12,7 @@ public class Bishop extends Piece {
         super(color, Class);
     }
 
-    public static Bishop create(Color color) {
+    public static Bishop createPiece(Color color) {
         return new Bishop(color);
     }
 

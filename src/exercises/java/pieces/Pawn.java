@@ -12,7 +12,7 @@ public class Pawn extends Piece {
         super(color, Class);
     }
 
-    public static Pawn create(Color color) {
+    public static Pawn createPiece(Color color) {
         return new Pawn(color);
     }
 

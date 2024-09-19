@@ -19,7 +19,7 @@ public class RookTest extends PieceTest {
         possibleMoves = new ArrayList<>();
     }
 
-    public void testCreate() {
+    public void testCreatePiece() {
         Piece rookBlack = createPiece(Color.BLACK, Class);
         assertEquals(Rook.Class, rookBlack.getType());
         assertEquals('R', rookBlack.getRepresentation());
@@ -30,11 +30,11 @@ public class RookTest extends PieceTest {
     }
 
     protected Piece createPiece(Color color, Type type) {
-        return Rook.create(color);
+        return Rook.createPiece(color);
     }
 
     public void testMove() {
-        Rook rookWhite = Rook.create(Piece.Color.WHITE);
+        Rook rookWhite = Rook.createPiece(Piece.Color.WHITE);
         board.addPiece(rookWhite, "b7");
 
         possibleMoves = rookWhite.getPossibleMoves();
@@ -43,7 +43,7 @@ public class RookTest extends PieceTest {
     }
 
     public void testLotsMovements() {
-        Rook rookBlack = Rook.create(Color.BLACK);
+        Rook rookBlack = Rook.createPiece(Color.BLACK);
         board.addPiece(rookBlack, "e1");
 
         board.movePieceToPosition("e8", rookBlack);
@@ -56,7 +56,7 @@ public class RookTest extends PieceTest {
     }
 
     public void testNotMove() {
-        Bishop bishopBlack = Bishop.create(Color.BLACK);
+        Bishop bishopBlack = Bishop.createPiece(Color.BLACK);
         board.addPiece(bishopBlack, "f8");
 
         possibleMoves = bishopBlack.getPossibleMoves();

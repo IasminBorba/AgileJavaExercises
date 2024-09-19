@@ -12,7 +12,7 @@ abstract public class PieceTest extends TestCase {
 
     abstract protected Piece createPiece(Piece.Color color, Piece.Type type);
 
-    public void testCreate() {
+    public void testCreatePiece() {
         assertEquals('R', piece.getRepresentation());
         assertEquals(Piece.Type.ROOK, piece.getType());
         assertEquals(0.0, piece.getPoints());

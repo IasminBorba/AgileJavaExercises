@@ -14,14 +14,14 @@ public class BoardTest extends TestCase {
     }
 
     public void testAddPieceToBoard() {
-        Piece blackKing = King.create(Piece.Color.BLACK);
+        Piece blackKing = King.createPiece(Piece.Color.BLACK);
         board.addPiece(blackKing, "a1");
 
         assertEquals('K', board.getPiece(0, 0).getRepresentation());
     }
 
     public void testNotAddPieceInTheBoard() {
-        Piece whitePawn = Pawn.create(Piece.Color.WHITE);
+        Piece whitePawn = Pawn.createPiece(Piece.Color.WHITE);
 
         try {
             board.addPiece(whitePawn, "c9");
@@ -31,7 +31,7 @@ public class BoardTest extends TestCase {
     }
 
     public void testRemovePieces() {
-        Piece blackBishop = Bishop.create(Piece.Color.BLACK);
+        Piece blackBishop = Bishop.createPiece(Piece.Color.BLACK);
         board.addPiece(blackBishop, "d6");
 
         board.removePieceFromTheBoard(blackBishop);
@@ -39,7 +39,7 @@ public class BoardTest extends TestCase {
     }
 
     public void testMovePiece() {
-        Piece whiteQueen = Queen.create(Piece.Color.WHITE);
+        Piece whiteQueen = Queen.createPiece(Piece.Color.WHITE);
         board.addPiece(whiteQueen, "b6");
 
         board.movePieceToPosition("b7", whiteQueen);
@@ -67,14 +67,14 @@ public class BoardTest extends TestCase {
     public List<Piece> initialRankWhitePieces() {
         List<Piece> rank = new ArrayList<>();
 
-        rank.add(Rook.create(Piece.Color.BLACK));
-        rank.add(Knight.create(Piece.Color.BLACK));
-        rank.add(Bishop.create(Piece.Color.BLACK));
-        rank.add(Queen.create(Piece.Color.BLACK));
-        rank.add(King.create(Piece.Color.BLACK));
-        rank.add(Bishop.create(Piece.Color.BLACK));
-        rank.add(Knight.create(Piece.Color.BLACK));
-        rank.add(Rook.create(Piece.Color.BLACK));
+        rank.add(Rook.createPiece(Piece.Color.BLACK));
+        rank.add(Knight.createPiece(Piece.Color.BLACK));
+        rank.add(Bishop.createPiece(Piece.Color.BLACK));
+        rank.add(Queen.createPiece(Piece.Color.BLACK));
+        rank.add(King.createPiece(Piece.Color.BLACK));
+        rank.add(Bishop.createPiece(Piece.Color.BLACK));
+        rank.add(Knight.createPiece(Piece.Color.BLACK));
+        rank.add(Rook.createPiece(Piece.Color.BLACK));
 
         return rank;
     }

@@ -19,7 +19,7 @@ public class BishopTest extends PieceTest {
         possibleMoves = new ArrayList<>();
     }
 
-    public void testCreate() {
+    public void testCreatePiece() {
         Piece bishopBlack = createPiece(Color.BLACK, Class);
         assertEquals(Bishop.Class, bishopBlack.getType());
         assertEquals('B', bishopBlack.getRepresentation());
@@ -30,11 +30,11 @@ public class BishopTest extends PieceTest {
     }
 
     protected Piece createPiece(Color color, Type type) {
-        return Bishop.create(color);
+        return Bishop.createPiece(color);
     }
 
     public void testMove() {
-        Bishop bishopWhite = Bishop.create(Piece.Color.WHITE);
+        Bishop bishopWhite = Bishop.createPiece(Piece.Color.WHITE);
         board.addPiece(bishopWhite, "g2");
 
         possibleMoves = bishopWhite.getPossibleMoves();
@@ -43,7 +43,7 @@ public class BishopTest extends PieceTest {
     }
 
     public void testLotsMovements() {
-        Bishop bishopBlack = Bishop.create(Color.BLACK);
+        Bishop bishopBlack = Bishop.createPiece(Color.BLACK);
         board.addPiece(bishopBlack, "d7");
 
         board.movePieceToPosition("f5", bishopBlack);
@@ -56,7 +56,7 @@ public class BishopTest extends PieceTest {
     }
 
     public void testNotMove() {
-        Bishop bishopBlack = Bishop.create(Color.BLACK);
+        Bishop bishopBlack = Bishop.createPiece(Color.BLACK);
         board.addPiece(bishopBlack, "b1");
 
         possibleMoves = bishopBlack.getPossibleMoves();

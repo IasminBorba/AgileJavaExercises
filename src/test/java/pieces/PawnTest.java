@@ -18,7 +18,7 @@ public class PawnTest extends PieceTest {
         possibleMoves = new ArrayList<>();
     }
 
-    public void testCreate() {
+    public void testCreatePiece() {
         Piece pawnBlack = createPiece(Color.BLACK, Class);
         assertEquals(Pawn.Class, pawnBlack.getType());
         assertEquals('P', pawnBlack.getRepresentation());
@@ -29,11 +29,11 @@ public class PawnTest extends PieceTest {
     }
 
     protected Piece createPiece(Color color, Type type) {
-        return Pawn.create(color);
+        return Pawn.createPiece(color);
     }
 
     public void testMoveWhitePawn() {
-        Pawn pawnWhite = Pawn.create(Piece.Color.WHITE);
+        Pawn pawnWhite = Pawn.createPiece(Piece.Color.WHITE);
         board.addPiece(pawnWhite, "d5");
 
         possibleMoves = pawnWhite.getPossibleMoves();
@@ -42,7 +42,7 @@ public class PawnTest extends PieceTest {
     }
 
     public void testNotMoveWhitePawn() {
-        Pawn pawnWhite = Pawn.create(Piece.Color.WHITE);
+        Pawn pawnWhite = Pawn.createPiece(Piece.Color.WHITE);
         board.addPiece(pawnWhite, "a2");
 
         possibleMoves = pawnWhite.getPossibleMoves();
@@ -51,7 +51,7 @@ public class PawnTest extends PieceTest {
     }
 
     public void testMoveBlackPawn() {
-        Pawn pawnBlack = Pawn.create(Color.BLACK);
+        Pawn pawnBlack = Pawn.createPiece(Color.BLACK);
         board.addPiece(pawnBlack, "g4");
 
         possibleMoves = pawnBlack.getPossibleMoves();
@@ -60,7 +60,7 @@ public class PawnTest extends PieceTest {
     }
 
     public void testNotMoveBlackPawn() {
-        Pawn pawnBlack = Pawn.create(Color.BLACK);
+        Pawn pawnBlack = Pawn.createPiece(Color.BLACK);
         board.addPiece(pawnBlack, "f5");
 
         possibleMoves = pawnBlack.getPossibleMoves();

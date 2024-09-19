@@ -12,7 +12,7 @@ public class Rook extends Piece {
         super(color, Class);
     }
 
-    public static Rook create(Color color) {
+    public static Rook createPiece(Color color) {
         return new Rook(color);
     }
 

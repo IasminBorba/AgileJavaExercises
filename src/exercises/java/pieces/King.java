@@ -12,7 +12,7 @@ public class King extends Piece {
         super(color, Class);
     }
 
-    public static King create(Color color) {
+    public static King createPiece(Color color) {
         return new King(color);
     }
 

@@ -17,30 +17,30 @@ public class PieceStrengthManagerTest extends TestCase {
     }
 
     public void testCalculateStrengthWhitePieces() {
-        board.addPiece(Pawn.create(Color.WHITE), "c5");
-        board.addPiece(Queen.create(Color.WHITE), "d2");
+        board.addPiece(Pawn.createPiece(Color.WHITE), "c5");
+        board.addPiece(Queen.createPiece(Color.WHITE), "d2");
 
         assertEquals(10, pieceStrengthManager.calculateWhitePieceStrength(), 0.001);
     }
 
     public void testCalculateStrengthBlackPieces() {
-        board.addPiece(Bishop.create(Color.BLACK), "a1");
-        board.addPiece(Rook.create(Color.BLACK), "b1");
-        board.addPiece(Knight.create(Color.BLACK), "c1");
+        board.addPiece(Bishop.createPiece(Color.BLACK), "a1");
+        board.addPiece(Rook.createPiece(Color.BLACK), "b1");
+        board.addPiece(Knight.createPiece(Color.BLACK), "c1");
 
         assertEquals(10.5, pieceStrengthManager.calculateBlackPieceStrength(), 0.001);
     }
 
     public void testHasDuplicatePawnsInColumn() {
-        board.addPiece(Pawn.create(Color.WHITE), "b4");
-        board.addPiece(Pawn.create(Color.WHITE), "b5");
+        board.addPiece(Pawn.createPiece(Color.WHITE), "b4");
+        board.addPiece(Pawn.createPiece(Color.WHITE), "b5");
 
         assertTrue(pieceStrengthManager.hasDuplicatePawnsInFile(board.getBoardCells(), TransformCoordenate.convertColumnToIndex('b')));
     }
 
     public void testHasNotDuplicatePawnsInColumn() {
-        board.addPiece(Pawn.create(Color.WHITE), "a7");
-        board.addPiece(Pawn.create(Color.BLACK), "a1");
+        board.addPiece(Pawn.createPiece(Color.WHITE), "a7");
+        board.addPiece(Pawn.createPiece(Color.BLACK), "a1");
 
         assertFalse(pieceStrengthManager.hasDuplicatePawnsInFile(board.getBoardCells(), TransformCoordenate.convertColumnToIndex('a')));
     }
@@ -53,26 +53,26 @@ public class PieceStrengthManagerTest extends TestCase {
     }
 
     public void addPatternPieces() {
-        board.addPiece(King.create(Color.BLACK), "b8");
-        board.addPiece(Rook.create(Color.BLACK), "c8");
+        board.addPiece(King.createPiece(Color.BLACK), "b8");
+        board.addPiece(Rook.createPiece(Color.BLACK), "c8");
 
-        board.addPiece(Pawn.create(Color.BLACK), "a7");
-        board.addPiece(Pawn.create(Color.BLACK), "c7");
-        board.addPiece(Bishop.create(Color.BLACK), "d7");
+        board.addPiece(Pawn.createPiece(Color.BLACK), "a7");
+        board.addPiece(Pawn.createPiece(Color.BLACK), "c7");
+        board.addPiece(Bishop.createPiece(Color.BLACK), "d7");
 
-        board.addPiece(Pawn.create(Color.BLACK), "b6");
-        board.addPiece(Queen.create(Color.BLACK), "e6");
+        board.addPiece(Pawn.createPiece(Color.BLACK), "b6");
+        board.addPiece(Queen.createPiece(Color.BLACK), "e6");
 
-        board.addPiece(Knight.create(Color.WHITE), "f4");
-        board.addPiece(Queen.create(Color.WHITE), "g4");
+        board.addPiece(Knight.createPiece(Color.WHITE), "f4");
+        board.addPiece(Queen.createPiece(Color.WHITE), "g4");
 
-        board.addPiece(Pawn.create(Color.WHITE), "f3");
-        board.addPiece(Pawn.create(Color.WHITE), "h3");
+        board.addPiece(Pawn.createPiece(Color.WHITE), "f3");
+        board.addPiece(Pawn.createPiece(Color.WHITE), "h3");
 
-        board.addPiece(Pawn.create(Color.WHITE), "f2");
-        board.addPiece(Pawn.create(Color.WHITE), "g2");
+        board.addPiece(Pawn.createPiece(Color.WHITE), "f2");
+        board.addPiece(Pawn.createPiece(Color.WHITE), "g2");
 
-        board.addPiece(Rook.create(Color.WHITE), "e1");
-        board.addPiece(King.create(Color.WHITE), "f1");
+        board.addPiece(Rook.createPiece(Color.WHITE), "e1");
+        board.addPiece(King.createPiece(Color.WHITE), "f1");
     }
 }

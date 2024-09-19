@@ -19,7 +19,7 @@ public class KingTest extends PieceTest {
         possibleMoves = new ArrayList<>();
     }
 
-    public void testCreate() {
+    public void testCreatePiece() {
         Piece kingBlack = createPiece(Color.BLACK, Class);
         assertEquals(King.Class, kingBlack.getType());
         assertEquals('K', kingBlack.getRepresentation());
@@ -30,11 +30,11 @@ public class KingTest extends PieceTest {
     }
 
     protected Piece createPiece(Color color, Type type) {
-        return King.create(color);
+        return King.createPiece(color);
     }
 
     public void testMove() {
-        King kingWhite = King.create(Color.WHITE);
+        King kingWhite = King.createPiece(Color.WHITE);
         board.addPiece(kingWhite, "d4");
         possibleMoves = kingWhite.getPossibleMoves();
 
@@ -42,7 +42,7 @@ public class KingTest extends PieceTest {
     }
 
     public void testLotsMovements() {
-        King kingBlack = King.create(Color.BLACK);
+        King kingBlack = King.createPiece(Color.BLACK);
         board.addPiece(kingBlack, "a1");
         board.movePieceToPosition("b1", kingBlack);
         board.movePieceToPosition("c2", kingBlack);
@@ -54,7 +54,7 @@ public class KingTest extends PieceTest {
     }
 
     public void testNotMove() {
-        King kingBlack = King.create(Color.BLACK);
+        King kingBlack = King.createPiece(Color.BLACK);
         board.addPiece(kingBlack, "h7");
 
         possibleMoves = kingBlack.getPossibleMoves();

@@ -18,7 +18,7 @@ public class QueenTest extends PieceTest {
         possibleMoves = new ArrayList<>();
     }
 
-    public void testCreate() {
+    public void testCreatePiece() {
         Piece queenBlack = createPiece(Color.BLACK, Class);
         assertEquals(Queen.Class, queenBlack.getType());
         assertEquals('Q', queenBlack.getRepresentation());
@@ -29,11 +29,11 @@ public class QueenTest extends PieceTest {
     }
 
     protected Piece createPiece(Color color, Type type) {
-        return Queen.create(color);
+        return Queen.createPiece(color);
     }
 
     public void testMove() {
-        Queen queenWhite = Queen.create(Piece.Color.WHITE);
+        Queen queenWhite = Queen.createPiece(Piece.Color.WHITE);
         board.addPiece(queenWhite, "d5");
 
         possibleMoves = queenWhite.getPossibleMoves();
@@ -49,7 +49,7 @@ public class QueenTest extends PieceTest {
     }
 
     public void testLotsMovements() {
-        Queen queenBlack = Queen.create(Color.BLACK);
+        Queen queenBlack = Queen.createPiece(Color.BLACK);
         board.addPiece(queenBlack, "c7");
 
         board.movePieceToPosition("h7", queenBlack);
@@ -68,7 +68,7 @@ public class QueenTest extends PieceTest {
     }
 
     public void testNotMove() {
-        Queen queenBlack = Queen.create(Color.BLACK);
+        Queen queenBlack = Queen.createPiece(Color.BLACK);
         board.addPiece(queenBlack, "g2");
 
         possibleMoves = queenBlack.getPossibleMoves();
