@@ -11,11 +11,19 @@ public class CoordinateTransformer {
     }
 
     public static String positionToCoordinateString(int file, int row) {
-        String colunmStr = fileIndexToLetter(file);
-        String rowStr = rowIndexToNumber(row);
+        String fileLetter = fileIndexToLetter(file);
+        String rowNumber = rowIndexToNumber(row);
 
-        return colunmStr + rowStr;
+        if (isCoordinateValid(fileLetter, rowNumber))
+            return fileLetter + rowNumber;
+
+        return "";
     }
+
+    private static boolean isCoordinateValid(String column, String rank) {
+        return !column.isEmpty() && !rank.isEmpty();
+    }
+
 
     public static String positionToString(Position position) {
         return positionToCoordinateString(position.getFile(), position.getRow());

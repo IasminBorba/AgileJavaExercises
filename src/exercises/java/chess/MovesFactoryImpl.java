@@ -50,8 +50,8 @@ public class MovesFactoryImpl implements Moves {
             addMovementsDifferentRows(rowUp, rowDown, fileOffset);
     }
 
-    private boolean isValidFile(int col) {
-        return col >= 0 && col <= 8;
+    private boolean isValidFile(int file) {
+        return file >= 0 && file <= 8;
     }
 
     private void rookPossibleMoves() {
