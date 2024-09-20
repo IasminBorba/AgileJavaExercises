@@ -1,7 +1,8 @@
 package pieces;
 
-import chess.Moves;
-import chess.MovesFactoryImpl;
+import chess.MovesHelper;
+import chess.Position;
+import util.CoordinateTransformer;
 
 import java.util.ArrayList;
 
@@ -18,7 +19,14 @@ public class King extends Piece {
 
     @Override
     public ArrayList<String> getPossibleMoves() {
-        Moves movesFactory = new MovesFactoryImpl(this);
-        return movesFactory.possibleMoves();
+        ArrayList<String> moves = new ArrayList<>();
+        Position position = this.getPosition();
+
+        for (int initialRow = position.getRow() - 1; initialRow <= position.getRow() + 1; initialRow++)
+            for (int initialFile = position.getFile() - 1; initialFile <= position.getFile() + 1; initialFile++)
+                moves.add(CoordinateTransformer.positionToCoordinateString(initialFile, initialRow));
+
+        MovesHelper.removeDuplicateOrInvalidMoves(moves, position);
+        return moves;
     }
 }

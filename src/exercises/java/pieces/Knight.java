@@ -1,7 +1,7 @@
 package pieces;
 
-import chess.Moves;
-import chess.MovesFactoryImpl;
+import chess.MovesHelper;
+import chess.Position;
 
 import java.util.ArrayList;
 
@@ -18,7 +18,18 @@ public class Knight extends Piece {
 
     @Override
     public ArrayList<String> getPossibleMoves() {
-        Moves movesFactory = new MovesFactoryImpl(this);
-        return movesFactory.possibleMoves();
+        ArrayList<String> moves = new ArrayList<>();
+        Position position = this.getPosition();
+
+        for (int movimentFile = -2; movimentFile <= 2; movimentFile++) {
+            int absoluteNumber = Math.abs(movimentFile);
+            int movimentRow = 3 - absoluteNumber;
+
+            int newFile = position.getFile() + movimentFile;
+
+            MovesHelper.addDiagonalNeighborMoves(movimentRow, newFile, position, moves);
+        }
+
+        return moves;
     }
 }

@@ -1,7 +1,7 @@
 package pieces;
 
-import chess.Moves;
-import chess.MovesFactoryImpl;
+import chess.MovesHelper;
+import chess.Position;
 
 import java.util.ArrayList;
 
@@ -18,7 +18,11 @@ public class Rook extends Piece {
 
     @Override
     public ArrayList<String> getPossibleMoves() {
-        Moves movesFactory = new MovesFactoryImpl(this);
-        return movesFactory.possibleMoves();
+        ArrayList<String> moves = new ArrayList<>();
+        Position position = this.getPosition();
+
+        MovesHelper.addStraightLineMoves(moves, position);
+
+        return moves;
     }
 }
