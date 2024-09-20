@@ -36,10 +36,10 @@ public class PieceStrengthManager {
 
     protected boolean hasDuplicatePawnsInFile(Piece[][] boardCells, int file) {
         for (int row = 0; row < 8; row++) {
-            Piece piece = boardCells[file][row];
+            Piece piece = boardCells[row][file];
             if (piece != null && piece.getType() == Type.PAWN) {
                 for (int checkRow = row + 1; checkRow < 8; checkRow++) {
-                    Piece otherPiece = boardCells[file][checkRow];
+                    Piece otherPiece = boardCells[checkRow][file];
                     if (otherPiece != null && otherPiece.getType() == Type.PAWN && otherPiece.getRepresentation() == piece.getRepresentation())
                         return true;
                 }
@@ -50,7 +50,7 @@ public class PieceStrengthManager {
 
     protected void adjustPawnStrengthInFile(Piece[][] boardCells, int file) {
         for (int row = 0; row < 8; row++) {
-            Piece piece = boardCells[file][row];
+            Piece piece = boardCells[row][file];
             if (piece != null && piece.getType() == Type.PAWN && piece.getPoints() == 1)
                 piece.updatePoints(0.5);
         }
@@ -64,7 +64,7 @@ public class PieceStrengthManager {
     protected double calculateStrengthByColor(Color color) {
         AtomicReference<Double> strength = new AtomicReference<>((double) 0);
         boardCells.iterateBoard((row, file) -> {
-            Piece currentPiece = boardCells.getPiece(file, row);
+            Piece currentPiece = boardCells.getPiece(row, file);
             if (currentPiece != null && currentPiece.getColor() == color)
                 strength.updateAndGet(v -> v + currentPiece.getPoints());
         });

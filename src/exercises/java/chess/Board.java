@@ -10,7 +10,7 @@ import java.util.*;
 
 public class Board implements Serializable {
     private Piece[][] boardCells;
-    private ArrayList<Piece> piecesOnBoard = new ArrayList<>();
+    private final ArrayList<Piece> piecesOnBoard = new ArrayList<>();
 
     public Board() {
         createBoard();
@@ -22,7 +22,7 @@ public class Board implements Serializable {
     }
 
     private void initializeBoardWithEmptyPieces() {
-        iterateBoard((row, file) -> boardCells[file][row] = null);
+        iterateBoard((row, file) -> boardCells[row][file] = null);
     }
 
     public void iterateBoard(CellAction cellAction) {
@@ -75,27 +75,16 @@ public class Board implements Serializable {
 
     private void addPieceToTheBoard(Piece piece, Position position) {
         piece.setPosition(position);
-        addOrUpdatePiece(piece);
+        piecesOnBoard.add(piece);
+
         updateBoard();
-    }
-
-    private void addOrUpdatePiece(Piece piece) {
-        if (isFirstPieceSlotEmpty())
-            piecesOnBoard.set(0, piece);
-        else
-            piecesOnBoard.add(piece);
-    }
-
-    private boolean isFirstPieceSlotEmpty() {
-        return (!piecesOnBoard.isEmpty() && piecesOnBoard.getFirst() == null);
     }
 
     private void updateBoard() {
         clearBoard();
         for (Piece piece : getPiecesOnBoard()) {
             Position piecePosition = piece.getPosition();
-            if (isPositionEmpty(piecePosition))
-                boardCells[piecePosition.getFile()][piecePosition.getRow()] = piece;
+            boardCells[piecePosition.getRow()][piecePosition.getFile()] = piece;
         }
     }
 
@@ -103,12 +92,8 @@ public class Board implements Serializable {
         boardCells = new Piece[8][8];
     }
 
-    private boolean isPositionEmpty(Position position) {
-        return boardCells[position.getFile()][position.getRow()] == null;
-    }
-
-    public Piece getPiece(int file, int row) {
-        return boardCells[file][row];
+    public Piece getPiece(int row, int file) {
+        return boardCells[row][file];
     }
 
     public void addPiece(Piece piece, String coordinate) {
@@ -124,13 +109,7 @@ public class Board implements Serializable {
     }
 
     public void removePieceFromTheBoard(Piece piece) {
-        ArrayList<Piece> remainingPieces = new ArrayList<>();
-        for (Piece p : piecesOnBoard)
-            if (piece != p)
-                remainingPieces.add(p);
-
-        piecesOnBoard = remainingPieces;
-
+        piecesOnBoard.removeIf(p -> p.equals(piece));
         updateBoard();
     }
 
@@ -145,7 +124,7 @@ public class Board implements Serializable {
     public List<Piece> getPiecesInRow(int row) {
         List<Piece> rowPiece = new ArrayList<>();
         for (int file = 0; file < 8; file++) {
-            Piece auxPIece = boardCells[file][row - 1];
+            Piece auxPIece = boardCells[row-1][file];
             if (auxPIece != null)
                 rowPiece.add(auxPIece);
         }
