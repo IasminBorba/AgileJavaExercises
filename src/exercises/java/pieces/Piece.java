@@ -5,7 +5,7 @@ import chess.Position;
 import java.io.Serializable;
 import java.util.*;
 
-abstract public class Piece implements Comparable<Piece>, Serializable {
+abstract public class Piece implements Serializable {
     public enum Color {WHITE, BLACK}
 
     public enum Type {
@@ -83,11 +83,7 @@ abstract public class Piece implements Comparable<Piece>, Serializable {
         this.position = position;
     }
 
-    @Override
-    public int compareTo(Piece that) {
-        int compare = this.getType().compareTo(that.getType());
-        if (compare != 0)
-            return compare;
-        return this.getColor().compareTo(that.getColor());
+    public boolean compareTo(Piece that) {
+        return this.getType().equals(that.getType()) && this.getColor().equals(that.getColor());
     }
 }

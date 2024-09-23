@@ -10,27 +10,6 @@ public class CoordinateTransformer {
         return new Position(row, file);
     }
 
-    public static String positionToCoordinateString(int file, int row) {
-        String fileLetter = fileIndexToLetter(file);
-        String rowNumber = rowIndexToNumber(row);
-        String coordinate = fileLetter + rowNumber;
-
-        if (isCoordinateValid(coordinate))
-            return coordinate;
-
-        return "";
-    }
-
-    public static boolean isCoordinateValid(String coordinate) {
-        if(coordinate.length() != 2)
-            return false;
-
-        int fileIndex = coordinate.charAt(0) - 'a';
-        int rowIndex = coordinate.charAt(1) - '1';
-
-        return isValidIndex(rowIndex) && isValidIndex(fileIndex);
-    }
-
     public static int convertFileToIndex(char file) {
         int fileIndex = file - 'a';
 
@@ -54,36 +33,44 @@ public class CoordinateTransformer {
         return rowIndex;
     }
 
-    public static boolean isValidIndex(int index) {
-        return index >= 0 && index <= 7;
-    }
-
     private static class InvalidRowException extends IllegalArgumentException {
         public InvalidRowException(int row) {
             super("Invalid row: " + (row + 1));
         }
+    }
 
+    public static String positionToCoordinateString(int file, int row) {
+        String fileLetter = fileIndexToLetter(file);
+        String rowNumber = rowIndexToNumber(row);
+        String coordinate = fileLetter + rowNumber;
+
+        if (isCoordinateValid(coordinate))
+            return coordinate;
+
+        return "";
     }
 
     public static String fileIndexToLetter(int file) {
-        return switch (file) {
-            case 0 -> "a";
-            case 1 -> "b";
-            case 2 -> "c";
-            case 3 -> "d";
-            case 4 -> "e";
-            case 5 -> "f";
-            case 6 -> "g";
-            case 7 -> "h";
-            default -> "";
-        };
+        char letterFile = (char) ('a' + file);
+
+        return String.valueOf(letterFile);
     }
 
     public static String rowIndexToNumber(int row) {
-        row++;
-        if (row >= 1 && row <= 8)
-            return String.valueOf(row);
-        else
-            return "";
+        return String.valueOf(++row);
+    }
+
+    public static boolean isCoordinateValid(String coordinate) {
+        if(coordinate.length() != 2)
+            return false;
+
+        int fileIndex = coordinate.charAt(0) - 'a';
+        int rowIndex = coordinate.charAt(1) - '1';
+
+        return isValidIndex(rowIndex) && isValidIndex(fileIndex);
+    }
+
+    public static boolean isValidIndex(int index) {
+        return index >= 0 && index <= 7;
     }
 }
