@@ -26,7 +26,7 @@ public class King extends Piece {
             for (int initialFile = position.getFile() - 1; initialFile <= position.getFile() + 1; initialFile++)
                 moves.add(CoordinateTransformer.positionToCoordinateString(initialFile, initialRow));
 
-        MovesHelper.removeDuplicateOrInvalidMoves(moves, position);
+        MovesHelper.removeInvalidOrDuplicateMoves(moves, position);
         return moves;
     }
 }

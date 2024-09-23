@@ -1,6 +1,7 @@
 package chess;
 
 import util.CoordinateTransformer;
+import static util.CoordinateTransformer.*;
 
 import java.util.*;
 
@@ -11,14 +12,10 @@ public class MovesHelper {
     }
 
     protected static void calculateDiagonalMoves(int fileDirection, List<String> moves, Position position) {
-        for (int offset = 1; isValidFile(position.getFile() + fileDirection * offset); offset++) {
+        for (int offset = 1; isValidIndex(position.getFile() + fileDirection * offset); offset++) {
             int newFile = position.getFile() + (fileDirection * offset);
             addDiagonalNeighborMoves(offset, newFile, position, moves);
         }
-    }
-
-    private static boolean isValidFile(int file) {
-        return file >= 0 && file <= 8;
     }
 
     public static void addDiagonalNeighborMoves(int rowOffset, int file, Position position, List<String> moves) {
@@ -30,7 +27,7 @@ public class MovesHelper {
 
     protected static void addIfValidMove(int row, int file, List<String> moves) {
         String move = CoordinateTransformer.positionToCoordinateString(file, row);
-        if (!move.isEmpty())
+        if (isValidIndex(row) && isValidIndex(file))
             moves.add(move);
     }
 
@@ -40,11 +37,11 @@ public class MovesHelper {
             moves.add(CoordinateTransformer.positionToCoordinateString(position.getFile(), coordinate));
         }
 
-        removeDuplicateOrInvalidMoves(moves, position);
+        removeInvalidOrDuplicateMoves(moves, position);
     }
 
-    public static void removeDuplicateOrInvalidMoves(List<String> moves, Position position) {
-        moves.removeIf(String::isEmpty);
+    public static void removeInvalidOrDuplicateMoves(List<String> moves, Position position) {
+        moves.removeIf(move -> !isCoordinateValid(move));
         moves.removeIf(move -> move.equals(position.toAlgebraicNotation()));
 
         Set<String> uniqueMoves = new LinkedHashSet<>(moves);

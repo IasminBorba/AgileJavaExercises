@@ -10,6 +10,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Objects;
+
+import static util.CoordinateTransformer.*;
 
 public class ChessGameUIController {
     private final GameUI panel = new GameUI();
@@ -67,8 +70,9 @@ public class ChessGameUIController {
 
         board.iterateBoard((rank, column) -> {
             Piece piece = boardCells[column][rank];
+            Position position = piece.getPosition();
             if (piece != null) {
-                JButton button = panel.getBoardButtonByName(CoordinateTransformer.positionToString(piece.getPosition()));
+                JButton button = panel.getBoardButtonByName(positionToCoordinateString(column, rank));
                 if (piece.getType() == Piece.Type.QUEEN) {
                     button.setIcon(getPieceImage(piece));
                 } else {
@@ -93,12 +97,10 @@ public class ChessGameUIController {
     }
 
     public String getImagePathForPiece(Piece piece) {
-        switch (piece.getType()) {
-            case QUEEN:
-                return "src/exercises/resources/queenWhite.png";
-            default:
-                return "";
+        if (Objects.requireNonNull(piece.getType()) == Piece.Type.QUEEN) {
+            return "src/exercises/resources/queenWhite.png";
         }
+        return "";
     }
 
     public void highlightPossibleMoves(ArrayList<String> possibleMoves) {

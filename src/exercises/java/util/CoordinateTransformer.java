@@ -13,52 +13,49 @@ public class CoordinateTransformer {
     public static String positionToCoordinateString(int file, int row) {
         String fileLetter = fileIndexToLetter(file);
         String rowNumber = rowIndexToNumber(row);
+        String coordinate = fileLetter + rowNumber;
 
-        if (isCoordinateValid(fileLetter, rowNumber))
-            return fileLetter + rowNumber;
+        if (isCoordinateValid(coordinate))
+            return coordinate;
 
         return "";
     }
 
-    private static boolean isCoordinateValid(String column, String rank) {
-        return !column.isEmpty() && !rank.isEmpty();
-    }
+    public static boolean isCoordinateValid(String coordinate) {
+        if(coordinate.length() != 2)
+            return false;
 
+        int fileIndex = coordinate.charAt(0) - 'a';
+        int rowIndex = coordinate.charAt(1) - '1';
 
-    public static String positionToString(Position position) {
-        return positionToCoordinateString(position.getFile(), position.getRow());
+        return isValidIndex(rowIndex) && isValidIndex(fileIndex);
     }
 
     public static int convertFileToIndex(char file) {
-        return switch (file) {
-            case 'a' -> 0;
-            case 'b' -> 1;
-            case 'c' -> 2;
-            case 'd' -> 3;
-            case 'e' -> 4;
-            case 'f' -> 5;
-            case 'g' -> 6;
-            case 'h' -> 7;
-            default -> throw new InvalidException(file);
-        };
+        int fileIndex = file - 'a';
+
+        if (!isValidIndex(fileIndex))
+            throw new InvalidFileException(file);
+
+        return fileIndex;
     }
 
-    private static class InvalidException extends IllegalArgumentException {
-        public InvalidException(char file) {
+    private static class InvalidFileException extends IllegalArgumentException {
+        public InvalidFileException(char file) {
             super("Invalid file: " + file);
         }
     }
 
-    public static int convertRowToIndex(char rowChar) {
-        int row = rowChar - '1';
-        if (!isValidRow(row))
-            throw new InvalidRowException(row);
+    public static int convertRowToIndex(char row) {
+        int rowIndex = row - '1';
+        if (!isValidIndex(rowIndex))
+            throw new InvalidRowException(rowIndex);
 
-        return row;
+        return rowIndex;
     }
 
-    public static boolean isValidRow(int row) {
-        return row >= 0 && row <= 7;
+    public static boolean isValidIndex(int index) {
+        return index >= 0 && index <= 7;
     }
 
     private static class InvalidRowException extends IllegalArgumentException {
