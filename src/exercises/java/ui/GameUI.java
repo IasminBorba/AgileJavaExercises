@@ -8,6 +8,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class GameUI extends JPanel {
+    public static final String NAME = "GAME";
     private static final int BOARD_SIZE = 8;
     private static final int SQUARE_SIZE = 80;
     private static final Color LIGHT_SQUARE_COLOR = Color.WHITE;
@@ -28,7 +29,7 @@ public class GameUI extends JPanel {
     }
 
     public GameUI() {
-        setName("GAME");
+        setName(NAME);
         createLayout();
     }
 

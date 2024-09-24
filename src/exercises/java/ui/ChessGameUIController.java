@@ -9,14 +9,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Objects;
+import java.util.*;
 
 import static util.CoordinateTransformer.*;
 
 public class ChessGameUIController {
     private final GameUI panel = new GameUI();
     private final JFrame frame = new JFrame("ChessGame");
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 800;
     private final Board board = new Board();
 
     public static void main(String[] args) {
@@ -31,8 +32,12 @@ public class ChessGameUIController {
         frame.setVisible(true);
     }
 
+    void close() {
+        frame.dispose();
+    }
+
     private void initialize() {
-        frame.setSize(800, 800);
+        frame.setSize(WIDTH, HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(panel);
 
@@ -51,11 +56,8 @@ public class ChessGameUIController {
             JButton clickedButton = (JButton) e.getSource();
 
             String coordinate = clickedButton.getName();
-            if (coordinate == null)
-                return;
-
             Position position = CoordinateTransformer.stringToPosition(coordinate);
-            Piece piece = board.getPiece(position.getFile(), position.getRow());
+            Piece piece = board.getPiece(position.getRow(), position.getFile());
 
             if (piece != null)
                 highlightPossibleMoves(piece.getPossibleMoves());
@@ -69,12 +71,13 @@ public class ChessGameUIController {
         Piece[][] boardCells = board.getBoardCells();
 
         board.iterateBoard((rank, column) -> {
-            Piece piece = boardCells[column][rank];
-            Position position = piece.getPosition();
+            Piece piece = boardCells[rank][column];
             if (piece != null) {
+                Position position = piece.getPosition();
                 JButton button = panel.getBoardButtonByName(positionToCoordinateString(column, rank));
                 if (piece.getType() == Piece.Type.QUEEN) {
                     button.setIcon(getPieceImage(piece));
+                    button.setText(piece.getType().name());
                 } else {
                     button.setText(piece.getType().name());
                 }
@@ -89,10 +92,10 @@ public class ChessGameUIController {
         try {
             img = ImageIO.read(new File(path));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Can't read input file!");
         }
 
-        Image scaledImg = img.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+        Image scaledImg = img.getScaledInstance(WIDTH / 10, HEIGHT / 10, Image.SCALE_SMOOTH);
         return new ImageIcon(scaledImg);
     }
 
@@ -108,5 +111,38 @@ public class ChessGameUIController {
             JButton button = panel.getBoardButtonByName(coordinate);
             button.setBackground(Color.GREEN);
         }
+    }
+
+    public JFrame getFrame() {
+        return frame;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void addPieceToGame(Piece piece, String position) {
+        board.addPiece(piece, position);
+        clearAndUpdateGame();
+    }
+
+    public void removePieceToGame(Piece piece) {
+        board.removePieceFromTheBoard(piece);
+        clearAndUpdateGame();
+    }
+
+    public void clearAndUpdateGame() {
+        clearGame();
+        addPieceIconsToButtons();
+    }
+
+    public void clearGame() {
+        Piece[][] boardCells = board.getBoardCells();
+
+        board.iterateBoard((rank, column) -> {
+            JButton button = panel.getBoardButtonByName(positionToCoordinateString(column, rank));
+            button.setText("");
+            button.setIcon(null);
+        });
     }
 }
