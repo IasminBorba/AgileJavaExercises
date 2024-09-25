@@ -2,8 +2,10 @@ package pieces;
 
 import chess.Board;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.*;
 
 import static pieces.Queen.*;
 
@@ -30,6 +32,29 @@ public class QueenTest extends PieceTest {
 
     protected Piece createPiece(Color color, Type type) {
         return Queen.createPiece(color);
+    }
+
+    public void testIconPiece() throws IOException {
+        Piece queen = createPiece(Color.WHITE, Class);
+        BufferedImage queenImage = (BufferedImage) queen.getImage();
+
+        BufferedImage imageExpected = ImageIO.read(new File("src/exercises/resources/queenWhite.png"));
+
+        for (int x = 0; x < imageExpected.getWidth(); x++)
+            for (int y = 0; y < imageExpected.getHeight(); y++)
+                assertEquals(imageExpected.getRGB(x, y), queenImage.getRGB(x, y));
+    }
+
+    public void testNotIconPiece() {
+        String pathOriginal = PATH_QUEEN_BLACK;
+        try {
+            PATH_QUEEN_BLACK = "a";
+            Piece queen = createPiece(Color.BLACK, Class);
+        } catch (Exception e) {
+            assertEquals("Can't read input file!", e.getMessage());
+        } finally {
+            PATH_QUEEN_BLACK = pathOriginal;
+        }
     }
 
     public void testMove() {
@@ -68,7 +93,7 @@ public class QueenTest extends PieceTest {
     }
 
     public void testNotMove() {
-        Queen queenBlack = Queen.createPiece(Color.BLACK);
+        Queen queenBlack = Queen.createPiece(Color.WHITE);
         board.addPiece(queenBlack, "g2");
 
         possibleMoves = queenBlack.getPossibleMoves();

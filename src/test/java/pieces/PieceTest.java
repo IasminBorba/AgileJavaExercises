@@ -14,9 +14,11 @@ abstract public class PieceTest extends TestCase {
     abstract protected Piece createPiece(Piece.Color color, Piece.Type type);
 
     public void testCreatePiece() {
-        assertEquals('R', piece.getRepresentation());
         assertEquals(Piece.Type.ROOK, piece.getType());
+        assertTrue(piece.isWhite());
+        assertEquals(Piece.Type.ROOK.getRepresentation(), piece.getRepresentation());
         assertEquals(0.0, piece.getPoints());
+        assertEquals(null, piece.getImage());
 
         verifyGeType(createPiece(Piece.Color.WHITE, Piece.Type.BISHOP), Piece.Type.BISHOP);
         verifyGeColor(createPiece(Piece.Color.BLACK, Piece.Type.KING), Piece.Color.BLACK);

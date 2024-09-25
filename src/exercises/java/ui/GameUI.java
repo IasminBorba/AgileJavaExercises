@@ -1,6 +1,7 @@
 package ui;
 
 import chess.Position;
+import ui.helpers.ComponentSearch;
 import util.CoordinateTransformer;
 
 import javax.swing.*;
@@ -18,15 +19,6 @@ public class GameUI extends JPanel {
     private static final JFrame frame = new JFrame("ChessGame");
     private final ArrayList<JButton> boardButtons = new ArrayList<>();
 
-    public static void main(String[] args) {
-        GameUI game = new GameUI();
-        game.display();
-    }
-
-    public void display() {
-        frame.setVisible(true);
-    }
-
     public GameUI() {
         frame.setSize(800, 800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -34,6 +26,10 @@ public class GameUI extends JPanel {
 
         setName(NAME);
         createLayout();
+    }
+
+    public void display() {
+        frame.setVisible(true);
     }
 
     public void close() {
@@ -118,7 +114,9 @@ public class GameUI extends JPanel {
         return LIGHT_SQUARE_COLOR;
     }
 
-    public void addIconToButtons(JButton button, ImageIcon icon) {
-        button.setIcon(icon);
+    public void addIconToButtons(JButton button, Image image) {
+        Image scaledImg = image.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+
+        button.setIcon(new ImageIcon(scaledImg));
     }
 }

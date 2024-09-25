@@ -6,9 +6,7 @@ import pieces.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Objects;
+import java.util.*;
 
 public class ChessGameUIControllerTest extends TestCase {
     private ChessGameUIController gameController;
@@ -51,11 +49,11 @@ public class ChessGameUIControllerTest extends TestCase {
     }
 
     public void testHighlightPossibleMoves() {
-        Piece queen = Queen.createPiece(Piece.Color.WHITE);
+        Piece rook = Rook.createPiece(Piece.Color.WHITE);
         String position = "d5";
-        gameController.addPieceToGame(queen, position);
+        gameController.addPieceToGame(rook, position);
 
-        ArrayList<String> possibleMoves = queen.getPossibleMoves();
+        ArrayList<String> possibleMoves = rook.getPossibleMoves();
         gameController.highlightPossibleMoves(possibleMoves);
 
         for (String move : possibleMoves) {
@@ -99,30 +97,5 @@ public class ChessGameUIControllerTest extends TestCase {
 
         assertEquals("", button.getText());
         assertNull(button.getIcon());
-    }
-
-    public void testGetPieceImage() {
-        Piece queen = Queen.createPiece(Piece.Color.WHITE);
-        ImageIcon icon = gameController.getPieceImage(queen);
-
-        assertNotNull(icon);
-
-        String expectedPath = "src/exercises/resources/queenWhite.png";
-        File imgFile = new File(expectedPath);
-        assertTrue(imgFile.exists());
-    }
-
-    public void testGetPieceImageInvalid() {
-        Piece king = King.createPiece(Piece.Color.WHITE);
-
-        try {
-            ImageIcon icon = gameController.getPieceImage(king);
-        } catch (RuntimeException e) {
-            assertEquals("Can't read input file!", e.getMessage());
-        }
-
-        String expectedPath = "src/exercises/resources/kingWhite.png";
-        File imgFile = new File(expectedPath);
-        assertFalse(imgFile.exists());
     }
 }

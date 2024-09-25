@@ -1,4 +1,5 @@
 import chess.*;
+import ui.*;
 import util.*;
 import pieces.AllTestsPieces;
 
@@ -13,6 +14,8 @@ public class AllTests {
         suite.addTestSuite(BoardPrinterTest.class);
         suite.addTestSuite(CoordinateTransformerTest.class);
         suite.addTestSuite(PiecesCounterTest.class);
+        suite.addTestSuite(GameUITest.class);
+        suite.addTestSuite(ChessGameUIControllerTest.class);
         return suite;
     }
 }

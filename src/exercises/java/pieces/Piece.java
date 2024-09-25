@@ -2,6 +2,7 @@ package pieces;
 
 import chess.Position;
 
+import java.awt.*;
 import java.io.Serializable;
 import java.util.*;
 
@@ -33,6 +34,7 @@ abstract public class Piece implements Serializable {
     private double points;
     private final char representation;
     private Position position;
+    protected Image icon;
 
     public Piece(Color color, Type type) {
         this.color = color;
@@ -43,6 +45,7 @@ abstract public class Piece implements Serializable {
             this.representation = Character.toLowerCase(type.representation);
         else
             this.representation = type.representation;
+
     }
 
     public Type getType() {
@@ -85,5 +88,9 @@ abstract public class Piece implements Serializable {
 
     public boolean compareTo(Piece that) {
         return this.getType().equals(that.getType()) && this.getColor().equals(that.getColor());
+    }
+
+    public Image getImage() {
+        return icon;
     }
 }
