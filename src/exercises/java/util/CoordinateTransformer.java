@@ -3,9 +3,9 @@ package util;
 import chess.Position;
 
 public class CoordinateTransformer {
-    public static Position stringToPosition(String coordenate) {
-        int file = convertFileToIndex(coordenate.charAt(0));
-        int row = convertRowToIndex(coordenate.charAt(1));
+    public static Position stringToPosition(String coordinate) {
+        int file = convertFileToIndex(coordinate.charAt(0));
+        int row = convertRowToIndex(coordinate.charAt(1));
 
         return new Position(row, file);
     }

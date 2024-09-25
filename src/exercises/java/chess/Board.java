@@ -101,8 +101,8 @@ public class Board implements Serializable {
         addPieceToTheBoard(piece, position);
     }
 
-    public void movePieceToPosition(String coordenate, Piece piece) {
-        Position position = CoordinateTransformer.stringToPosition(coordenate);
+    public void movePieceToPosition(String coordinate, Piece piece) {
+        Position position = CoordinateTransformer.stringToPosition(coordinate);
         piece.setPosition(position);
 
         updateBoard();

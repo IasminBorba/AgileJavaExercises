@@ -1,5 +1,6 @@
 package ui;
 
+import chess.Position;
 import util.CoordinateTransformer;
 
 import javax.swing.*;
@@ -14,23 +15,29 @@ public class GameUI extends JPanel {
     private static final Color LIGHT_SQUARE_COLOR = Color.WHITE;
     private static final Color DARK_SQUARE_COLOR = Color.BLACK;
 
-    private static final JFrame frame = new JFrame();
+    private static final JFrame frame = new JFrame("ChessGame");
     private final ArrayList<JButton> boardButtons = new ArrayList<>();
 
     public static void main(String[] args) {
-        show(new GameUI());
+        GameUI game = new GameUI();
+        game.display();
     }
 
-    private static void show(JPanel panel) {
-        frame.setSize(800, 800);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(panel);
+    public void display() {
         frame.setVisible(true);
     }
 
     public GameUI() {
+        frame.setSize(800, 800);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().add(this);
+
         setName(NAME);
         createLayout();
+    }
+
+    public void close() {
+        frame.dispose();
     }
 
     private void createLayout() {
@@ -49,8 +56,12 @@ public class GameUI extends JPanel {
         JPanel boardPanel = new JPanel();
         boardPanel.setLayout(new GridLayout(BOARD_SIZE, BOARD_SIZE));
 
-        boolean isLightSquare = true;
+        applyColorsSquares(boardPanel);
+        return boardPanel;
+    }
 
+    public void applyColorsSquares(JPanel boardPanel) {
+        boolean isLightSquare = true;
         for (int rank = 0; rank < BOARD_SIZE; rank++) {
             for (int column = 0; column < BOARD_SIZE; column++) {
                 JButton square = createBoardSquare(rank, column, isLightSquare);
@@ -59,8 +70,6 @@ public class GameUI extends JPanel {
             }
             isLightSquare = !isLightSquare;
         }
-
-        return boardPanel;
     }
 
     private JButton createBoardSquare(int rank, int column, boolean isLightSquare) {
@@ -79,5 +88,37 @@ public class GameUI extends JPanel {
 
     public ArrayList<JButton> getBoardButtons() {
         return boardButtons;
+    }
+
+    public JFrame getFrame() {
+        return frame;
+    }
+
+    public void highlightBoardSquare(JButton button) {
+        button.setBackground(Color.GREEN);
+    }
+
+    public void clearHighlights() {
+        for (JButton button : getBoardButtons())
+            if (button.getBackground() == Color.GREEN) {
+                String coordinate = button.getName();
+                button.setBackground(calculatePosition(coordinate));
+            }
+    }
+
+    public Color calculatePosition(String coordinate) {
+        Position position = CoordinateTransformer.stringToPosition(coordinate);
+        int invertedRank = 7 - position.getRow();
+        int rowOffsetInStringBuilder = (invertedRank * 9);
+
+        int calculate = rowOffsetInStringBuilder + position.getFile();
+
+        if (calculate % 2 == 0)
+            return DARK_SQUARE_COLOR;
+        return LIGHT_SQUARE_COLOR;
+    }
+
+    public void addIconToButtons(JButton button, ImageIcon icon) {
+        button.setIcon(icon);
     }
 }

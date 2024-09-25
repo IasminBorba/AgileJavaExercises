@@ -8,70 +8,55 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ChessGameUIControllerTest extends TestCase {
-    private ChessGameUIController game;
-    private JFrame frame;
+    private ChessGameUIController gameController;
     private GameUI panel;
+    private Board board;
 
     protected void setUp() throws AWTException {
-        game = new ChessGameUIController();
-        frame = game.getFrame();
-        panel = (GameUI) ComponentSearch.findComponentByName(frame, GameUI.NAME);
+        panel = new GameUI();
+        board = new Board();
+        gameController = new ChessGameUIController(panel, board);
     }
 
-    public void testCreate() {
-        final double tolerance = 0.05;
-        assertEquals(ChessGameUIController.HEIGHT, frame.getSize().getHeight(), tolerance);
-        assertEquals(ChessGameUIController.WIDTH, frame.getSize().getWidth(), tolerance);
-        assertEquals(JFrame.EXIT_ON_CLOSE, frame.getDefaultCloseOperation());
-        assertNotNull(ComponentSearch.findComponentByName(frame, GameUI.NAME));
-        assertEquals("ChessGame", frame.getTitle());
-
-        assertNotNull(panel);
-    }
-
-    protected void tearDown() {
-        game.close();
-    }
-
-    public void testShow() {
-        game.show();
-        assertTrue(frame.isVisible());
-    }
-
-    public void testAddPiece() {
+    public void testClicked() {
         Piece queen = Queen.createPiece(Piece.Color.WHITE);
         String position = "d5";
+        gameController.addPieceToGame(queen, position);
 
-        game.addPieceToGame(queen, position);
+        ArrayList<String> possibleMoves = queen.getPossibleMoves();
 
-        JButton button = panel.getBoardButtonByName(position);
+        JButton buttonClicked = panel.getBoardButtonByName(position);
+        buttonClicked.doClick();
 
-        assertEquals("QUEEN", button.getText());
-        assertNotNull(button.getIcon());
-        assertTrue(button.getIcon() instanceof ImageIcon);
+        for (String move : possibleMoves) {
+            JButton button = panel.getBoardButtonByName(move);
+            assertEquals(Color.GREEN, button.getBackground());
+        }
     }
 
-    public void testRemovePiece() {
-        Board board = game.getBoard();
-        String position = "d1";
-        JButton button = panel.getBoardButtonByName(position);
-        Piece queen = board.getPiece(0, 3);
+    public void testClickedNull() {
+        String position = "d5";
 
-        game.removePieceToGame(queen);
+        JButton buttonClicked = panel.getBoardButtonByName(position);
+        assertTrue(Objects.equals(buttonClicked.getText(), ""));
 
-        assertEquals("", button.getText());
-        assertNull(button.getIcon());
+        buttonClicked.doClick();
+
+        ArrayList<JButton> allButtons = panel.getBoardButtons();
+        for (JButton button : allButtons)
+            assertFalse(button.getBackground() == Color.GREEN);
     }
 
     public void testHighlightPossibleMoves() {
         Piece queen = Queen.createPiece(Piece.Color.WHITE);
         String position = "d5";
-        game.addPieceToGame(queen, position);
+        gameController.addPieceToGame(queen, position);
 
         ArrayList<String> possibleMoves = queen.getPossibleMoves();
-        game.highlightPossibleMoves(possibleMoves);
+        gameController.highlightPossibleMoves(possibleMoves);
 
         for (String move : possibleMoves) {
             JButton button = panel.getBoardButtonByName(move);
@@ -92,41 +77,33 @@ public class ChessGameUIControllerTest extends TestCase {
         }
     }
 
-    public void testClicked() {
+    public void testAddPiece() {
         Piece queen = Queen.createPiece(Piece.Color.WHITE);
         String position = "d5";
-        game.addPieceToGame(queen, position);
 
-        ArrayList<String> possibleMoves = queen.getPossibleMoves();
+        gameController.addPieceToGame(queen, position);
 
-        JButton buttonClicked = panel.getBoardButtonByName(position);
-        buttonClicked.doClick();
+        JButton button = panel.getBoardButtonByName(position);
 
-        for (String move : possibleMoves) {
-            JButton button = panel.getBoardButtonByName(move);
-            assertEquals(Color.GREEN, button.getBackground());
-        }
+        assertEquals("QUEEN", button.getText());
+        assertNotNull(button.getIcon());
+        assertTrue(button.getIcon() instanceof ImageIcon);
     }
 
-    public void testClickedNull() {
-        Piece queen = Queen.createPiece(Piece.Color.WHITE);
-        queen.setPosition(new Position(4, 3));
-        ArrayList<String> possibleMoves = queen.getPossibleMoves();
+    public void testRemovePiece() {
+        String position = "d1";
+        JButton button = panel.getBoardButtonByName(position);
+        Piece queen = board.getPiece(0, 3);
 
-        String position = "d5";
+        gameController.removePieceToGame(queen);
 
-        JButton buttonClicked = panel.getBoardButtonByName(position);
-        buttonClicked.doClick();
-
-        for (String move : possibleMoves) {
-            JButton button = panel.getBoardButtonByName(move);
-            assertFalse(button.getBackground() == Color.GREEN);
-        }
+        assertEquals("", button.getText());
+        assertNull(button.getIcon());
     }
 
     public void testGetPieceImage() {
         Piece queen = Queen.createPiece(Piece.Color.WHITE);
-        ImageIcon icon = game.getPieceImage(queen);
+        ImageIcon icon = gameController.getPieceImage(queen);
 
         assertNotNull(icon);
 
@@ -139,7 +116,7 @@ public class ChessGameUIControllerTest extends TestCase {
         Piece king = King.createPiece(Piece.Color.WHITE);
 
         try {
-            ImageIcon icon = game.getPieceImage(king);
+            ImageIcon icon = gameController.getPieceImage(king);
         } catch (RuntimeException e) {
             assertEquals("Can't read input file!", e.getMessage());
         }

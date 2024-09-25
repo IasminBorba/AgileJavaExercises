@@ -14,35 +14,41 @@ import java.util.*;
 import static util.CoordinateTransformer.*;
 
 public class ChessGameUIController {
-    private final GameUI panel = new GameUI();
-    private final JFrame frame = new JFrame("ChessGame");
-    public static final int WIDTH = 800;
-    public static final int HEIGHT = 800;
-    private final Board board = new Board();
+    private final GameUI panel;
+    private final Board board;
 
     public static void main(String[] args) {
-        new ChessGameUIController().show();
+        Board board = new Board();
+        board.initialize();
+
+        ChessGameUIController game = new ChessGameUIController(new GameUI(), board);
+
+        game.panel.display();
     }
 
-    ChessGameUIController() {
+    public ChessGameUIController(GameUI panel, Board board) {
+        this.panel = panel;
+        this.board = board;
         initialize();
     }
 
-    public void show() {
-        frame.setVisible(true);
-    }
-
-    void close() {
-        frame.dispose();
-    }
-
     private void initialize() {
-        frame.setSize(WIDTH, HEIGHT);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(panel);
-
-        board.initialize();
+        addPiecesToBoard();
         createListeners();
+    }
+
+    private void addPiecesToBoard() {
+        Piece[][] boardCells = board.getBoardCells();
+        board.iterateBoard((rank, column) -> {
+            Piece piece = boardCells[rank][column];
+            if (piece != null) {
+                Position position = piece.getPosition();
+                JButton button = panel.getBoardButtonByName(positionToCoordinateString(column, rank));
+                if (piece.getType() == Piece.Type.QUEEN)
+                    panel.addIconToButtons(button, getPieceImage(piece));
+                button.setText(piece.getType().name());
+            }
+        });
     }
 
     private void createListeners() {
@@ -50,9 +56,8 @@ public class ChessGameUIController {
     }
 
     private void createButtonListeners() {
-        addPieceIconsToButtons();
-
         ActionListener buttonListener = e -> {
+            panel.clearHighlights();
             JButton clickedButton = (JButton) e.getSource();
 
             String coordinate = clickedButton.getName();
@@ -67,24 +72,6 @@ public class ChessGameUIController {
             button.addActionListener(buttonListener);
     }
 
-    private void addPieceIconsToButtons() {
-        Piece[][] boardCells = board.getBoardCells();
-
-        board.iterateBoard((rank, column) -> {
-            Piece piece = boardCells[rank][column];
-            if (piece != null) {
-                Position position = piece.getPosition();
-                JButton button = panel.getBoardButtonByName(positionToCoordinateString(column, rank));
-                if (piece.getType() == Piece.Type.QUEEN) {
-                    button.setIcon(getPieceImage(piece));
-                    button.setText(piece.getType().name());
-                } else {
-                    button.setText(piece.getType().name());
-                }
-            }
-        });
-    }
-
     public ImageIcon getPieceImage(Piece piece) {
         String path = getImagePathForPiece(piece);
 
@@ -95,7 +82,7 @@ public class ChessGameUIController {
             throw new RuntimeException("Can't read input file!");
         }
 
-        Image scaledImg = img.getScaledInstance(WIDTH / 10, HEIGHT / 10, Image.SCALE_SMOOTH);
+        Image scaledImg = img.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
         return new ImageIcon(scaledImg);
     }
 
@@ -109,16 +96,8 @@ public class ChessGameUIController {
     public void highlightPossibleMoves(ArrayList<String> possibleMoves) {
         for (String coordinate : possibleMoves) {
             JButton button = panel.getBoardButtonByName(coordinate);
-            button.setBackground(Color.GREEN);
+            panel.highlightBoardSquare(button);
         }
-    }
-
-    public JFrame getFrame() {
-        return frame;
-    }
-
-    public Board getBoard() {
-        return board;
     }
 
     public void addPieceToGame(Piece piece, String position) {
@@ -133,7 +112,7 @@ public class ChessGameUIController {
 
     public void clearAndUpdateGame() {
         clearGame();
-        addPieceIconsToButtons();
+        addPiecesToBoard();
     }
 
     public void clearGame() {
